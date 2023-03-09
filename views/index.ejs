@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<form method="post" action="/insert">
+  <label for="firstName">First name:</label><br>
+  <input type="text" id="firstName" name="firstName"><br>
+  <label for="familyName">Family name:</label><br>
+  <input type="text" id="familyName" name="familyName"><br>
+  <label for="dob">Data of Birth:</label><br>
+  <input type="text" id="dob" name="dob"><br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>
