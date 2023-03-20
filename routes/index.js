@@ -1,14 +1,23 @@
 var express = require('express');
 var router = express.Router();
-const character_controller = require("../controllers/characters");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index' );
+});
+
+/* GET home page. */
+router.get('/create', function(req, res, next) {
+  res.render('create' );
+});
+
+/* GET home page. */
+router.get('/details', function(req, res, next) {
+  res.render('details' );
 });
 
 
-router.post('/insert', character_controller.character_insert);
+
 
 
 module.exports = router;

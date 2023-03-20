@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let mongoDB = 'mongodb://127.0.0.1:27017/characters'
+let mongoDB = 'mongodb://127.0.0.1:27017/birdsighting'
 
 mongoose.Promise = global.Promise;
 

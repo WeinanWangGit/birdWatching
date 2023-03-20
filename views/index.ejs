@@ -1,20 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= title %></title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title>Bird Sighting</title>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    table {
+      width: 50%;
+      border-collapse: collapse;
+      border: 1px solid black;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px grey;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    td input[type="datetime-local"],
+    td input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid grey;
+      font-size: 16px;
+    }
+
+    td button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0px 0px 10px grey;
+    }
+
+    .add-button {
+      margin-top: 20px;
+    }
+
+    .add-button button {
+      padding: 15px 30px;
+      font-size: 24px;
+      box-shadow: 0px 0px 10px grey;
+    }
+  </style>
 </head>
 <body>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<form method="post" action="/insert">
-  <label for="firstName">First name:</label><br>
-  <input type="text" id="firstName" name="firstName"><br>
-  <label for="familyName">Family name:</label><br>
-  <input type="text" id="familyName" name="familyName"><br>
-  <label for="dob">Data of Birth:</label><br>
-  <input type="text" id="dob" name="dob"><br>
-  <input type="submit" value="Submit">
-</form>
+<div class="container">
+  <h1>Bird Sighting</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Date/Time</th>
+      <th>Identification</th>
+      <th>User</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody onclick="location.href='/details'">
+      <a href="/details">
+        <tr>
+          <td><input type="datetime-local" name="date-time" value="2022-03-01T09:00" required></td>
+          <td><input type="text" name="identification" value="Red-tailed Hawk" required></td>
+          <td><input type="text" name="user" value="John Doe" required></td>
+        </tr>
+        <tr>
+          <td><input type="datetime-local" name="date-time" value="2022-03-02T14:30" required></td>
+          <td><input type="text" name="identification" value="Bald Eagle" required></td>
+          <td><input type="text" name="user" value="Jane Smith" required></td>
+        </tr>
+        <tr>
+          <td><input type="datetime-local" name="date-time" value="2022-03-03T10:15" required></td>
+          <td><input type="text" name="identification" value="American Robin" required></td>
+          <td><input type="text" name="user" value="Bob Johnson" required></td>
+        </tr>
+      </a>
+    </tbody>
+  </table>
+  <div class="add-button">
+    <button onclick="location.href='/create'"><i class="fa fa-plus-circle"></i> Add New Sighting</button>
+  </div>
+</div>
 </body>
 </html>
