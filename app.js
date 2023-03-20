@@ -3,11 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const specs = require('./swaggerConfig.js');
+
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var createRouter = require('./routes/create');
+var detailsRouter = require('./routes/details');
 
 var app = express();
+
+//add swagger config
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/', createRouter);
+app.use('/', detailsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
