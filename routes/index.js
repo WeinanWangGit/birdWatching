@@ -6,7 +6,15 @@ router.get('/', function(req, res, next) {
   res.render('index' );
 });
 
-/* GET home page. */
+/**
+ * @swagger
+ * /create:
+ *   get:
+ *     summary: create a sighting
+ *     responses:
+ *       200:
+ *         description: save in mongodb
+ */
 router.get('/create', function(req, res, next) {
   res.render('create' );
 });
