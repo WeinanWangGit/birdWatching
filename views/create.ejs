@@ -77,29 +77,67 @@
 <body>
 <div class="container">
     <h1>Create a new Sighting</h1>
-    <div class="form-container">
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required>
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
-        <label for="author">Author:</label>
-        <input type="text" id="author" name="author" required>
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required>
-        <hr>
-        <label for="identification">Identification:</label>
-        <input type="text" id="identification" name="identification" required>
-        <label for="bird-name">Bird Name:</label>
-        <input type="text" id="bird-name" name="bird-name" required>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
-        <label for="url">URL:</label>
-        <input type="text" id="url" name="url">
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image">
-        <button type="submit"><i class="fa fa-plus-circle"></i> Create</button>
+    <form id="sighting-form">
+        <div class="form-container">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            <hr>
+            <label for="identification">Identification:</label>
+            <input type="text" id="identification" name="identification" required>
+            <label for="bird-name">Bird Name:</label>
+            <input type="text" id="bird-name" name="bird-name" required>
+            <label for="description">Description:</label>
+            <textarea id="bird-description" name="bird-description" required></textarea>
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image">
+            <button type="submit"><i class="fa fa-plus-circle"></i> Create</button>
+        </div>
+    </form>
 
-    </div>
+    <script>
+        const form = document.getElementById('sighting-form');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent form from submitting normally
+
+            const data = {
+                description: document.getElementById('description').value,
+                date: document.getElementById('date').value,
+                author: document.getElementById('author').value,
+                location: document.getElementById('location').value,
+                identification: document.getElementById('identification').value,
+                birdName: document.getElementById('bird-name').value,
+                birdDescription: document.getElementById('bird-description').value,
+                url: document.getElementById('url').value,
+                image: document.getElementById('image').files[0]
+            };
+
+            const formData = new FormData();
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            const response = await fetch('/create', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert('Sighting created successfully!');
+                form.reset();
+            } else {
+                alert('Error creating sighting');
+            }
+        });
+    </script>
 </div>
 </body>
 </html>
