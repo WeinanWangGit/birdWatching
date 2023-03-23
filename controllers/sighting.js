@@ -40,7 +40,23 @@ function insertSighting(req, res) {
     });
 }
 
+
+
+
+async function getSightingList(req, res) {
+    try {
+        const sightings = await Sighting.find().sort({ date: 'asc' });
+        return sightings;
+    } catch (err) {
+        throw err;
+    }
+}
+
+
+
+
 module.exports = {
     insertSighting,
+    getSightingList,
     upload
 };

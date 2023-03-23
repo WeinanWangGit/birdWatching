@@ -63,35 +63,25 @@
 <body>
 <div class="container">
   <h1>Bird Sighting</h1>
-  <table>
-    <thead>
-    <tr>
-      <th>Date/Time</th>
-      <th>Identification</th>
-      <th>User</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody onclick="location.href='/details'">
-      <a href="/details">
-        <tr>
-          <td><input type="datetime-local" name="date-time" value="2022-03-01T09:00" required></td>
-          <td><input type="text" name="identification" value="Red-tailed Hawk" required></td>
-          <td><input type="text" name="user" value="John Doe" required></td>
+    <table>
+      <thead>
+      <tr>
+        <th>Date/Time</th>
+        <th>Identification</th>
+        <th>User</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="table-body">
+      <% sightings.forEach(function(sighting) { %>
+        <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
+          <td><%= new Date(sighting.date).toLocaleString() %></td>
+          <td><%= sighting.identification.birdName %></td>
+          <td><%= sighting.author %></td>
         </tr>
-        <tr>
-          <td><input type="datetime-local" name="date-time" value="2022-03-02T14:30" required></td>
-          <td><input type="text" name="identification" value="Bald Eagle" required></td>
-          <td><input type="text" name="user" value="Jane Smith" required></td>
-        </tr>
-        <tr>
-          <td><input type="datetime-local" name="date-time" value="2022-03-03T10:15" required></td>
-          <td><input type="text" name="identification" value="American Robin" required></td>
-          <td><input type="text" name="user" value="Bob Johnson" required></td>
-        </tr>
-      </a>
-    </tbody>
-  </table>
+      <% }); %>
+      </tbody>
+    </table>
   <div class="add-button">
     <button onclick="location.href='/create'"><i class="fa fa-plus-circle"></i> Add New Sighting</button>
   </div>
