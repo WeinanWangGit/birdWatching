@@ -1,20 +1,21 @@
 const Sighting = require('../models/sighting');
 const multer = require('multer');
 
-// configure multer to store images in memory
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-        fileSize: 5 * 1024 * 1024 // 5 MB
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/');
     },
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype.startsWith('image/')) {
-            cb(null, true);
-        } else {
-            cb(new Error('Only image files are allowed.'));
-        }
+    filename: function (req, file, cb) {
+        var original = file.originalname;
+        var file_extension = original.split(".");
+        // Make the file name the date + the file extension
+        filename = Date.now() + '.' + file_extension[file_extension.length-1];
+        cb(null, filename);
     }
 });
+
+var upload = multer({ storage: storage });
 
 function insertSighting(req, res) {
     const sighting = new Sighting({
@@ -24,11 +25,13 @@ function insertSighting(req, res) {
         location: req.body.location,
         identification: {
             birdName: req.body.birdName,
-            description: req.body.identificationDescription,
-            url: req.body.identificationUrl
+            description: req.body.birdDescription,
+            url: req.body.url
         },
-        image: req.file ? req.file.buffer : undefined
+        image: req.file.path
     });
+
+    console.log(sighting);
 
     sighting.save((err, savedSighting) => {
         if (err) {
