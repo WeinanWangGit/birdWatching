@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 80vh;
+  font-size: 1.6rem;
+  font-family: "Lato", sans-serif;
+  line-height: 1.5;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 5rem;
+}
+
+.header {
+  display: flex;
+  margin-top: 5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem;
+  border: 0.1rem solid #104937;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 0.1rem grey;
+  margin-top: 2rem;
+  max-width: 80rem;
+}
+
+label {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  max-width: 100%;
+  flex-basis: 50%; /* adjust as needed */
+}
+
+hr {
+  margin-bottom: 2rem;
+}
+input[type="text"],
+input[type="date"],
+input[type="datetime-local"] {
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid grey;
+  font-size: 1.8rem;
+  max-width: 100%;
+  flex-basis: 70%; /* adjust as needed */
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+textarea {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid grey;
+  font-size: 1.8rem;
+  /* resize: vertical; */
+  max-width: 100%;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center child content horizontally */
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 0.1rem grey;
+  text-align: center; /* center text horizontally */
+  margin-top: 2rem;
+}
+button:hover {
+  background-image: linear-gradient(to left, #7dd56f, #28b487);
+}
+
+button i {
+  margin-right: auto;
+  margin-left: 1rem;
+}

@@ -1,105 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Create a new Sighting</title>
-    <style>
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
+    <link rel="stylesheet" href=".././stylesheets/create.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Create a new Sighting</h1>
+        <button class="sighting-btn" type="submit">Sighting List</button>
+      </div>
+      <div class="form">
+        <div class="form-container">
+          <div class="input-container">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required />
+          </div>
 
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            border: 1px solid black;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px grey;
-            width: 80%;
-            max-width: 600px;
-        }
+          <div class="input-container">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required />
+          </div>
 
-        label {
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            width: 100%;
-        }
+          <div class="input-container">
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required />
+          </div>
 
-        input[type="text"],
-        input[type="date"],
-        input[type="datetime-local"] {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid grey;
-            font-size: 18px;
-            width: 100%;
-        }
+          <div class="input-container">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required />
+          </div>
+          <hr />
 
-        textarea {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid grey;
-            font-size: 18px;
-            resize: vertical;
-            width: 100%;
-            height: 100px;
-        }
+          <div class="input-container">
+            <label for="identification">Identification:</label>
+            <input
+              type="text"
+              id="identification"
+              name="identification"
+              required
+            />
+          </div>
 
-        button[type="submit"] {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            box-shadow: 0px 0px 10px grey;
-        }
+          <div class="input-container">
+            <label for="bird-name">Bird Name:</label>
+            <input type="text" id="bird-name" name="bird-name" required />
+          </div>
 
-        button[type="submit"] i {
-            margin-right: 10px;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h1>Create a new Sighting</h1>
-    <div class="form-container">
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required>
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
-        <label for="author">Author:</label>
-        <input type="text" id="author" name="author" required>
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required>
-        <hr>
-        <label for="identification">Identification:</label>
-        <input type="text" id="identification" name="identification" required>
-        <label for="bird-name">Bird Name:</label>
-        <input type="text" id="bird-name" name="bird-name" required>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
-        <label for="url">URL:</label>
-        <input type="text" id="url" name="url">
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image">
-        <button type="submit"><i class="fa fa-plus-circle"></i> Create</button>
+          <div class="input-container">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+          </div>
 
+          <div class="input-container">
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url" />
+          </div>
+
+          <div class="input-container">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" />
+          </div>
+
+          <button type="submit">
+            <i class="fa fa-plus-circle"></i> Create
+          </button>
+        </div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>
