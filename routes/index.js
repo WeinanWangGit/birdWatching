@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 const sighting_controller = require("../controllers/sighting");
 
@@ -6,25 +6,21 @@ const sighting_controller = require("../controllers/sighting");
  * @swagger
  * getSightingList
  */
-router.get('/', async function(req, res) {
+router.get("/", async function (req, res) {
   try {
     const sightings = await sighting_controller.getSightingList();
-    res.render('index', {sightings: sightings});
+    res.render("index", { sightings: sightings });
   } catch (err) {
     // handle error
-    res.status(500).send('Internal server error');
+    res.status(500).send("Internal server error");
   }
 });
 
 /**
 
-/* GET home page. */
-router.get('/details', function(req, res, next) {
-  res.render('details' );
+/* GET details page. */
+router.get("/details", function (req, res, next) {
+  res.render("details");
 });
-
-
-
-
 
 module.exports = router;

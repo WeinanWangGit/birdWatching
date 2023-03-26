@@ -5,13 +5,13 @@
     <link rel="stylesheet" href=".././stylesheets/create.css" />
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <h1>Create a new Sighting</h1>
-        <button class="sighting-btn" type="submit">Sighting List</button>
-      </div>
+    <%- include('partials/header') %>
 
-      <form class="form">
+    <div class="container">
+      <div class="title-container">
+        <h1 class="page-title">Create a new Sighting</h1>
+      </div>
+      <form class="sighting-form">
         <div class="form-container">
           <div class="input-container">
             <label for="description">Description:</label>
