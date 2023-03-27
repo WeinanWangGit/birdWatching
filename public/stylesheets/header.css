@@ -1,0 +1,54 @@
+/* Set the height and background color of the header */
+header {
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+}
+
+/* TITLE */
+.title {
+  font-size: 2rem;
+  margin-left: 2rem;
+  font-weight: bold;
+  margin-left: 2rem;
+}
+
+/* BUTTON */
+button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+  color: white;
+  cursor: pointer;
+  border: none;
+  margin-right: 2rem;
+}
+button:hover {
+  background-image: linear-gradient(to left, #7dd56f, #28b487);
+}
+
+@media (max-width: 576px) {
+  /* Reduce padding for smaller screens */
+  header {
+    padding: 0.5rem;
+  }
+
+  /* Reduce font size for smaller screens */
+  .title {
+    font-size: 1.5rem;
+  }
+
+  /* Make button full width for smaller screens */
+  button {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
