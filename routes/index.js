@@ -16,15 +16,6 @@ router.get('/', async function(req, res) {
   }
 });
 
-/**
-
-/* GET home page. */
-router.get('/details', function(req, res, next) {
-  res.render('details' );
-});
-
-
-
 
 
 module.exports = router;
