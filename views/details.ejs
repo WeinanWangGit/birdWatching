@@ -1,67 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bird Sighting</title>
-  <style>
-    body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 1rem;
-      height: 100vh;
-      margin: 0;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-    .image-box, .comment-box, .identification-form, .metadata {
-      border: 1px solid #ccc;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-    .image-box img {
-      max-width: 100%;
-      max-height: 100%;
-    }
-    .send-message-btn {
-      display: inline-block;
-      background-color: #007bff;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      text-decoration: none;
-      margin-top: 1rem;
-    }
-    .send-message-btn:hover {
-      background-color: #0056b3;
-      text-decoration: none;
-      color: #fff;
-    }
-  </style>
-</head>
-<body>
-<div class="image-box">
-  <img src="../public/images/img.png" alt="Bird">
-</div>
-<div class="identification-form">
-  <h2>Identification Form</h2>
-  <label for="description">Description:</label>
-  <textarea id="description" rows="4" style="width: 100%;"></textarea>
-  <label for="url">URL:</label>
-  <input type="text" id="url" style="width: 100%;">
-</div>
-<div class="comment-box">
-  <h2>Comment</h2>
-  <textarea id="comment" rows="4" style="width: 100%;"></textarea>
-  <a href="#" class="send-message-btn">Send Message</a>
-</div>
-<div class="metadata">
-  <h2>Metadata</h2>
-  <p><strong>Date:</strong> 2023-03-20</p>
-  <p><strong>Author:</strong> John Doe</p>
-  <p><strong>Location:</strong> New York, NY</p>
-  <p><strong>Description:</strong> A beautiful bird sighted in Central Park.</p>
-</div>
-</body>
+<html>
+  <head>
+    <title>Create a new Sighting</title>
+    <link rel="stylesheet" href=".././stylesheets/details.css" />
+    <%- include('partials/header') %>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container_top">
+        <div class="top_left">
+          <div class="image-box">
+            <div class="image-box">
+              <img src="bird1.png"  alt="Bird">
+            </div>
+          </div>
+        </div>
+        <div class="top_right">
+          <div  class="identification-form">
+            <h2 style="font-size: 24px; font-weight: bold;text-align: center;margin-bottom: 10px" > Identification Form</h2>
+            <label class="top_right_content" for="description_label">Description:</label>
+            <textarea class="my-textarea" class="top_right_content" id="description" rows="8" style="width: 100%;resize: none;background: aliceblue"></textarea>
+            <label class="top_right_content" for="url" >URL:</label>
+            <input type="text" id="url" placeholder="url" style="width: 100%;background: aliceblue">
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="container_bottom">
+        <div class="bottom_left">
+          <div class="metadata">
+            <h2 style="margin-top: 10px">Metadata</h2>
+            <p><strong>Date:</strong> 2023-03-20</p>
+            <p><strong>Author:</strong> John Doe</p>
+            <p><strong>Location:</strong> New York, NY</p>
+            <p><strong>Description:</strong> A beautiful bird sighted in Central Park.</p>
+          </div>
+        </div>
+        <div class="bottom_right">
+          <div  class="comment-box">
+            <h2>Comment</h2>
+            <textarea class="my-textarea" class="top_right_content" id="comment" rows="8" style="width: 100%;resize: none;background: aliceblue"></textarea>
+            <a href="#" class="send-message-btn">Send Message</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
 </html>
+
+
+
+
+
+
+
+
+
