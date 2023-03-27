@@ -57,9 +57,23 @@ async function getSightingList(req, res) {
 
 
 
+async function getSightingById(id) {
+    try {
+        const sighting = await Sighting.findById(id);
+        return sighting;
+    } catch (err) {
+        console.error(`Error getting sighting by ID: ${err}`);
+        throw err;
+    }
+}
+
+
+
+
 
 module.exports = {
     insertSighting,
     getSightingList,
+    getSightingById,
     upload
 };
