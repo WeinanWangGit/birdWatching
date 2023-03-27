@@ -11,7 +11,7 @@
       <div class="title-container">
         <h1 class="page-title">Create a new Sighting</h1>
       </div>
-      <form class="sighting-form">
+      <form class="sighting-form" id="sighting-form">
         <div class="form-container">
           <div class="input-container">
             <label for="description">Description:</label>
@@ -51,7 +51,8 @@
 
           <div class="input-container">
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
+            <label for="description">Description:</label>
+            <textarea id="bird-description" name="bird-description" required></textarea>
           </div>
 
           <div class="input-container">
@@ -71,39 +72,42 @@
       </form>
 
       <script>
-        const form = document.getElementById("sighting-form");
 
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault(); // Prevent form from submitting normally
+        document.addEventListener('DOMContentLoaded', () => {
+          const form = document.getElementById("sighting-form");
 
-          const data = {
-            description: document.getElementById("description").value,
-            date: document.getElementById("date").value,
-            author: document.getElementById("author").value,
-            location: document.getElementById("location").value,
-            identification: document.getElementById("identification").value,
-            birdName: document.getElementById("bird-name").value,
-            birdDescription: document.getElementById("bird-description").value,
-            url: document.getElementById("url").value,
-            image: document.getElementById("image").files[0],
-          };
+          form.addEventListener("submit", async (event) => {
+            event.preventDefault(); // Prevent form from submitting normally
 
-          const formData = new FormData();
-          for (const key in data) {
-            formData.append(key, data[key]);
-          }
+            const data = {
+              description: document.getElementById("description").value,
+              date: document.getElementById("date").value,
+              author: document.getElementById("author").value,
+              location: document.getElementById("location").value,
+              identification: document.getElementById("identification").value,
+              birdName: document.getElementById("bird-name").value,
+              birdDescription: document.getElementById("bird-description").value,
+              url: document.getElementById("url").value,
+              image: document.getElementById("image").files[0],
+            };
 
-          const response = await fetch("/create", {
-            method: "POST",
-            body: formData,
+            const formData = new FormData();
+            for (const key in data) {
+              formData.append(key, data[key]);
+            }
+
+            const response = await fetch("/add", {
+              method: "POST",
+              body: formData,
+            });
+
+            if (response.ok) {
+              alert("Sighting created successfully!");
+              form.reset();
+            } else {
+              alert("Error creating sighting");
+            }
           });
-
-          if (response.ok) {
-            alert("Sighting created successfully!");
-            form.reset();
-          } else {
-            alert("Error creating sighting");
-          }
         });
       </script>
     </div>

@@ -16,12 +16,11 @@ router.get("/", async function (req, res) {
   }
 });
 
-/**
 
-/* GET details page. */
-router.get("/details", function (req, res, next) {
-  res.render("details");
+
+/* go to create page. */
+router.get("/create", function (req, res, next) {
+  res.render("create");
 });
-
 
 module.exports = router;
