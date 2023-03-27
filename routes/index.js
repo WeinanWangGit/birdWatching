@@ -17,5 +17,9 @@ router.get("/", async function (req, res) {
 });
 
 
+/* go to create page. */
+router.get("/create", function (req, res, next) {
+  res.render("create");
+});
 
 module.exports = router;
