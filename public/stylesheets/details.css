@@ -1,71 +1,120 @@
 * {
-    margin: 0;
-    box-sizing: border-box;
-
+  margin: 0;
+  box-sizing: border-box;
 }
-
 
 .container {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    padding: 5rem;
-    background: cadetblue;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1rem auto;
+  padding: 5rem;
+  font-family: "Lato", sans-serif;
+  background: cadetblue;
 }
 
-.container_top {
-    display: flex;
-    flex-direction: row;
-    margin: 0px auto;
-    padding: 0px;
-    width: 100%;
-    margin-bottom: 150px;
-
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  .left_container,
+  .right_container {
+    max-width: 100%;
+    margin: 0;
+  }
+  .left_container {
+    margin-bottom: 1rem;
+  }
 }
 
-.top_left{
-    display: inline-block;;
-    width: 50%;
-    height: 200px;
-
+/* Image and Comment */
+.left_container {
+  display: flex;
+  flex-direction: column;
 }
 
-.top_right{
-    display: inline-block;;
-    width: 50%;
-    height: 200px;
+.img_container {
+  max-width: 30rem;
+}
+.img_container img {
+  max-width: 100%;
+  height: auto;
+}
+.comment-box {
+  display: inline-block;
 }
 
-.top_right_content{
-    margin-top:  10px;
-    margin-bottom: 10px;
-
+.comment-box h2 {
+  margin-top: 1rem;
 }
 
-
-
-.container_bottom{
-    display: flex;
-    flex-direction: row;
-    margin: 0 auto;
-    padding: 0px;
-    width: 100%;
-
+.my-textarea {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid grey;
+  margin-bottom: 1rem;
 }
 
-
-.bottom_left{
-    display: inline-block;;
-    width: 50%;
-    height: 200px;
-    padding-right: 70px;
+.send-message-btn {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+  color: white;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.bottom_right{
-    display: inline-block;;
-    width: 50%;
-    height: 200px;
+.send-message-btn:hover {
+  background-image: linear-gradient(to left, #7dd56f, #28b487);
 }
 
+/* Identification and Metadata */
+.right_container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  flex: 1;
+  max-width: 50rem;
+}
 
+.identification_container {
+  display: inline-block;
+  max-width: 100%;
+}
 
+.identification_container h2 {
+  margin-bottom: 0.5rem;
+}
+
+.description_label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.desciption_text,
+#url {
+  height: 10rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid grey;
+}
+
+#url {
+  height: 3rem;
+}
+.url_label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.metadata h2 {
+  margin-bottom: 0.5rem;
+}
+.metadata p {
+  margin-bottom: 0.5rem;
+}
