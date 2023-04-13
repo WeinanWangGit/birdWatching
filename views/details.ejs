@@ -10,7 +10,14 @@
     <div class="container">
       <div class="left_container">
         <div class="img_container">
-          <img src="/image/bird.jpg" alt="Bird1" />
+          <% if (sighting.image) { %>
+          <img
+            src="data:image/jpeg;base64,<%= sighting.image.toString('base64') %>"
+            alt="Bird1"
+          />
+          <% } else { %>
+          <p>The image is not available.</p>
+          <% } %>
         </div>
         <div class="comment-box">
           <h2>Comment</h2>
@@ -25,23 +32,23 @@
           <label class="description_label" for="description_label"
             >Description:</label
           >
-          <textarea
-            class="desciption_text"
-            id="description"
-            rows="8"
-          ></textarea>
+          <textarea class="desciption_text" id="description" rows="8">
+<%= sighting.identification.description %></textarea
+          >
           <label class="url_label" for="url">URL:</label>
-          <input type="text" id="url" placeholder="URL" />
+          <input
+            type="text"
+            id="url"
+            placeholder="URL"
+            value="<%= sighting.identification.url %>"
+          />
         </div>
         <div class="metadata">
           <h2>Metadata</h2>
-          <p><strong>Date:</strong> 2023-03-20</p>
-          <p><strong>Author:</strong> John Doe</p>
-          <p><strong>Location:</strong> New York, NY</p>
-          <p>
-            <strong>Description:</strong> A beautiful bird sighted in Central
-            Park.
-          </p>
+          <p><strong>Date:</strong> <%= sighting.date %></p>
+          <p><strong>Author:</strong> <%= sighting.author %></p>
+          <p><strong>Location:</strong> <%= sighting.location %></p>
+          <p><strong>Description:</strong> <%= sighting.description %></p>
         </div>
       </div>
     </div>
