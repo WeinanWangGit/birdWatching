@@ -13,7 +13,7 @@
           <% if (sighting.image) { %>
           <img
             src="data:image/jpeg;base64,<%= sighting.image.toString('base64') %>"
-            alt="Bird1"
+            alt="<%= sighting.identification.birdName %> Image"
           />
           <% } else { %>
           <p>The image is not available.</p>
@@ -29,12 +29,21 @@
       <div class="right_container">
         <div class="identification_container">
           <h2>Identification Form</h2>
+          <label class="bird_label" for="bird_label">Bird Name:</label>
+          <input
+            type="text"
+            id="birdName"
+            placeholder="bird name"
+            value="<%= sighting.identification.birdName %>"
+          />
+
           <label class="description_label" for="description_label"
             >Description:</label
           >
           <textarea class="desciption_text" id="description" rows="8">
 <%= sighting.identification.description %></textarea
           >
+
           <label class="url_label" for="url">URL:</label>
           <input
             type="text"

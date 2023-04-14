@@ -94,22 +94,33 @@
   margin-bottom: 0.5rem;
 }
 
-.desciption_text,
-#url {
-  height: 10rem;
-  width: 100%;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid grey;
+.bird_label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
-#url {
-  height: 3rem;
-}
 .url_label {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 1rem;
+}
+
+.desciption_text,
+#url,
+#birdName {
+  height: 10rem;
+  width: 80%;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid grey;
+}
+#birdName {
+  height: 3rem;
+}
+#url {
+  height: 3rem;
 }
 
 .metadata h2 {
