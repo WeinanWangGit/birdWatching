@@ -50,9 +50,12 @@
           </div>
 
           <div class="input-container">
-            <label for="description">Description:</label>
-            <label for="description">Description:</label>
-            <textarea id="bird-description" name="bird-description" required></textarea>
+            <label for="description">Bird Description:</label>
+            <textarea
+              id="bird-description"
+              name="bird-description"
+              required
+            ></textarea>
           </div>
 
           <div class="input-container">
@@ -72,8 +75,7 @@
       </form>
 
       <script>
-
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener("DOMContentLoaded", () => {
           const form = document.getElementById("sighting-form");
 
           form.addEventListener("submit", async (event) => {
@@ -86,7 +88,8 @@
               location: document.getElementById("location").value,
               identification: document.getElementById("identification").value,
               birdName: document.getElementById("bird-name").value,
-              birdDescription: document.getElementById("bird-description").value,
+              birdDescription:
+                document.getElementById("bird-description").value,
               url: document.getElementById("url").value,
               image: document.getElementById("image").files[0],
             };

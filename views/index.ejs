@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Bird Sighting</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     .container {
       display: flex;
@@ -58,33 +59,96 @@
       font-size: 24px;
       box-shadow: 0px 0px 10px grey;
     }
+
+    .grid-layout {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(300px, 1fr));
+      grid-gap: 20px;
+    }
+
+    .grid-item {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+    .toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .add-button{
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+
   </style>
 </head>
 <body>
+
 <div class="container">
   <h1>Bird Sighting</h1>
-    <table>
-      <thead>
-      <tr>
-        <th>Date/Time</th>
-        <th>Identification</th>
-        <th>User</th>
-        <th></th>
+  <div class="toggle-button">
+    <button onclick="toggleGrid()">
+      <i class="fa fa-exchange"></i> Toggle Grid View
+    </button>
+  </div>
+
+  <table id="table-view">
+    <thead>
+    <tr>
+      <th>Date/Time</th>
+      <th>Identification</th>
+      <th>User</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody id="table-body">
+    <% sightings.forEach(function(sighting) { %>
+      <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
+        <td><%= new Date(sighting.date).toLocaleString() %></td>
+        <td><%= sighting.identification.birdName %></td>
+        <td><%= sighting.author %></td>
       </tr>
-      </thead>
-      <tbody id="table-body">
-      <% sightings.forEach(function(sighting) { %>
-        <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
-          <td><%= new Date(sighting.date).toLocaleString() %></td>
-          <td><%= sighting.identification.birdName %></td>
-          <td><%= sighting.author %></td>
-        </tr>
-      <% }); %>
-      </tbody>
-    </table>
+    <% }); %>
+    </tbody>
+  </table>
+
+  <div id="grid-view" class="grid-layout" style="display:none;">
+    <% sightings.forEach(function(sighting) { %>
+      <div class="grid-item" data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
+        <img src="<%= sighting.image %>" alt="Bird image">
+        <p><strong>Date/Time: </strong><%= new Date(sighting.date).toLocaleString() %></p>
+        <p><strong>Identification: </strong><%= sighting.identification.birdName %></p>
+        <p><strong>User: </strong><%= sighting.author %></p>
+      </div>
+    <% }); %>
+  </div>
+
+
+
+
   <div class="add-button">
     <button onclick="location.href='/create'"><i class="fa fa-plus-circle"></i> Add New Sighting</button>
   </div>
+
 </div>
+
+<script>
+  function toggleGrid() {
+    var tableView = document.getElementById("table-view");
+    var gridView = document.getElementById("grid-view");
+    if (tableView.style.display === "none") {
+      tableView.style.display = "table";
+      gridView.style.display = "none";
+    } else {
+      tableView.style.display = "none";
+      gridView.style.display = "grid";
+    }
+  }
+</script>
 </body>
 </html>
