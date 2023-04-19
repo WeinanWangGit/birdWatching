@@ -1,8 +1,110 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 3rem;
+  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+.toggle-button button {
+  display: inline-block;
+  margin-left: 2rem;
+  margin-right: 0;
+
+  padding: 0.25rem 0.5rem;
+  border: none;
+  cursor: pointer;
+  background-color: #ddd;
+  border: 0.05rem solid black;
+}
+
+table {
+  width: 50%;
+  border-collapse: collapse;
+  border: 0.05rem solid #4caf50;
+  border-radius: 0.5rem;
+}
+
+th,
+td {
+  padding: 0.5rem 0.55rem;
+  text-align: left;
+}
+
+th {
+  background-color: #4caf50;
+  color: white;
+}
+
+td input[type="datetime-local"],
+td input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 0.5rem solid #4caf50;
+  font-size: 1rem;
+}
+
+/* td button {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 0.5rem #4caf50;
+} */
+
+.add-button {
+  margin-top: 2rem;
+}
+
+.add-button button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(18rem, 1fr));
+  grid-gap: 1rem;
+}
+
+.grid-item {
+  background-color: #f9f9f9;
+  /* border: 0.05rem solid #4caf50; */
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* .add-button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+} */
