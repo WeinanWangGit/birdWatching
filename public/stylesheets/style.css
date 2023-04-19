@@ -13,6 +13,7 @@ a {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  overflow-x: auto;
 }
 
 .header-container {
@@ -75,23 +76,9 @@ td input[type="text"] {
   box-shadow: 0 0 0.5rem #4caf50;
 } */
 
-.add-button {
-  margin-top: 2rem;
-}
-
-.add-button button {
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  background-image: linear-gradient(to right, #7dd56f, #28b487);
-}
-
 .grid-layout {
   display: grid;
-  grid-template-columns: repeat(5, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   grid-gap: 1rem;
 }
 
@@ -103,8 +90,36 @@ td input[type="text"] {
   font-size: 1rem;
 }
 
-/* .add-button {
+.add-button {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-} */
+}
+.add-button button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+}
+
+/* Responsive grid layout*/
+@media only screen and (max-width: 767px) {
+  .grid-layout {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1023px) {
+  .grid-layout {
+    grid-template-columns: repeat(3, minmax(16rem, 1fr));
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .grid-layout {
+    grid-template-columns: repeat(4, minmax(16rem, 1fr));
+  }
+}
