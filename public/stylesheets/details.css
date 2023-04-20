@@ -16,7 +16,7 @@ body {
   background: cadetblue;
 }
 
-/* Image and Comment */
+/* Image */
 .left_container {
   display: flex;
   flex-direction: column;
@@ -29,25 +29,28 @@ body {
   max-width: 100%;
   height: auto;
 }
-.comment-box {
-  display: inline-block;
+
+/* Chat */
+.chat-interface {
   margin-top: 1rem;
 }
-
-.comment-box h2 {
-  margin-bottom: 0.5rem;
+.history {
+  margin-top: 0.5rem;
 }
-
-.my-textarea {
+.chat-form {
   width: 100%;
+}
+.chat-input {
+  /* display: inline-block; */
+  width: 80%;
   border-radius: 0.5rem;
   border: 1px solid grey;
-  margin-bottom: 1rem;
 }
 
-.send-message-btn {
-  display: inline-block;
-  padding: 1rem 1.5rem;
+.send-btn {
+  /* display: inline-block; */
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
   background-image: linear-gradient(to right, #7dd56f, #28b487);
   color: white;
   font-size: 1.2rem;

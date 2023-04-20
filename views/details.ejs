@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Create a new Sighting</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
@@ -19,10 +20,16 @@
           <p>The image is not available.</p>
           <% } %>
         </div>
-        <div class="comment-box">
-          <h2>Comment</h2>
-          <textarea class="my-textarea" id="comment" rows="8"></textarea>
-          <a href="#" class="send-message-btn">Send Message</a>
+
+        <div class="chat-interface">
+          <h2 for="name">Chat</h2>
+          <div id="chat-history" class="history"></div>
+          <form id="chat-form" action="">
+            <p>
+              <textarea id="chat-input" class="chat-input"></textarea>
+              <button class="send-btn">Send</button>
+            </p>
+          </form>
         </div>
       </div>
 
@@ -61,5 +68,30 @@
         </div>
       </div>
     </div>
+
+    <!-- <script>
+      // Connect to the Socket.IO server
+      const socket = io();
+
+      // Get references to the UI elements
+      const form = document.querySelector("#chat-form");
+      const input = document.querySelector("#chat-input");
+      const history = document.querySelector("#chat-history");
+
+      // Handle the form submit event
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const message = input.value;
+        socket.emit("chat message", message); // send message to server
+        input.value = "";
+      });
+
+      // Handle incoming messages from the server
+      socket.on("chat message", (message) => {
+        const li = document.createElement("li");
+        li.textContent = message;
+        messages.appendChild(li);
+      });
+    </script> -->
   </body>
 </html>
