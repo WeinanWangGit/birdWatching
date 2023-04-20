@@ -2,24 +2,39 @@
   margin: 0;
   box-sizing: border-box;
 }
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin: 1rem auto;
-  padding: 5rem;
+  padding: 7rem;
+  font-family: "Lato", sans-serif;
   background: cadetblue;
+
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  .left_container,
+  .right_container {
+    max-width: 100%;
+    margin: 0;
+  }
+  .left_container {
+    margin-bottom: 1rem;
+  }
 }
 
 /* Image and Comment */
 .left_container {
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
+  margin-right: 50px;
+ 
 }
 
 .img_container {
@@ -31,11 +46,12 @@ body {
 }
 .comment-box {
   display: inline-block;
-  margin-top: 1rem;
+  font-style: italic;
 }
 
 .comment-box h2 {
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+
 }
 
 .my-textarea {
@@ -43,6 +59,7 @@ body {
   border-radius: 0.5rem;
   border: 1px solid grey;
   margin-bottom: 1rem;
+  background: rgba(150, 205, 205, 0.95);
 }
 
 .send-message-btn {
@@ -64,14 +81,15 @@ body {
 .right_container {
   display: flex;
   flex-direction: column;
-  margin-left: 2.5rem;
   flex: 1;
   max-width: 50rem;
+  margin-left: 170px;
 }
 
 .identification_container {
   display: inline-block;
   max-width: 100%;
+  font-style: italic;
 }
 
 .identification_container h2 {
@@ -88,6 +106,7 @@ body {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 1rem;
+
 }
 
 .url_label {
@@ -105,31 +124,23 @@ body {
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   border: 1px solid grey;
+  background: rgba(150, 205, 205, 0.95);
+
+
 }
 #birdName {
   height: 3rem;
+
 }
 #url {
   height: 3rem;
+  background: rgba(150, 205, 205, 0.95);
 }
 
 .metadata h2 {
   margin-bottom: 0.5rem;
+  font-style: italic;
 }
 .metadata p {
   margin-bottom: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-  .left_container,
-  .right_container {
-    max-width: 90%;
-    margin: 1rem;
-  }
-  .left_container {
-    margin-bottom: 1rem;
-  }
 }
