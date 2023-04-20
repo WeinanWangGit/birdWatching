@@ -8,9 +8,10 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: 1rem auto;
-  padding: 5rem;
+  padding: 7rem;
   font-family: "Lato", sans-serif;
   background: cadetblue;
+
 }
 
 @media (max-width: 768px) {
@@ -31,6 +32,7 @@
 .left_container {
   display: flex;
   flex-direction: column;
+  margin-left: 5rem ;
 }
 
 .img_container {
@@ -42,10 +44,13 @@
 }
 .comment-box {
   display: inline-block;
+
+
 }
 
 .comment-box h2 {
   margin-top: 1rem;
+
 }
 
 .my-textarea {
@@ -53,6 +58,7 @@
   border-radius: 0.5rem;
   border: 1px solid grey;
   margin-bottom: 1rem;
+  background: rgba(	255,250,250,0.65);
 }
 
 .send-message-btn {
@@ -74,7 +80,7 @@
 .right_container {
   display: flex;
   flex-direction: column;
-  margin-left: 2rem;
+  margin-left: 10rem;
   flex: 1;
   max-width: 50rem;
 }
@@ -115,6 +121,7 @@
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   border: 1px solid grey;
+  background: rgba(	255,250,250,0.65);
 }
 #birdName {
   height: 3rem;
