@@ -46,17 +46,14 @@
 
 /* Chat */
 .chat-interface {
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 .history {
   margin-top: 0.5rem;
 }
-.chat-form {
-  width: 100%;
-}
 .chat-input {
   /* display: inline-block; */
-  width: 80%;
+  width: 100%;
   border-radius: 0.5rem;
   border: 1px solid grey;
   margin-bottom: 1rem;
@@ -66,7 +63,6 @@
 .send-btn {
   /* display: inline-block; */
   padding: 0.5rem 1rem;
-  margin-top: 1rem;
   background-image: linear-gradient(to right, #7dd56f, #28b487);
   color: white;
   font-size: 1.2rem;
