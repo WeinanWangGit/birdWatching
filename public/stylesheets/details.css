@@ -7,11 +7,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /*margin: 1rem auto;*/
-  padding: 8.5rem;
+  padding: 5rem;
   font-family: "Lato", sans-serif;
   background: cadetblue;
-
 }
 
 @media (max-width: 768px) {
@@ -26,15 +24,17 @@
   .left_container {
     margin-bottom: 1rem;
   }
+  .img_container img {
+    max-width: 50%;
+    height: auto;
+  }
 }
 
 /* Image and Comment */
 .left_container {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
-  margin-right: 50px;
- 
+  margin-bottom: 1rem;
 }
 
 .img_container {
@@ -42,16 +42,15 @@
 }
 .img_container img {
   max-width: 100%;
-  height: auto;
 }
+
 .comment-box {
   display: inline-block;
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 .comment-box h2 {
   margin-top: 1rem;
-
 }
 
 .my-textarea {
@@ -83,7 +82,8 @@
   flex-direction: column;
   flex: 1;
   max-width: 50rem;
-  margin-left: 170px;
+  margin-left: 8rem;
+  margin-bottom: 1rem;
 }
 
 .identification_container {
@@ -106,7 +106,6 @@
   display: block;
   margin-bottom: 0.5rem;
   font-size: 1rem;
-
 }
 
 .url_label {
@@ -125,12 +124,9 @@
   border-radius: 0.5rem;
   border: 1px solid grey;
   background: rgba(150, 205, 205, 0.95);
-
-
 }
 #birdName {
   height: 3rem;
-
 }
 #url {
   height: 3rem;

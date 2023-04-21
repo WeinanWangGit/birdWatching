@@ -1,67 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Sighting details</title>
-  <link rel="stylesheet" href=".././stylesheets/details.css" />
-  <%- include('partials/header') %>
-</head>
+  <head>
+    <title>Sighting details</title>
+    <link rel="stylesheet" href=".././stylesheets/details.css" />
+    <%- include('partials/header') %>
+  </head>
 
-<body>
-<div class="container">
-  <div class="left_container">
-    <div class="img_container">
-      <% if (sighting.image) { %>
-        <img
-                src="<%= sighting.image %>"
-                alt="<%= sighting.identification.birdName %> Image"
-                style="width: 50vw; height: 35vh;"
-        />
-      <% } else { %>
-        <p>The image is not available.</p>
-      <% } %>
-    </div>
-    <div class="comment-box">
-      <h2>Comment</h2>
-      <textarea class="my-textarea" id="comment" rows="8"></textarea>
-      <a href="#" class="send-message-btn">Send Message</a>
-    </div>
-  </div>
+  <body>
+    <div class="container">
+      <div class="left_container">
+        <div class="img_container">
+          <% if (sighting.image) { %>
+          <img
+            src="<%= sighting.image %>"
+            alt="<%= sighting.identification.birdName %> Image"
+          />
+          <% } else { %>
+          <p>The image is not available.</p>
+          <% } %>
+        </div>
+        <div class="comment-box">
+          <h2>Comment</h2>
+          <textarea class="my-textarea" id="comment" rows="8"></textarea>
+          <a href="#" class="send-message-btn">Send Message</a>
+        </div>
+      </div>
 
-  <div class="right_container">
-    <div class="identification_container">
-      <h2>Identification Form</h2>
-      <label class="bird_label" for="bird_label">Bird Name:</label>
-      <input
-              type="text"
-              id="birdName"
-              placeholder="bird name"
-              value="<%= sighting.identification.birdName %>"
-      />
+      <div class="right_container">
+        <div class="identification_container">
+          <h2>Identification Form</h2>
+          <label class="bird_label" for="bird_label">Bird Name:</label>
+          <input
+            type="text"
+            id="birdName"
+            placeholder="bird name"
+            value="<%= sighting.identification.birdName %>"
+          />
 
-      <label class="description_label" for="description_label"
-      >Description:</label
-      >
-      <textarea class="desciption_text" id="description" rows="8">
+          <label class="description_label" for="description_label"
+            >Description:</label
+          >
+          <textarea class="desciption_text" id="description" rows="8">
 <%= sighting.identification.description %></textarea
-      >
+          >
 
-      <label class="url_label" for="url">URL:</label>
-      <input
-              type="text"
-              id="url"
-              placeholder="URL"
-              value="<%= sighting.identification.url %>"
-      />
-    </div>
-    <div class="metadata">
-      <h2>Metadata</h2>
-      <p><strong>Date:</strong> <%= sighting.date %></p>
-      <p><strong>Author:</strong> <%= sighting.author %></p>
-      <p><strong>Location:</strong> <%= sighting.location %></p>
+          <label class="url_label" for="url">URL:</label>
+          <input
+            type="text"
+            id="url"
+            placeholder="URL"
+            value="<%= sighting.identification.url %>"
+          />
+        </div>
+        <div class="metadata">
+          <h2>Metadata</h2>
+          <p><strong>Date:</strong> <%= sighting.date %></p>
+          <p><strong>Author:</strong> <%= sighting.author %></p>
+          <p><strong>Location:</strong> <%= sighting.location %></p>
 
-      <p><strong>Description:</strong> <%= sighting.description %></p>
+          <p><strong>Description:</strong> <%= sighting.description %></p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-</body>
+  </body>
 </html>

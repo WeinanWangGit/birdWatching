@@ -1,11 +1,12 @@
 /* Set the height and background color of the header */
 header {
-  background-color: #D3D3D3;
+  background-color: #d3d3d3;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  padding: 1rem;
 }
 
 /* TITLE */
@@ -14,7 +15,7 @@ header {
   margin-left: 2rem;
   font-weight: bold;
 
-  color:#28b487 ;
+  color: #28b487;
   font-style: italic;
 }
 
