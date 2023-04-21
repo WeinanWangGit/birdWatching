@@ -1,5 +1,5 @@
 let name = null;
-// let roomNo = null;
+let roomNo = null;
 let socket = io();
 
 /**
@@ -7,46 +7,49 @@ let socket = io();
  * it initialises the interface and the expected socket messages
  * plus the associated actions
  */
-function init() {
-  document.getElementById("chat-interface");
-  console.log("chat-interface");
+function init(sightingJson) {
+  const sighting = JSON.parse(sightingJson)
+  name = "testName"
+  roomNo = sighting._id;
+  connectToRoom(name, roomNo);
 
   // called when a message is received
-  socket.on("chat message", function (message) {
+  socket.on("chat message", function (roomNo, name, chatText) {
+    var message = name + chatText;
     writeOnHistory("<b>" + message);
   });
 }
 
 /**
- * called when the Send button is pressed.
+ * called when the Send button is pressed. It gets the text to send from the interface
+ * and sends the message via  socket
  */
 function sendChatText() {
-  let input = document.getElementById("chat-input");
-  socket.emit("chat message", input.value);
-  input.value = "";
-
-  // get msg text
-  let chat_input = document.getElementById("chat-input").value;
-  if (chat_input) {
-    console.log(chat_input);
-
-    // emit the msg to server
-    socket.emit("chat", chat_input);
-
-    // reset input value
-    chat_input = "";
-  }
+  let input = document.getElementById('chat_input');
+  socket.emit('chat message', roomNo, name, input.value);
+  input.value = '';
 }
+
+/**
+ * used to connect to a room. It gets
+ * - the user name and room number from the interface using document.getElementById('').value
+ * - uses socket.emit('create or join') to join the room
+ */
+function connectToRoom(name, roomNo) {
+  console.log(name + " join the " + roomNo);
+  socket.emit('create or join', roomNo, name);
+}
+
 
 /**
  * it appends the given html text to the history div
  * @param text: teh text to append
  */
 function writeOnHistory(text) {
-  let history = document.getElementById("chat-history");
+  let history = document.getElementById("chat_history");
   let paragraph = document.createElement("p");
 
   paragraph.innerHTML = text;
   history.appendChild(paragraph); // add a new 'p' to a new history
-  document.getElementById("chat-input").value = ""; // grab the input chat
+  document.getElementById("chat_input").value = ""; // grab the input chat
 }

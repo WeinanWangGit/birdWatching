@@ -45,6 +45,25 @@ function insertSighting(req, res) {
 
 
 
+function updateSighting(sightingTemp) {
+    Sighting.findById(sightingTemp._id, (err, sighting) => {
+        if (err) {
+            console.error(err);
+        } else {
+            sighting.messages.push(sightingTemp.messages[sightingTemp.messages.length - 1]);
+            sighting.save((err, updatedSighting) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log('Sighting updated successfully:', updatedSighting);
+                }
+            });
+        }
+    });
+}
+
+
+
 
 async function getSightingList(req, res) {
     try {
@@ -75,5 +94,6 @@ module.exports = {
     insertSighting,
     getSightingList,
     getSightingById,
+    updateSighting,
     upload
 };

@@ -4,13 +4,13 @@
     <title>Sighting Details</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="../public/javascripts/chat.js"></script>
-
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
 
   <!-- <body> -->
-  <body onload="init()">
+  <body onload="init('<%=JSON.stringify(sighting)%>')">
+
     <div class="container">
       <div class="left_container">
         <div class="img_container">
@@ -24,13 +24,21 @@
           <% } %>
         </div>
 
-        <div class="chat-interface">
+        <div class="chat_interface">
           <h2 for="name">Chat</h2>
-          <div id="chat-history" class="history"></div>
-          <form id="chat-form" onsubmit="return false;">
+          <div id="chat_history" class="history">
+            <% if (sighting && sighting.messages && sighting.messages.length > 0) { %>
+              <% for (var i = 0; i < sighting.messages.length; i++) { %>
+                <p><%= sighting.messages[i] %></p>
+              <% } %>
+            <% } else { %>
+              <p>No messages yet.</p>
+            <% } %>
+          </div>
+          <form id="chat_form" onsubmit="return false;">
             <p>
-              <textarea id="chat-input" class="chat-input"></textarea>
-              <button id="chat-send" class="send-btn" onclick="sendChatText()">
+              <textarea id="chat_input" class="chat_input"></textarea>
+              <button id="chat_send" class="send_btn" onclick="sendChatText()">
                 Send
               </button>
             </p>
@@ -80,9 +88,9 @@
       const socket = io();
 
       // Get references to the UI elements
-      const form = document.querySelector("#chat-form");
-      const input = document.querySelector("#chat-input");
-      const history = document.querySelector("#chat-history");
+      const form = document.querySelector("#chat_form");
+      const input = document.querySelector("#chat_input");
+      const history = document.querySelector("#chat_history");
 
       // Handle the form submit event
       form.addEventListener("submit", (e) => {
