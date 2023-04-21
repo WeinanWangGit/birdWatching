@@ -7,72 +7,72 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="../public/stylesheets/style.css" />
+    <%- include('partials/header_index') %>
   </head>
   <body>
     <div class="container">
-      <header class="header-container clearfix">
-        <h1>Bird Sighting</h1>
-        <div class="toggle-button">
-          <button onclick="toggleGrid()">
-            <i class="fa fa-exchange"></i>
-            <span id="toggle-text">Toggle Grid View</span>
-          </button>
-        </div>
-      </header>
+        <table id="table-view">
+          <thead>
+            <tr>
+              <th>Date/Time</th>
+              <th>Identification</th>
+              <th>User</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <% sightings.forEach(function(sighting) { %>
+            <tr
+              data-id="<%= sighting._id %>"
+              onclick="location.href='/details?id=<%= sighting._id %>'"
+            >
+              <td><%= new Date(sighting.date).toLocaleString() %></td>
+              <td><%= sighting.identification.birdName %></td>
+              <td><%= sighting.author %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
 
-      <table id="table-view">
-        <thead>
-          <tr>
-            <th>Date/Time</th>
-            <th>Identification</th>
-            <th>User</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
+        <div id="grid-view" class="grid-layout" style="display: none">
           <% sightings.forEach(function(sighting) { %>
-          <tr
+          <div
+            class="grid-item"
             data-id="<%= sighting._id %>"
             onclick="location.href='/details?id=<%= sighting._id %>'"
           >
-            <td><%= new Date(sighting.date).toLocaleString() %></td>
-            <td><%= sighting.identification.birdName %></td>
-            <td><%= sighting.author %></td>
-          </tr>
+            <img
+              src="<%= sighting.image %>"
+              alt="Bird image"
+              style="max-width: 100%"
+            />
+            <p>
+              <strong>Date/Time: </strong><%= new
+              Date(sighting.date).toLocaleString() %>
+            </p>
+            <p>
+              <strong>Identification: </strong><%=
+              sighting.identification.birdName %>
+            </p>
+            <p><strong>User: </strong><%= sighting.author %></p>
+          </div>
           <% }); %>
-        </tbody>
-      </table>
-
-      <div id="grid-view" class="grid-layout" style="display: none">
-        <% sightings.forEach(function(sighting) { %>
-        <div
-          class="grid-item"
-          data-id="<%= sighting._id %>"
-          onclick="location.href='/details?id=<%= sighting._id %>'"
-        >
-          <img
-            src="<%= sighting.image %>"
-            alt="Bird image"
-            style="max-width: 100%"
-          />
-          <p>
-            <strong>Date/Time: </strong><%= new
-            Date(sighting.date).toLocaleString() %>
-          </p>
-          <p>
-            <strong>Identification: </strong><%=
-            sighting.identification.birdName %>
-          </p>
-          <p><strong>User: </strong><%= sighting.author %></p>
         </div>
-        <% }); %>
-      </div>
 
-      <div class="add-button">
-        <button onclick="location.href='/create'">
-          <i class="fa fa-plus-circle"></i> Add New Sighting
-        </button>
-      </div>
+        <div class="header-container clearfix">
+          <div class="toggle-button">
+            <button onclick="toggleGrid()">
+              <i class="fa fa-exchange"></i>
+              <span id="toggle-text">Toggle Grid View</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="add-button">
+          <button onclick="location.href='/create'">
+            <i class="fa fa-plus-circle"></i> Add New Sighting
+          </button>
+        </div>
     </div>
 
     <script>

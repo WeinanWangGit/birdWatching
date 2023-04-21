@@ -1,6 +1,11 @@
+* {
+  margin: 0;
+}
+
+
 body {
-  padding: 3rem;
-  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1.5rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: cadetblue;
 }
 
 a {
@@ -12,36 +17,40 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 60vh;
   overflow-x: auto;
+
 }
 
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+/*.header-container {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: space-between;*/
+/*}*/
 
-h1 {
-  font-size: 1.8rem;
-}
+/*h1 {*/
+/*  !*font-size: 1.8rem;*!*/
+/*}*/
 
+.toggle-button {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
 .toggle-button button {
-  display: inline-block;
-  margin-left: 2rem;
-  margin-right: 0;
-
-  padding: 0.25rem 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  color: white;
   border: none;
+  border-radius: 0.5rem;
   cursor: pointer;
-  background-color: #ddd;
-  border: 0.05rem solid black;
+  background-image: linear-gradient(to left, #7dd56f, #28b487);
 }
 
 table {
   width: 50%;
   border-collapse: collapse;
-  border: 0.05rem solid #4caf50;
+  /*border: 0.3rem solid #4caf50;*/
   border-radius: 0.5rem;
 }
 
@@ -80,12 +89,13 @@ td input[type="text"] {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   grid-gap: 1rem;
+  margin: 10px;
 }
 
 .grid-item {
   background-color: #f9f9f9;
   /* border: 0.05rem solid #4caf50; */
-  padding: 1rem;
+  /*padding: 1rem;*/
   text-align: center;
   font-size: 1rem;
 }
