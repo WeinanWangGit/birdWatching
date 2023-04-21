@@ -2,24 +2,39 @@
   margin: 0;
   box-sizing: border-box;
 }
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 1rem auto;
   padding: 5rem;
+  font-family: "Lato", sans-serif;
   background: cadetblue;
 }
 
-/* Image */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  .left_container,
+  .right_container {
+    max-width: 100%;
+    margin: 0;
+  }
+  .left_container {
+    margin-bottom: 1rem;
+  }
+  .img_container img {
+    max-width: 50%;
+    height: auto;
+  }
+}
+
+/* Image and Chat */
 .left_container {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .img_container {
@@ -27,7 +42,6 @@ body {
 }
 .img_container img {
   max-width: 100%;
-  height: auto;
 }
 
 /* Chat */
@@ -45,6 +59,8 @@ body {
   width: 80%;
   border-radius: 0.5rem;
   border: 1px solid grey;
+  margin-bottom: 1rem;
+  background: rgba(150, 205, 205, 0.95);
 }
 
 .send-btn {
@@ -67,14 +83,16 @@ body {
 .right_container {
   display: flex;
   flex-direction: column;
-  margin-left: 2.5rem;
   flex: 1;
   max-width: 50rem;
+  margin-left: 8rem;
+  margin-bottom: 1rem;
 }
 
 .identification_container {
   display: inline-block;
   max-width: 100%;
+  font-style: italic;
 }
 
 .identification_container h2 {
@@ -108,31 +126,20 @@ body {
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   border: 1px solid grey;
+  background: rgba(150, 205, 205, 0.95);
 }
 #birdName {
   height: 3rem;
 }
 #url {
   height: 3rem;
+  background: rgba(150, 205, 205, 0.95);
 }
 
 .metadata h2 {
   margin-bottom: 0.5rem;
+  font-style: italic;
 }
 .metadata p {
   margin-bottom: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-  .left_container,
-  .right_container {
-    max-width: 90%;
-    margin: 1rem;
-  }
-  .left_container {
-    margin-bottom: 1rem;
-  }
 }

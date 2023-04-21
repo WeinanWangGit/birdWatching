@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Create a new Sighting</title>
+    <title>Sighting Details</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
@@ -64,6 +64,7 @@
           <p><strong>Date:</strong> <%= sighting.date %></p>
           <p><strong>Author:</strong> <%= sighting.author %></p>
           <p><strong>Location:</strong> <%= sighting.location %></p>
+
           <p><strong>Description:</strong> <%= sighting.description %></p>
         </div>
       </div>
