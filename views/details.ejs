@@ -3,14 +3,17 @@
   <head>
     <title>Sighting Details</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="../public/javascripts/index.js"></script>
+
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
 
-  <body>
+  <!-- <body> -->
+  <body onload="init()">
     <div class="container">
       <div class="left_container">
-        <div class="img_container">
+        <!-- <div class="img_container">
           <% if (sighting.image) { %>
           <img
             src="<%= sighting.image %>"
@@ -19,7 +22,7 @@
           <% } else { %>
           <p>The image is not available.</p>
           <% } %>
-        </div>
+        </div> -->
 
         <!-- <div class="chat-interface">
           <h2>Chat</h2>
@@ -30,10 +33,13 @@
         <div class="chat-interface">
           <h2 for="name">Chat</h2>
           <div id="chat-history" class="history"></div>
-          <form id="chat-form" action="">
+          <form id="chat-form">
             <p>
               <textarea id="chat-input" class="chat-input"></textarea>
-              <button class="send-btn">Send</button>
+              <!-- <button class="send-btn">Send</button> -->
+              <button id="chat-send" class="send-btn" onclick="sendChatText()">
+                Send
+              </button>
             </p>
           </form>
         </div>
@@ -97,8 +103,8 @@
       socket.on("chat message", (message) => {
         const li = document.createElement("li");
         li.textContent = message;
-        messages.appendChild(li);
+        history.appendChild(li);
       });
-    </script> -->
+    </> -->
   </body>
 </html>
