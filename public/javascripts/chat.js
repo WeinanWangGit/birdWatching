@@ -9,7 +9,8 @@ let socket = io();
  */
 function init(sightingJson) {
   const sighting = JSON.parse(sightingJson)
-  name = "testName"
+  const username = sessionStorage.getItem("username");
+  name = username
   roomNo = sighting._id;
   connectToRoom(name, roomNo);
 

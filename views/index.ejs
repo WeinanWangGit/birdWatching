@@ -2,6 +2,21 @@
 <html>
   <head>
     <title>Bird Sighting</title>
+    <script>
+      // Ask for username and save to sessionStorage
+      const username = sessionStorage.getItem("username");
+      if (!username) {
+        const username = prompt("Please enter your username:");
+        sessionStorage.setItem("username", username);
+      }
+      // Validate username
+      const MAX_LENGTH = 20;
+      console.log(username)
+      if (!username || username.length > MAX_LENGTH) {
+        window.location.href = "/error";
+        window.close();
+      }
+    </script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
