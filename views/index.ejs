@@ -5,18 +5,22 @@
     <script>
       // Ask for username and save to sessionStorage
       const username = sessionStorage.getItem("username");
-      if (!username) {
-        const username = prompt("Please enter your username:");
-        sessionStorage.setItem("username", username);
-      }
-      // Validate username
       const MAX_LENGTH = 20;
-      console.log(username)
-      if (!username || username.length > MAX_LENGTH) {
-        window.location.href = "/error";
-        window.close();
+
+      if (!username) {
+        let isValid = false;
+        while (!isValid) {
+          const username = prompt(
+            "Please enter your username (no more than 20 characters):"
+          );
+          if (username && username.length <= MAX_LENGTH) {
+            sessionStorage.setItem("username", username);
+            isValid = true;
+          }
+        }
       }
     </script>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -26,68 +30,68 @@
   </head>
   <body>
     <div class="container">
-        <table id="table-view">
-          <thead>
-            <tr>
-              <th>Date/Time</th>
-              <th>Identification</th>
-              <th>User</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <% sightings.forEach(function(sighting) { %>
-            <tr
-              data-id="<%= sighting._id %>"
-              onclick="location.href='/details?id=<%= sighting._id %>'"
-            >
-              <td><%= new Date(sighting.date).toLocaleString() %></td>
-              <td><%= sighting.identification.birdName %></td>
-              <td><%= sighting.author %></td>
-            </tr>
-            <% }); %>
-          </tbody>
-        </table>
-
-        <div id="grid-view" class="grid-layout" style="display: none">
+      <table id="table-view">
+        <thead>
+          <tr>
+            <th>Date/Time</th>
+            <th>Identification</th>
+            <th>User</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
           <% sightings.forEach(function(sighting) { %>
-          <div
-            class="grid-item"
+          <tr
             data-id="<%= sighting._id %>"
             onclick="location.href='/details?id=<%= sighting._id %>'"
           >
-            <img
-              src="<%= sighting.image %>"
-              alt="Bird image"
-              style="max-width: 100%"
-            />
-            <p>
-              <strong>Date/Time: </strong><%= new
-              Date(sighting.date).toLocaleString() %>
-            </p>
-            <p>
-              <strong>Identification: </strong><%=
-              sighting.identification.birdName %>
-            </p>
-            <p><strong>User: </strong><%= sighting.author %></p>
-          </div>
+            <td><%= new Date(sighting.date).toLocaleString() %></td>
+            <td><%= sighting.identification.birdName %></td>
+            <td><%= sighting.author %></td>
+          </tr>
           <% }); %>
-        </div>
+        </tbody>
+      </table>
 
-        <div class="header-container clearfix">
-          <div class="toggle-button">
-            <button onclick="toggleGrid()">
-              <i class="fa fa-exchange"></i>
-              <span id="toggle-text">Toggle Grid View</span>
-            </button>
-          </div>
+      <div id="grid-view" class="grid-layout" style="display: none">
+        <% sightings.forEach(function(sighting) { %>
+        <div
+          class="grid-item"
+          data-id="<%= sighting._id %>"
+          onclick="location.href='/details?id=<%= sighting._id %>'"
+        >
+          <img
+            src="<%= sighting.image %>"
+            alt="Bird image"
+            style="max-width: 100%"
+          />
+          <p>
+            <strong>Date/Time: </strong><%= new
+            Date(sighting.date).toLocaleString() %>
+          </p>
+          <p>
+            <strong>Identification: </strong><%=
+            sighting.identification.birdName %>
+          </p>
+          <p><strong>User: </strong><%= sighting.author %></p>
         </div>
+        <% }); %>
+      </div>
 
-        <div class="add-button">
-          <button onclick="location.href='/create'">
-            <i class="fa fa-plus-circle"></i> Add New Sighting
+      <div class="header-container clearfix">
+        <div class="toggle-button">
+          <button onclick="toggleGrid()">
+            <i class="fa fa-exchange"></i>
+            <span id="toggle-text">Toggle Grid View</span>
           </button>
         </div>
+      </div>
+
+      <div class="add-button">
+        <button onclick="location.href='/create'">
+          <i class="fa fa-plus-circle"></i> Add New Sighting
+        </button>
+      </div>
     </div>
 
     <script>
