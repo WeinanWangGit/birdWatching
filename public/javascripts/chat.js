@@ -8,15 +8,15 @@ let socket = io();
  * plus the associated actions
  */
 function init(sightingJson) {
-  const sighting = JSON.parse(sightingJson)
+  const sighting = JSON.parse(sightingJson);
   const username = sessionStorage.getItem("username");
-  name = username
+  name = username;
   roomNo = sighting._id;
   connectToRoom(name, roomNo);
 
   // called when a message is received
   socket.on("chat message", function (roomNo, name, chatText) {
-    var message = name + chatText;
+    var message = name + ": " + chatText;
     writeOnHistory("<b>" + message);
   });
 }
@@ -26,9 +26,9 @@ function init(sightingJson) {
  * and sends the message via  socket
  */
 function sendChatText() {
-  let input = document.getElementById('chat_input');
-  socket.emit('chat message', roomNo, name, input.value);
-  input.value = '';
+  let input = document.getElementById("chat_input");
+  socket.emit("chat message", roomNo, name, input.value);
+  input.value = "";
 }
 
 /**
@@ -38,9 +38,8 @@ function sendChatText() {
  */
 function connectToRoom(name, roomNo) {
   console.log(name + " join the " + roomNo);
-  socket.emit('create or join', roomNo, name);
+  socket.emit("create or join", roomNo, name);
 }
-
 
 /**
  * it appends the given html text to the history div

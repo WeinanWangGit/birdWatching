@@ -34,10 +34,23 @@ const SightingSchema = new mongoose.Schema({
   image: {
     type: Buffer,
   },
-  messages: {
-    type: [String], // string array
-    default: [], // default empty array
-  },
+  // messages: {
+  //   type: [String], // string array
+  //   default: [], // default empty array
+  // },
+
+  messages: [
+    {
+      text: {
+        type: [String],
+        default: [],
+      },
+      sentAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Sighting", SightingSchema);
