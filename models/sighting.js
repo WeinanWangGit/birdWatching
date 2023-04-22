@@ -8,6 +8,8 @@ const SightingSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
+    default: Date.now,
+    get: (v) => v.toDateString(), // convert Date object to string
     required: true,
   },
   author: {

@@ -7,26 +7,38 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 5rem;
   font-family: "Lato", sans-serif;
   background: cadetblue;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 5rem;
   }
-  .left_container,
-  .right_container {
+  .left_container {
     max-width: 100%;
-    margin: 0;
+  }
+  .right_container {
+    max-width: 50%;
+    margin-left: 6rem;
   }
   .left_container {
     margin-bottom: 1rem;
   }
-  .img_container img {
-    max-width: 50%;
-    height: auto;
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .left_container,
+  .right_container {
+    max-width: 100%;
+  }
+  .left_container {
+    margin-bottom: 1rem;
   }
 }
 
@@ -52,7 +64,7 @@
 .history {
   margin-top: 0.5rem;
   width: 100%;
-  height: 5rem;
+  height: 10rem;
   overflow-x: hidden;
   overflow-y: auto;
   text-align: justify;
@@ -69,7 +81,6 @@
 .send-btn {
   /* display: inline-block; */
   padding: 0.5rem 1rem;
-  background-image: linear-gradient(to right, #7dd56f, #28b487);
   color: white;
   font-size: 1.2rem;
   border-radius: 0.5rem;
@@ -77,28 +88,26 @@
   text-decoration: none;
 }
 
-.send-message-btn:hover {
-  background-image: linear-gradient(to left, #7dd56f, #28b487);
-}
-
 /* Identification and Metadata */
 .right_container {
   display: flex;
   flex-direction: column;
   flex: 1;
-  max-width: 50rem;
-  margin-left: 8rem;
   margin-bottom: 1rem;
-}
-
-.identification_container {
-  display: inline-block;
-  max-width: 100%;
-  font-style: italic;
 }
 
 .identification_container h2 {
   margin-bottom: 0.5rem;
+}
+
+.update-btn {
+  padding: 0.5rem 1rem;
+  color: white;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 1rem;
 }
 
 .description_label {
@@ -123,7 +132,7 @@
 #url,
 #birdName {
   height: 10rem;
-  width: 80%;
+  width: 100%;
   font-size: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.5rem;
@@ -140,7 +149,6 @@
 
 .metadata h2 {
   margin-bottom: 0.5rem;
-  font-style: italic;
 }
 .metadata p {
   margin-bottom: 0.5rem;

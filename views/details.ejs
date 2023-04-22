@@ -10,7 +10,6 @@
 
   <!-- <body> -->
   <body onload="init('<%=JSON.stringify(sighting)%>')">
-
     <div class="container">
       <div class="left_container">
         <div class="img_container">
@@ -27,12 +26,11 @@
         <div class="chat_interface">
           <h2 for="name">Chat</h2>
           <div id="chat_history" class="history">
-            <% if (sighting && sighting.messages && sighting.messages.length > 0) { %>
-              <% for (var i = 0; i < sighting.messages.length; i++) { %>
-                <p><%= sighting.messages[i] %></p>
-              <% } %>
-            <% } else { %>
-              <p>No messages yet.</p>
+            <% if (sighting && sighting.messages && sighting.messages.length >
+            0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
+            <p><%= sighting.messages[i] %></p>
+            <% } %> <% } else { %>
+            <p>No messages yet.</p>
             <% } %>
           </div>
           <form id="chat_form" onsubmit="return false;">
@@ -49,6 +47,8 @@
       <div class="right_container">
         <div class="identification_container">
           <h2>Identification Form</h2>
+          <button id="update-btn" class="update-btn">Update</button>
+
           <label class="bird_label" for="bird_label">Bird Name:</label>
           <input
             type="text"
@@ -56,14 +56,13 @@
             placeholder="bird name"
             value="<%= sighting.identification.birdName %>"
           />
-
           <label class="description_label" for="description_label"
             >Description:</label
           >
-          <textarea class="desciption_text" id="description" rows="8">
-<%= sighting.identification.description %></textarea
+          <textarea class="desciption_text" id="description">
+<%= sighting.identification.description %>
+        </textarea
           >
-
           <label class="url_label" for="url">URL:</label>
           <input
             type="text"
@@ -72,40 +71,15 @@
             value="<%= sighting.identification.url %>"
           />
         </div>
+
         <div class="metadata">
           <h2>Metadata</h2>
           <p><strong>Date:</strong> <%= sighting.date %></p>
           <p><strong>Author:</strong> <%= sighting.author %></p>
           <p><strong>Location:</strong> <%= sighting.location %></p>
-
           <p><strong>Description:</strong> <%= sighting.description %></p>
         </div>
       </div>
     </div>
-
-    <!-- <script>
-      // Connect to the Socket.IO server
-      const socket = io();
-
-      // Get references to the UI elements
-      const form = document.querySelector("#chat_form");
-      const input = document.querySelector("#chat_input");
-      const history = document.querySelector("#chat_history");
-
-      // Handle the form submit event
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const message = input.value;
-        socket.emit("chat message", message); // send message to server
-        input.value = "";
-      });
-
-      // Handle incoming messages from the server
-      socket.on("chat message", (message) => {
-        const li = document.createElement("li");
-        li.textContent = message;
-        history.appendChild(li);
-      });
-    </> -->
   </body>
 </html>
