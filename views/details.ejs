@@ -4,6 +4,8 @@
     <title>Sighting Details</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="../public/javascripts/chat.js"></script>
+    <!-- <script src="../public/javascripts/identification.js"></script> -->
+
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
@@ -50,26 +52,30 @@
           <button id="update-btn" class="update-btn">Update</button>
 
           <label class="bird_label" for="bird_label">Bird Name:</label>
-          <input
-            type="text"
-            id="birdName"
-            placeholder="bird name"
-            value="<%= sighting.identification.birdName %>"
-          />
+          <div id="birdName"><%= sighting.identification.birdName %></div>
           <label class="description_label" for="description_label"
             >Description:</label
           >
-          <textarea class="desciption_text" id="description">
-<%= sighting.identification.description %>
-        </textarea
-          >
+          <div id="description"><%= sighting.identification.description %></div>
           <label class="url_label" for="url">URL:</label>
-          <input
-            type="text"
-            id="url"
-            placeholder="URL"
-            value="<%= sighting.identification.url %>"
-          />
+          <div id="url"><%= sighting.identification.url %></div>
+        </div>
+
+        <!-- Modal dialog box -->
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <h2>Edit Identification</h2>
+            <label for="modal-bird-name">Bird Name:</label>
+            <input type="text" id="modal-bird-name" />
+            <label for="modal-description">Description:</label>
+            <textarea id="modal-description"></textarea>
+            <label for="modal-url">URL:</label>
+            <input type="text" id="modal-url" />
+            <div class="modal-buttons">
+              <button id="save-btn">Save</button>
+              <button id="cancel-btn">Cancel</button>
+            </div>
+          </div>
         </div>
 
         <div class="metadata">
@@ -81,5 +87,73 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const updateBtn = document.getElementById("update-btn");
+      const modal = document.getElementById("modal");
+      const saveBtn = document.getElementById("save-btn");
+      const cancelBtn = document.getElementById("cancel-btn");
+
+      updateBtn.addEventListener("click", () => {
+        // Show modal dialog box
+        modal.style.display = "block";
+
+        // Get input fields and populate them with current values
+        const birdNameDiv = document.getElementById("birdName");
+        const descriptionDiv = document.getElementById("description");
+        const urlDiv = document.getElementById("url");
+        const modalBirdNameInput = document.getElementById("modal-bird-name");
+        const modalDescriptionTextarea =
+          document.getElementById("modal-description");
+        const modalUrlInput = document.getElementById("modal-url");
+
+        modalBirdNameInput.value = birdNameDiv.innerText;
+        modalDescriptionTextarea.value = descriptionDiv.innerText;
+        modalUrlInput.value = urlDiv.innerText;
+      });
+
+      saveBtn.addEventListener("click", () => {
+        // Get input fields and read their values
+        const modalBirdNameInput = document.getElementById("modal-bird-name");
+        const modalDescriptionTextarea =
+          document.getElementById("modal-description");
+        const modalUrlInput = document.getElementById("modal-url");
+
+        // Get original read-only fields and update their values
+        const birdNameDiv = document.getElementById("birdName");
+        const descriptionDiv = document.getElementById("description");
+        const urlDiv = document.getElementById("url");
+
+        birdNameDiv.textContent = modalBirdNameInput.value;
+        descriptionDiv.textContent = modalDescriptionTextarea.value;
+        urlDiv.textContent = modalUrlInput.value;
+
+        // Hide modal dialog box
+        modal.style.display = "none";
+      });
+
+      cancelBtn.addEventListener("click", () => {
+        // Hide modal dialog box
+        modal.style.display = "none";
+
+        // Show read-only fields and hide input fields
+        const birdNameInput = document.getElementById("birdName");
+        const descriptionTextarea = document.getElementById("description");
+        const urlInput = document.getElementById("url");
+
+        birdNameInput.style.display = "block";
+        descriptionTextarea.style.display = "block";
+        urlInput.style.display = "block";
+
+        const modalBirdNameInput = document.getElementById("modal-bird-name");
+        const modalDescriptionTextarea =
+          document.getElementById("modal-description");
+        const modalUrlInput = document.getElementById("modal-url");
+
+        modalBirdNameInput.value = "";
+        modalDescriptionTextarea.value = "";
+        modalUrlInput.value = "";
+      });
+    </script>
   </body>
 </html>
