@@ -63,13 +63,15 @@
             <input type="file" id="image" name="image" />
           </div>
 
-          <button type="submit">
+          <button type="submit" class="create-btn">
             <i class="fa fa-plus-circle"></i> Create
           </button>
         </div>
       </form>
 
       <script>
+        const username = sessionStorage.getItem("username");
+
         document.addEventListener("DOMContentLoaded", () => {
           const form = document.getElementById("sighting-form");
 
@@ -79,7 +81,7 @@
             const data = {
               description: document.getElementById("description").value,
               date: document.getElementById("date").value,
-              author: document.getElementById("author").value,
+              author: username,
               location: document.getElementById("location").value,
               identification: document.getElementById("identification").value,
               birdName: document.getElementById("bird-name").value,

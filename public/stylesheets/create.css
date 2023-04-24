@@ -84,6 +84,11 @@ textarea {
   /* resize: vertical; */
   max-width: 100%;
 }
+.create-btn {
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  width: 100%;
+}
 
 /* Adjust layout for small screens */
 @media screen and (max-width: 768px) {
