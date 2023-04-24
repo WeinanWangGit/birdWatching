@@ -2,24 +2,34 @@
 <html>
   <head>
     <title>Bird Sighting</title>
+    <script>
+      // Ask for username and save to sessionStorage
+      const username = sessionStorage.getItem("username");
+      const MAX_LENGTH = 20;
+
+      if (!username) {
+        let isValid = false;
+        while (!isValid) {
+          const username = prompt(
+            "Please enter your username (no more than 20 characters):"
+          );
+          if (username && username.length <= MAX_LENGTH) {
+            sessionStorage.setItem("username", username);
+            isValid = true;
+          }
+        }
+      }
+    </script>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="../public/stylesheets/style.css" />
+    <%- include('partials/header_index') %>
   </head>
   <body>
     <div class="container">
-      <header class="header-container clearfix">
-        <h1>Bird Sighting</h1>
-        <div class="toggle-button">
-          <button onclick="toggleGrid()">
-            <i class="fa fa-exchange"></i>
-            <span id="toggle-text">Toggle Grid View</span>
-          </button>
-        </div>
-      </header>
-
       <table id="table-view">
         <thead>
           <tr>
@@ -66,6 +76,15 @@
           <p><strong>User: </strong><%= sighting.author %></p>
         </div>
         <% }); %>
+      </div>
+
+      <div class="header-container clearfix">
+        <div class="toggle-button">
+          <button onclick="toggleGrid()">
+            <i class="fa fa-exchange"></i>
+            <span id="toggle-text">Toggle Grid View</span>
+          </button>
+        </div>
       </div>
 
       <div class="add-button">

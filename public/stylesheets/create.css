@@ -4,7 +4,6 @@
 }
 
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -18,13 +17,17 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  /*margin: 1rem auto;*/
   padding: 3rem;
+  background: cadetblue;
+
+
 }
 
 .title-container {
   margin-bottom: 1rem;
   text-align: center;
+
 }
 
 .sighting-form {
@@ -67,6 +70,7 @@ input[type="datetime-local"] {
   font-size: 1.2rem;
   max-width: 100%;
   flex-basis: 70%; /* adjust as needed */
+  background: rgba(150, 205, 205, 0.95);
 }
 
 .input-container {
@@ -84,6 +88,7 @@ textarea {
   font-size: 1.2rem;
   /* resize: vertical; */
   max-width: 100%;
+  background: rgba(150, 205, 205, 0.95);
 }
 
 /* Adjust layout for small screens */
