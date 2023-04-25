@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Create a new Sighting</title>
+    <title>Sighting Details</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="../public/javascripts/chat.js"></script>
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
 
-  <body>
+  <!-- <body> -->
+  <body onload="init('<%=JSON.stringify(sighting)%>')">
     <div class="container">
       <div class="left_container">
         <div class="img_container">
@@ -14,16 +17,41 @@
           <img
             src="<%= sighting.image %>"
             alt="<%= sighting.identification.birdName %> Image"
-            style="width: 12.5vw; height: 12.5vh;"
           />
           <% } else { %>
           <p>The image is not available.</p>
           <% } %>
         </div>
-        <div class="comment-box">
-          <h2>Comment</h2>
-          <textarea class="my-textarea" id="comment" rows="8"></textarea>
-          <a href="#" class="send-message-btn">Send Message</a>
+
+        <div class="chat_interface">
+          <h2 for="name">Chat</h2>
+          <div id="chat_history" class="history">
+            <!-- <% if (sighting && sighting.messages && sighting.messages.length >
+            0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
+            <p><%= sighting.messages[i].text %></p>
+            <% } %> <% } else { %>
+            <p>No messages yet.</p>
+            <% } %> -->
+            <% if (sighting && sighting.messages && sighting.messages.length >
+            0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
+            <div class="message">
+              <div class="message-text"><%= sighting.messages[i].text %></div>
+              <div class="message-sentAt">
+                <%= new Date(sighting.messages[i].sentAt).toLocaleString() %>
+              </div>
+            </div>
+            <% } %> <% } else { %>
+            <p>No messages yet.</p>
+            <% } %>
+          </div>
+          <form id="chat_form" onsubmit="return false;">
+            <p>
+              <textarea id="chat_input" class="chat_input"></textarea>
+              <button id="chat_send" class="send_btn" onclick="sendChatText()">
+                Send
+              </button>
+            </p>
+          </form>
         </div>
       </div>
 
@@ -58,9 +86,35 @@
           <p><strong>Date:</strong> <%= sighting.date %></p>
           <p><strong>Author:</strong> <%= sighting.author %></p>
           <p><strong>Location:</strong> <%= sighting.location %></p>
+
           <p><strong>Description:</strong> <%= sighting.description %></p>
         </div>
       </div>
     </div>
+
+    <!-- <script>
+      // Connect to the Socket.IO server
+      const socket = io();
+
+      // Get references to the UI elements
+      const form = document.querySelector("#chat_form");
+      const input = document.querySelector("#chat_input");
+      const history = document.querySelector("#chat_history");
+
+      // Handle the form submit event
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const message = input.value;
+        socket.emit("chat message", message); // send message to server
+        input.value = "";
+      });
+
+      // Handle incoming messages from the server
+      socket.on("chat message", (message) => {
+        const li = document.createElement("li");
+        li.textContent = message;
+        history.appendChild(li);
+      });
+    </> -->
   </body>
 </html>
