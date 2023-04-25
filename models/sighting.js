@@ -1,5 +1,20 @@
 const mongoose = require("mongoose");
 
+// Define a shema for Identification
+const IdentificationSchema = new mongoose.Schema({
+  birdName: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  url: {
+    type: String,
+  },
+});
+
 // Define a Mongoose schema for the bird sighting data
 const SightingSchema = new mongoose.Schema({
   description: {
@@ -20,18 +35,22 @@ const SightingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // identification: {
+  //   birdName: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   description: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   url: {
+  //     type: String,
+  //   },
+  // },
   identification: {
-    birdName: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-    },
+    type: IdentificationSchema,
+    required: true,
   },
   image: {
     type: Buffer,

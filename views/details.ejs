@@ -89,70 +89,53 @@
     </div>
 
     <script>
+      // Update Identification
       const updateBtn = document.getElementById("update-btn");
       const modal = document.getElementById("modal");
+      const modalBirdName = document.getElementById("modal-bird-name");
+      const modalDescription = document.getElementById("modal-description");
+      const modalUrl = document.getElementById("modal-url");
       const saveBtn = document.getElementById("save-btn");
       const cancelBtn = document.getElementById("cancel-btn");
 
       updateBtn.addEventListener("click", () => {
-        // Show modal dialog box
+        modalBirdName.value = document.getElementById("birdName").innerText;
+        modalDescription.value =
+          document.getElementById("description").innerText;
+        modalUrl.value = document.getElementById("url").innerText;
+
         modal.style.display = "block";
-
-        // Get input fields and populate them with current values
-        const birdNameDiv = document.getElementById("birdName");
-        const descriptionDiv = document.getElementById("description");
-        const urlDiv = document.getElementById("url");
-        const modalBirdNameInput = document.getElementById("modal-bird-name");
-        const modalDescriptionTextarea =
-          document.getElementById("modal-description");
-        const modalUrlInput = document.getElementById("modal-url");
-
-        modalBirdNameInput.value = birdNameDiv.innerText;
-        modalDescriptionTextarea.value = descriptionDiv.innerText;
-        modalUrlInput.value = urlDiv.innerText;
-      });
-
-      saveBtn.addEventListener("click", () => {
-        // Get input fields and read their values
-        const modalBirdNameInput = document.getElementById("modal-bird-name");
-        const modalDescriptionTextarea =
-          document.getElementById("modal-description");
-        const modalUrlInput = document.getElementById("modal-url");
-
-        // Get original read-only fields and update their values
-        const birdNameDiv = document.getElementById("birdName");
-        const descriptionDiv = document.getElementById("description");
-        const urlDiv = document.getElementById("url");
-
-        birdNameDiv.textContent = modalBirdNameInput.value;
-        descriptionDiv.textContent = modalDescriptionTextarea.value;
-        urlDiv.textContent = modalUrlInput.value;
-
-        // Hide modal dialog box
-        modal.style.display = "none";
       });
 
       cancelBtn.addEventListener("click", () => {
-        // Hide modal dialog box
         modal.style.display = "none";
+      });
 
-        // Show read-only fields and hide input fields
-        const birdNameInput = document.getElementById("birdName");
-        const descriptionTextarea = document.getElementById("description");
-        const urlInput = document.getElementById("url");
+      saveBtn.addEventListener("click", async () => {
+        const sightingId = "<%= sighting._id %>";
+        const birdName = modalBirdName.value;
+        const description = modalDescription.value;
+        const url = modalUrl.value;
 
-        birdNameInput.style.display = "block";
-        descriptionTextarea.style.display = "block";
-        urlInput.style.display = "block";
+        const response = await fetch(`/details?id=${sightingId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            identification: {
+              birdName,
+              description,
+              url,
+            },
+          }),
+        });
 
-        const modalBirdNameInput = document.getElementById("modal-bird-name");
-        const modalDescriptionTextarea =
-          document.getElementById("modal-description");
-        const modalUrlInput = document.getElementById("modal-url");
-
-        modalBirdNameInput.value = "";
-        modalDescriptionTextarea.value = "";
-        modalUrlInput.value = "";
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error("Failed to update identification data");
+        }
       });
     </script>
   </body>
