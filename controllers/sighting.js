@@ -99,10 +99,32 @@ async function getSightingById(id) {
   }
 }
 
+async function getSightingByIdAndUpdate(id, identification) {
+  try {
+    const updatedSighting = await Sighting.findByIdAndUpdate(
+      id,
+      {
+        // $set: {
+        //   "identification.birdName": identification.birdName,
+        //   "identification.description": identification.description,
+        //   "identification.url": identification.url,
+        // },
+        $set: { identification: identification },
+      },
+      { new: true }
+    );
+    return updatedSighting;
+  } catch (err) {
+    console.error(`Error getting sighting by ID: ${err}`);
+    throw err;
+  }
+}
+
 module.exports = {
   insertSighting,
   getSightingList,
   getSightingById,
+  getSightingByIdAndUpdate,
   updateSighting,
   upload,
 };
