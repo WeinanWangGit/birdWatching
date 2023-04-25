@@ -44,6 +44,10 @@
   margin-top: 2rem;
   margin-bottom: 1rem;
   max-width: 40rem;
+
+  background-color: #f8f9fa;
+  padding: 1rem;
+  /* text-align: center; */
 }
 .history {
   margin-top: 0.5rem;
@@ -51,18 +55,40 @@
   height: 10rem;
   overflow-x: hidden;
   overflow-y: auto;
-  text-align: justify;
-  background: rgba(150, 205, 205, 0.95);
+  background-color: #e9ecef;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+}
+.message {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.message-text {
+  background-color: #fff;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  max-width: 80%;
+  word-wrap: break-word;
+  margin-right: 0.6rem;
+}
+
+.message-sentAt {
+  font-size: 0.8rem;
+  color: #aaa;
 }
 .chat_input {
   /* display: inline-block; */
   width: 100%;
   border-radius: 0.5rem;
   border: 1px solid grey;
-  background: rgba(150, 205, 205, 0.95);
+  background: #f1f1f1;
+  margin-bottom: 1rem;
 }
 
-.send-btn {
+.send_btn {
   /* display: inline-block; */
   padding: 0.5rem 1rem;
   color: white;

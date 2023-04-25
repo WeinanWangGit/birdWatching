@@ -42,22 +42,41 @@ function insertSighting(req, res) {
   });
 }
 
-function updateSighting(sightingTemp) {
-  Sighting.findById(sightingTemp._id, (err, sighting) => {
+// function updateSighting(sightingTemp) {
+//     Sighting.findById(sightingTemp._id, (err, sighting) => {
+//         if (err) {
+//             console.error(err);
+//         } else {
+//             sighting.messages.push(sightingTemp.messages[sightingTemp.messages.length - 1]);
+//             sighting.save((err, updatedSighting) => {
+//                 if (err) {
+//                     console.error(err);
+//                 } else {
+//                     console.log('Sighting updated successfully:', updatedSighting);
+//                 }
+//             });
+//         }
+//     });
+// }
+
+function updateSighting(sightingId, message) {
+  Sighting.findById(sightingId, (err, sighting) => {
     if (err) {
-      console.error(err);
-    } else {
-      sighting.messages.push(
-        sightingTemp.messages[sightingTemp.messages.length - 1]
-      );
-      sighting.save((err, updatedSighting) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("Sighting updated successfully:", updatedSighting);
-        }
-      });
+      console.error("Error finding sighting:", err);
+      return;
     }
+    if (!sighting) {
+      console.error("Sighting not found");
+      return;
+    }
+    sighting.messages.push({ text: message, sentAt: new Date() });
+    sighting.save((err, updatedSighting) => {
+      if (err) {
+        console.error("Error saving sighting:", err);
+        return;
+      }
+      console.log("Sighting updated successfully:", updatedSighting);
+    });
   });
 }
 

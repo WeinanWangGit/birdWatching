@@ -28,9 +28,20 @@
         <div class="chat_interface">
           <h2 for="name">Chat</h2>
           <div id="chat_history" class="history">
+            <!-- <% if (sighting && sighting.messages && sighting.messages.length >
+            0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
+            <p><%= sighting.messages[i].text %></p>
+            <% } %> <% } else { %>
+            <p>No messages yet.</p>
+            <% } %> -->
             <% if (sighting && sighting.messages && sighting.messages.length >
             0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
-            <p><%= sighting.messages[i] %></p>
+            <div class="message">
+              <div class="message-text"><%= sighting.messages[i].text %></div>
+              <div class="message-sentAt">
+                <%= new Date(sighting.messages[i].sentAt).toLocaleString() %>
+              </div>
+            </div>
             <% } %> <% } else { %>
             <p>No messages yet.</p>
             <% } %>
