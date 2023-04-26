@@ -21,8 +21,9 @@ router.put("/details", async function (req, res) {
     description: req.body.description,
     url: req.body.url,
   };
+
   try {
-    const updatedSighting = await sighting_controller.getSightingByIdAndUpdate(
+    const updatedSighting = await sighting_controller.updateIdentification(
       id,
       identification
     );

@@ -100,46 +100,45 @@
     </div>
 
     <script>
-      // Update Identification
       const updateBtn = document.getElementById("update-btn");
       const modal = document.getElementById("modal");
-      const modalBirdName = document.getElementById("modal-bird-name");
-      const modalDescription = document.getElementById("modal-description");
-      const modalUrl = document.getElementById("modal-url");
       const saveBtn = document.getElementById("save-btn");
       const cancelBtn = document.getElementById("cancel-btn");
 
-      updateBtn.addEventListener("click", () => {
-        modalBirdName.value = document.getElementById("birdName").innerText;
-        modalDescription.value =
-          document.getElementById("description").innerText;
-        modalUrl.value = document.getElementById("url").innerText;
+      // update input
+      const birdNameInput = document.getElementById("modal-bird-name");
+      const descriptionInput = document.getElementById("modal-description");
+      const urlInput = document.getElementById("modal-url");
+      // saved data
+      const birdName = document.getElementById("birdName");
+      const description = document.getElementById("description");
+      const url = document.getElementById("url");
 
+      // Add event listener to Update button
+      updateBtn.addEventListener("click", () => {
+        // Populate modal inputs with current identification data
+        birdNameInput.value = birdName.textContent;
+        descriptionInput.value = description.textContent;
+        urlInput.value = url.textContent;
+
+        // Show modal dialog box
         modal.style.display = "block";
       });
 
-      cancelBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-      });
-
+      // Add event listener to Save button
       saveBtn.addEventListener("click", async () => {
         const sightingId = "<%= sighting._id %>";
-        const birdName = modalBirdName.value;
-        const description = modalDescription.value;
-        const url = modalUrl.value;
-
+        const data = {
+          birdName: birdNameInput.value,
+          description: descriptionInput.value,
+          url: urlInput.value,
+        };
         const response = await fetch(`/details?id=${sightingId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            identification: {
-              birdName,
-              description,
-              url,
-            },
-          }),
+          body: JSON.stringify(data),
         });
 
         if (response.ok) {
@@ -148,6 +147,45 @@
           console.error("Failed to update identification data");
         }
       });
+
+      // Add event listener to Cancel button
+      cancelBtn.addEventListener("click", () => {
+        // Hide modal dialog box
+        modal.style.display = "none";
+      });
+
+      // // Add event listener to Save button
+      // saveBtn.addEventListener("click", () => {
+      //   const sightingId = "<%= sighting._id %>";
+      //   const data = {
+      //     birdName: birdNameInput.value,
+      //     description: descriptionInput.value,
+      //     url: urlInput.value,
+      //   };
+
+      //   // Send AJAX request to server to update identification data
+      //   fetch(`/details?id=${sightingId}`, {
+      //     method: "PUT",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(data),
+      //   })
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       // Update identification data on page with new values
+      //       birdName.textContent = data.birdName;
+      //       description.textContent = data.description;
+      //       url.textContent = data.url;
+
+      //       // Hide modal dialog box
+      //       modal.style.display = "none";
+      //       window.location.reload();
+      //     })
+      //     .catch((err) => {
+      //       console.error(err);
+      //     });
+      // });
     </script>
   </body>
 </html>
