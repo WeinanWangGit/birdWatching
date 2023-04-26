@@ -24,8 +24,9 @@
 
           <div class="input-container">
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location" required />
+            <input type="text" placeholder="Please select from the map" id="location" name="location" required />
           </div>
+          <div id="map" style="height: 500px;width: 700px"></div>
           <hr />
 
           <div class="input-container">
@@ -67,6 +68,25 @@
           </button>
         </div>
       </form>
+
+      <!--    map-->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en" async defer></script>
+      <script>
+        function initMap() {
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 53.381766908539895, lng: -1.4816093444824219},
+            zoom: 12
+          });
+
+          map.addListener('click', function(e) {
+            var location = e.latLng;
+            var locationInput = document.getElementById('location');
+            locationInput.value ='Latitude: ' + location.lat() + ', Longitude: ' + location.lng();
+            // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
+          });
+        }
+      </script>
+
 
       <script>
         const username = sessionStorage.getItem("username");

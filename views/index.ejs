@@ -3,6 +3,22 @@
   <head>
     <title>Bird Sighting</title>
     <script>
+
+<!--      Get the user's current location-->
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          // console.log('Latitude:', latitude, 'Longitude:', longitude);
+          alert('您选择的位置是：' + latitude + ',' + longitude);
+        }, function(error) {
+          console.log('Error getting current position:', error);
+        });
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+      }
+
+
       // Ask for username and save to sessionStorage
       const username = sessionStorage.getItem("username");
       const MAX_LENGTH = 20;

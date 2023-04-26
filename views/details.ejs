@@ -108,11 +108,31 @@
           <h2>Metadata</h2>
           <p><strong>Date:</strong> <%= sighting.date %></p>
           <p><strong>Author:</strong> <%= sighting.author %></p>
-          <p><strong>Location:</strong> <%= sighting.location %></p>
+          <p id="location"><strong>Location:</strong> <%= sighting.location %></p>
+          <div id="map" style="height: 500px;width: 700px"></div>
           <p><strong>Description:</strong> <%= sighting.description %></p>
         </div>
       </div>
     </div>
+
+
+    <!--    map-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en" async defer></script>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 53.381766908539895, lng: -1.4816093444824219},
+          zoom: 12
+        });
+
+        map.addListener('click', function(e) {
+          var location = e.latLng;
+          var locationInfo = document.getElementById('location');
+          locationInfo.innerText ='Location:'+ 'Latitude: ' + location.lat() + ', Longitude: ' + location.lng();
+          // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
+        });
+      }
+    </script>
 
     <script>
       const searchForm = document.querySelector("#search-form");
