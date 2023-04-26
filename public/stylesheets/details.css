@@ -104,7 +104,14 @@
   flex: 1;
   flex-direction: column;
   padding: 1rem;
-  max-width: 50%;
+  max-width: 100%;
+}
+
+#search-results {
+  display: none;
+  max-width: 100%;
+  max-height: 15rem;
+  overflow-y: auto;
 }
 
 .identification_container h2 {
@@ -115,15 +122,14 @@
 .bird_label,
 .url_label {
   display: block;
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
 #description,
 #url,
-#birdName {
-  word-wrap: break-word;
-  white-space: pre-wrap;
+#birdName,
+#search-results {
   padding: 1rem;
   max-width: 100%;
   font-size: 1rem;
@@ -131,6 +137,11 @@
   border-radius: 0.5rem;
   border: 1px solid grey;
   background: rgba(150, 205, 205, 0.95);
+}
+
+#description {
+  height: 15rem;
+  overflow-y: auto;
 }
 
 /* Edit identification Modal box styles */
@@ -153,7 +164,7 @@
   padding: 20px;
   border: 1px solid #888;
   width: 60%;
-  max-width: 500px;
+  max-width: 40rem;
 }
 
 #modal-description,
@@ -178,9 +189,7 @@
   margin-top: 1rem;
 }
 
-#save-btn,
-#cancel-btn,
-.update-btn {
+.identification-btn {
   padding: 0.5rem 1rem;
   color: white;
   font-size: 1.2rem;

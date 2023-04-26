@@ -4,8 +4,8 @@
     <title>Sighting Details</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="../public/javascripts/chat.js"></script>
-    <!-- <script src="../public/javascripts/identification.js"></script> -->
 
+    <!-- <script src="https://unpkg.com/fetch-sparql-endpoint"></script> -->
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
@@ -58,9 +58,24 @@
       </div>
 
       <div class="right_container">
+        <div class="search-container">
+          <form id="search-form">
+            <label for="search">Enter the bird name to search:</label>
+            <input
+              type="text"
+              id="search-text"
+              name="search-text"
+              placeholder="e.g. Mockingbird"
+              required
+            />
+            <button type="submit" class="identification-btn">Search</button>
+          </form>
+          <div id="search-results"></div>
+        </div>
+
         <div class="identification_container">
           <h2>Identification Form</h2>
-          <button id="update-btn" class="update-btn">Update</button>
+          <button id="update-btn" class="identification-btn">Update</button>
 
           <label class="bird_label" for="bird_label">Bird Name:</label>
           <div id="birdName"><%= sighting.identification.birdName %></div>
@@ -72,7 +87,7 @@
           <div id="url"><%= sighting.identification.url %></div>
         </div>
 
-        <!-- Modal dialog box -->
+        <!-- Modal for updating identification -->
         <div id="modal" class="modal">
           <div class="modal-content">
             <h2>Edit Identification</h2>
@@ -83,8 +98,8 @@
             <label for="modal-url">URL:</label>
             <input type="text" id="modal-url" />
             <div class="modal-buttons">
-              <button id="save-btn">Save</button>
-              <button id="cancel-btn">Cancel</button>
+              <button id="save-btn" class="identification-btn">Save</button>
+              <button id="cancel-btn" class="identification-btn">Cancel</button>
             </div>
           </div>
         </div>
@@ -98,6 +113,73 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const searchForm = document.querySelector("#search-form");
+      const searchResults = document.querySelector("#search-results");
+
+      searchForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const searchText = document.querySelector("#search-text").value;
+        const sanitisedSearch = searchText.replace(/[^a-zA-Z0-9]/g, "");
+
+        // Query DBPedia to get bird information
+        const query = `
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        SELECT ?bird ?label ?description
+        WHERE {
+          ?bird a <http://dbpedia.org/ontology/Bird>;
+          rdfs:label ?label;
+          dbo:abstract ?description.
+          FILTER(LANG(?label) = 'en' && LANG(?description) = 'en' && regex(?label, '${sanitisedSearch}',"i"))
+        }
+        LIMIT 5
+        `;
+
+        const url = `https://dbpedia.org/sparql?query=${encodeURIComponent(
+          query
+        )}&format=json`;
+        const response = await fetch(url);
+        // const response = await fetch(`/search?text=${searchText}`);
+
+        if (response.ok) {
+          const data = await response.json();
+          displayResults(data);
+          console.log(data);
+        } else {
+          console.error("Failed to fetch search results:", response.status);
+        }
+      });
+
+      function displayResults(data) {
+        const resultsContainer = document.querySelector("#search-results");
+        resultsContainer.innerHTML = "";
+
+        const bindings = data.results.bindings;
+        // Make the resultsContainer visible
+        resultsContainer.style.display = "block";
+        if (bindings.length === 0) {
+          resultsContainer.innerHTML = "<p>No results found.</p>";
+        } else {
+          const list = document.createElement("ul");
+          for (const binding of bindings) {
+            const birdName = binding.label.value
+              .split("/")
+              .pop()
+              .replace(/_/g, " ");
+            const description = binding.description.value;
+            const url = binding.bird.value;
+
+            // Show the items in a list
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `<h3>${birdName} <a href="${url}">${url}</a></h3><p>Description: ${description}</p>`;
+            list.appendChild(listItem);
+          }
+          resultsContainer.appendChild(list);
+        }
+      }
+    </script>
 
     <script>
       const updateBtn = document.getElementById("update-btn");
@@ -142,7 +224,12 @@
         });
 
         if (response.ok) {
-          window.location.reload();
+          // window.location.reload();
+          birdName.textContent = data.birdName;
+          description.textContent = data.description;
+          url.textContent = data.url;
+          // Hide modal dialog box
+          modal.style.display = "none";
         } else {
           console.error("Failed to update identification data");
         }
