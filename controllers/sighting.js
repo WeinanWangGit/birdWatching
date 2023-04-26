@@ -42,6 +42,7 @@ function insertSighting(req, res) {
   });
 }
 
+// NOT IN USE
 // function updateSighting(sightingTemp) {
 //     Sighting.findById(sightingTemp._id, (err, sighting) => {
 //         if (err) {
@@ -99,10 +100,42 @@ async function getSightingById(id) {
   }
 }
 
+// NOT IN USE
+// async function getSightingByIdAndUpdate(id, identification) {
+//   try {
+//     const updatedSighting = await Sighting.findByIdAndUpdate(
+//       id,
+//       {
+//         $set: { identification: identification },
+//       },
+//       { new: true }
+//     );
+//     return updatedSighting;
+//   } catch (err) {
+//     console.error(`Error getting sighting by ID: ${err}`);
+//     throw err;
+//   }
+// }
+
+async function updateIdentification(id, identification) {
+  try {
+    const updatedSighting = await Sighting.updateOne(
+      { _id: id },
+      { $set: { identification: identification } }
+    );
+    return updatedSighting;
+  } catch (err) {
+    console.error(`Error updating sighting: ${err}`);
+    throw err;
+  }
+}
+
 module.exports = {
   insertSighting,
   getSightingList,
   getSightingById,
+  // getSightingByIdAndUpdate,
+  updateIdentification,
   updateSighting,
   upload,
 };

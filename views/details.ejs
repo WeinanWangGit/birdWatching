@@ -4,6 +4,8 @@
     <title>Sighting Details</title>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="../public/javascripts/chat.js"></script>
+    <!-- <script src="../public/javascripts/identification.js"></script> -->
+
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
@@ -58,63 +60,132 @@
       <div class="right_container">
         <div class="identification_container">
           <h2>Identification Form</h2>
-          <label class="bird_label" for="bird_label">Bird Name:</label>
-          <input
-            type="text"
-            id="birdName"
-            placeholder="bird name"
-            value="<%= sighting.identification.birdName %>"
-          />
+          <button id="update-btn" class="update-btn">Update</button>
 
+          <label class="bird_label" for="bird_label">Bird Name:</label>
+          <div id="birdName"><%= sighting.identification.birdName %></div>
           <label class="description_label" for="description_label"
             >Description:</label
           >
-          <textarea class="desciption_text" id="description" rows="8">
-<%= sighting.identification.description %></textarea
-          >
-
+          <div id="description"><%= sighting.identification.description %></div>
           <label class="url_label" for="url">URL:</label>
-          <input
-            type="text"
-            id="url"
-            placeholder="URL"
-            value="<%= sighting.identification.url %>"
-          />
+          <div id="url"><%= sighting.identification.url %></div>
         </div>
+
+        <!-- Modal dialog box -->
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <h2>Edit Identification</h2>
+            <label for="modal-bird-name">Bird Name:</label>
+            <input type="text" id="modal-bird-name" />
+            <label for="modal-description">Description:</label>
+            <textarea id="modal-description"></textarea>
+            <label for="modal-url">URL:</label>
+            <input type="text" id="modal-url" />
+            <div class="modal-buttons">
+              <button id="save-btn">Save</button>
+              <button id="cancel-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+
         <div class="metadata">
           <h2>Metadata</h2>
           <p><strong>Date:</strong> <%= sighting.date %></p>
           <p><strong>Author:</strong> <%= sighting.author %></p>
           <p><strong>Location:</strong> <%= sighting.location %></p>
-
           <p><strong>Description:</strong> <%= sighting.description %></p>
         </div>
       </div>
     </div>
 
-    <!-- <script>
-      // Connect to the Socket.IO server
-      const socket = io();
+    <script>
+      const updateBtn = document.getElementById("update-btn");
+      const modal = document.getElementById("modal");
+      const saveBtn = document.getElementById("save-btn");
+      const cancelBtn = document.getElementById("cancel-btn");
 
-      // Get references to the UI elements
-      const form = document.querySelector("#chat_form");
-      const input = document.querySelector("#chat_input");
-      const history = document.querySelector("#chat_history");
+      // update input
+      const birdNameInput = document.getElementById("modal-bird-name");
+      const descriptionInput = document.getElementById("modal-description");
+      const urlInput = document.getElementById("modal-url");
+      // saved data
+      const birdName = document.getElementById("birdName");
+      const description = document.getElementById("description");
+      const url = document.getElementById("url");
 
-      // Handle the form submit event
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const message = input.value;
-        socket.emit("chat message", message); // send message to server
-        input.value = "";
+      // Add event listener to Update button
+      updateBtn.addEventListener("click", () => {
+        // Populate modal inputs with current identification data
+        birdNameInput.value = birdName.textContent;
+        descriptionInput.value = description.textContent;
+        urlInput.value = url.textContent;
+
+        // Show modal dialog box
+        modal.style.display = "block";
       });
 
-      // Handle incoming messages from the server
-      socket.on("chat message", (message) => {
-        const li = document.createElement("li");
-        li.textContent = message;
-        history.appendChild(li);
+      // Add event listener to Save button
+      saveBtn.addEventListener("click", async () => {
+        const sightingId = "<%= sighting._id %>";
+        const data = {
+          birdName: birdNameInput.value,
+          description: descriptionInput.value,
+          url: urlInput.value,
+        };
+        const response = await fetch(`/details?id=${sightingId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error("Failed to update identification data");
+        }
       });
-    </> -->
+
+      // Add event listener to Cancel button
+      cancelBtn.addEventListener("click", () => {
+        // Hide modal dialog box
+        modal.style.display = "none";
+      });
+
+      // // Add event listener to Save button
+      // saveBtn.addEventListener("click", () => {
+      //   const sightingId = "<%= sighting._id %>";
+      //   const data = {
+      //     birdName: birdNameInput.value,
+      //     description: descriptionInput.value,
+      //     url: urlInput.value,
+      //   };
+
+      //   // Send AJAX request to server to update identification data
+      //   fetch(`/details?id=${sightingId}`, {
+      //     method: "PUT",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(data),
+      //   })
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       // Update identification data on page with new values
+      //       birdName.textContent = data.birdName;
+      //       description.textContent = data.description;
+      //       url.textContent = data.url;
+
+      //       // Hide modal dialog box
+      //       modal.style.display = "none";
+      //       window.location.reload();
+      //     })
+      //     .catch((err) => {
+      //       console.error(err);
+      //     });
+      // });
+    </script>
   </body>
 </html>
