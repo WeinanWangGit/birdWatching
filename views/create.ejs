@@ -26,7 +26,13 @@
             <label for="location">Location:</label>
             <input type="text" placeholder="Please select from the map" id="location" name="location" required />
           </div>
-          <div id="map" style="height: 500px;width: 700px"></div>
+
+          <div class="input-container">
+            <label for="Distance">Distance:</label>
+            <input type="text" id="Distance" name="Distance" required disabled />
+          </div>
+
+          <div id="map" style="height: 300px;width: 700px"></div>
           <hr />
 
           <div class="input-container">
@@ -81,7 +87,7 @@
           map.addListener('click', function(e) {
             var location = e.latLng;
             var locationInput = document.getElementById('location');
-            locationInput.value ='Latitude: ' + location.lat() + ', Longitude: ' + location.lng();
+            locationInput.value =location.lat() + ',' + location.lng();
             // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
           });
         }

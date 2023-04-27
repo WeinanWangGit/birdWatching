@@ -69,6 +69,30 @@
         </tbody>
       </table>
 
+      <table id="table-Distance" style="display: none" >
+        <thead>
+        <tr>
+          <th>Distance</th>
+          <th>Identification</th>
+          <th>User</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        <% sightings.forEach(function(sighting) { %>
+          <tr
+                  data-id="<%= sighting._id %>"
+                  onclick="location.href='/details?id=<%= sighting._id %>'"
+          >
+<!--            <td><%= new Date(sighting.date).toLocaleString() %></td>-->
+            <td><%= sighting.location%></td>
+            <td><%= sighting.identification.birdName %></td>
+            <td><%= sighting.author %></td>
+          </tr>
+        <% }); %>
+        </tbody>
+      </table>
+
       <div id="grid-view" class="grid-layout" style="display: none">
         <% sightings.forEach(function(sighting) { %>
         <div
@@ -98,7 +122,7 @@
         <div class="toggle-button">
           <button onclick="toggleGrid()">
             <i class="fa fa-exchange"></i>
-            <span id="toggle-text">Toggle Grid View</span>
+            <span id="toggle-text">Sort by distance</span>
           </button>
         </div>
       </div>
@@ -111,19 +135,27 @@
     </div>
 
     <script>
-      function toggleGrid() {
-        var tableView = document.getElementById("table-view");
-        var gridView = document.getElementById("grid-view");
-        var toggleText = document.getElementById("toggle-text");
+      var currentView = 0;
+      var views = ["table-view", "table-Distance", "grid-view"];
+      var toggleText = document.querySelector("button");
 
-        if (tableView.style.display === "none") {
-          tableView.style.display = "table";
-          gridView.style.display = "none";
-          toggleText.innerHTML = "Toggle Grid View";
+      function toggleGrid() {
+        var viewToHide = views[currentView];
+        currentView = (currentView + 1) % views.length;
+        var viewToShow = views[currentView];
+
+        var viewToHideElement = document.getElementById(viewToHide);
+        var viewToShowElement = document.getElementById(viewToShow);
+
+        viewToHideElement.style.display = "none";
+        viewToShowElement.style.display = "";
+
+        if (currentView == 0) {
+          toggleText.innerHTML = "Sort by distance";
+        } else if (currentView == 1) {
+          toggleText.innerHTML = "Sort by grid";
         } else {
-          tableView.style.display = "none";
-          gridView.style.display = "grid";
-          toggleText.innerHTML = "Toggle Table View";
+          toggleText.innerHTML = "Sort by time";
         }
       }
     </script>

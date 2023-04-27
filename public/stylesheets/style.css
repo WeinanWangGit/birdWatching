@@ -43,7 +43,7 @@ a {
   color: white;
   border: none;
   border-radius: 0.5rem;
-  cursor: pointer;
+  /*cursor: pointer;*/
   background-image: linear-gradient(to left, #7dd56f, #28b487);
 }
 
