@@ -90,6 +90,7 @@ td input[type="text"] {
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   grid-gap: 1rem;
   margin: 10px;
+  padding-top: 100px;
 }
 
 .grid-item {
