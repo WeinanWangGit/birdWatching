@@ -3,22 +3,6 @@
   <head>
     <title>Bird Sighting</title>
     <script>
-
-<!--      Get the user's current location-->
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
-          // console.log('Latitude:', latitude, 'Longitude:', longitude);
-          alert('您选择的位置是：' + latitude + ',' + longitude);
-        }, function(error) {
-          console.log('Error getting current position:', error);
-        });
-      } else {
-        console.log('Geolocation is not supported by this browser.');
-      }
-
-
       // Ask for username and save to sessionStorage
       const username = sessionStorage.getItem("username");
       const MAX_LENGTH = 20;
@@ -79,13 +63,9 @@
         </tr>
         </thead>
         <tbody id="table-body">
-        <% sightings.forEach(function(sighting) { %>
-          <tr
-                  data-id="<%= sighting._id %>"
-                  onclick="location.href='/details?id=<%= sighting._id %>'"
-          >
-<!--            <td><%= new Date(sighting.date).toLocaleString() %></td>-->
-            <td><%= sighting.location%></td>
+        <% sightings.forEach(function (sighting) { %>
+          <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
+            <td><%= sighting.distance %></td>
             <td><%= sighting.identification.birdName %></td>
             <td><%= sighting.author %></td>
           </tr>

@@ -35,6 +35,10 @@ const SightingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  distance:{
+    type: String,
+    required: true,
+  },
   // identification: {
   //   birdName: {
   //     type: String,
