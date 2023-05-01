@@ -116,6 +116,7 @@
             <p id="location">
               <strong>Location:</strong> <%= sighting.location %>
             </p>
+            <p><strong>Position:</strong> <%= sighting.position %></p>
             <div id="map" class="map-container"></div>
           </div>
         </div>
@@ -226,6 +227,8 @@
         var map = new google.maps.Map(document.getElementById("map"), {
           center: { lat: 53.381766908539895, lng: -1.4816093444824219 },
           zoom: 12,
+          position: location,
+          draggable: true
         });
 
         map.addListener(function (e) {
@@ -237,8 +240,24 @@
             location.lat() +
             ", Longitude: " +
             location.lng();
+
+
+          geocoder.geocode({ location: location }, function (results, status) {
+            if (status === "OK") {
+              if (results[0]) {
+                var position = document.getElementById("position");
+                position.innerText = "Address: " + results[0].formatted_address;
+              } else {
+                console.log("No results found");
+              }
+            } else {
+              console.log("Geocoder failed due to: " + status);
+            }
+          });
           // alert('The location you chose is: ' + location.lat() + ',' + location.lng());
         });
+
+
       }
     </script>
 
