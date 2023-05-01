@@ -22,6 +22,7 @@ function insertSighting(req, res) {
     date: req.body.date,
     author: req.body.author,
     location: req.body.location,
+    distance: req.body.distance,
     identification: {
       birdName: req.body.birdName,
       description: req.body.birdDescription,

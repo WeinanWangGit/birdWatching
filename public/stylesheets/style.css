@@ -43,7 +43,7 @@ a {
   color: white;
   border: none;
   border-radius: 0.5rem;
-  cursor: pointer;
+  /*cursor: pointer;*/
   background-image: linear-gradient(to left, #7dd56f, #28b487);
 }
 
@@ -90,6 +90,7 @@ td input[type="text"] {
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   grid-gap: 1rem;
   margin: 10px;
+  padding-top: 100px;
 }
 
 .grid-item {
