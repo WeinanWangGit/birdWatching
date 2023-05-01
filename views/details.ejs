@@ -2,132 +2,442 @@
 <html>
   <head>
     <title>Sighting Details</title>
+    <%- include('partials/head') %>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="../public/javascripts/chat.js"></script>
-    <!-- <script src="../public/javascripts/identification.js"></script> -->
+    <script src="../public/javascripts/identification.js"></script>
 
     <link rel="stylesheet" href=".././stylesheets/details.css" />
     <%- include('partials/header') %>
   </head>
 
-  <!-- <body> -->
   <body onload="init('<%=JSON.stringify(sighting)%>')">
     <div class="container">
-      <div class="left_container">
-        <div class="img_container">
-          <% if (sighting.image) { %>
-          <img
-            src="<%= sighting.image %>"
-            alt="<%= sighting.identification.birdName %> Image"
-          />
-          <% } else { %>
-          <p>The image is not available.</p>
-          <% } %>
-        </div>
-
-        <div class="chat_interface">
-          <h2 for="name">Chat</h2>
-          <div id="chat_history" class="history">
-            <!-- <% if (sighting && sighting.messages && sighting.messages.length >
-            0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
-            <p><%= sighting.messages[i].text %></p>
-            <% } %> <% } else { %>
-            <p>No messages yet.</p>
-            <% } %> -->
-            <% if (sighting && sighting.messages && sighting.messages.length >
-            0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
-            <div class="message">
-              <div class="message-text"><%= sighting.messages[i].text %></div>
-              <div class="message-sentAt">
-                <%= new Date(sighting.messages[i].sentAt).toLocaleString() %>
-              </div>
-            </div>
-            <% } %> <% } else { %>
-            <p>No messages yet.</p>
+      <!-- <div class="row"> -->
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Sighting Image</h5>
+          </div>
+          <div class="card-body">
+            <% if (sighting.image) { %>
+            <img
+              src="<%= sighting.image %>"
+              alt="<%= sighting.identification.birdName %> Image"
+              class="img-fluid"
+            />
+            <% } else { %>
+            <p>The image is not available.</p>
             <% } %>
           </div>
-          <form id="chat_form" onsubmit="return false;">
-            <p>
-              <textarea id="chat_input" class="chat_input"></textarea>
-              <button id="chat_send" class="send_btn" onclick="sendChatText()">
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Chat</h5>
+          </div>
+          <div class="card-body">
+            <div id="chat_history" class="history">
+              <% if (sighting && sighting.messages && sighting.messages.length >
+              0) { %> <% for (var i = 0; i < sighting.messages.length; i++) { %>
+              <div class="message">
+                <div class="message-text"><%= sighting.messages[i].text %></div>
+                <div class="message-sentAt">
+                  <%= new Date(sighting.messages[i].sentAt).toLocaleString() %>
+                </div>
+              </div>
+              <% } %> <% } else { %>
+              <p>No messages yet.</p>
+              <% } %>
+            </div>
+            <form id="chat_form" onsubmit="return false;">
+              <div class="mb-3">
+                <label for="chat_input" class="form-label"
+                  >Enter message:</label
+                >
+                <textarea
+                  id="chat_input"
+                  class="form-control chat_input"
+                ></textarea>
+              </div>
+              <button
+                id="chat_send"
+                class="btn btn-primary"
+                onclick="sendChatText()"
+              >
                 Send
               </button>
-            </p>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
 
-      <div class="right_container">
-        <div class="identification_container">
-          <h2>Identification Form</h2>
-          <button id="update-btn" class="update-btn">Update</button>
-
-          <label class="bird_label" for="bird_label">Bird Name:</label>
-          <div id="birdName"><%= sighting.identification.birdName %></div>
-          <label class="description_label" for="description_label"
-            >Description:</label
-          >
-          <div id="description"><%= sighting.identification.description %></div>
-          <label class="url_label" for="url">URL:</label>
-          <div id="url"><%= sighting.identification.url %></div>
-        </div>
-
-        <!-- Modal dialog box -->
-        <div id="modal" class="modal">
-          <div class="modal-content">
-            <h2>Edit Identification</h2>
-            <label for="modal-bird-name">Bird Name:</label>
-            <input type="text" id="modal-bird-name" />
-            <label for="modal-description">Description:</label>
-            <textarea id="modal-description"></textarea>
-            <label for="modal-url">URL:</label>
-            <input type="text" id="modal-url" />
-            <div class="modal-buttons">
-              <button id="save-btn">Save</button>
-              <button id="cancel-btn">Cancel</button>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="card-title">Identification Form</h2>
+            <div class="mb-3">
+              <label for="birdName" class="form-label">Bird Name:</label>
+              <div class="form-text" id="birdName">
+                <%= sighting.identification.birdName %>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description:</label>
+              <div class="form-text" id="description">
+                <%= sighting.identification.description %>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="url" class="form-label">URL:</label>
+              <div class="form-text" id="url">
+                <a href="#"><%= sighting.identification.url %></a>
+              </div>
+            </div>
+            <div class="mb-3">
+              <button
+                type="button"
+                id="update-btn"
+                class="btn btn-primary"
+                data-bs-target="#modal"
+                onclick="updateIdentification('<%=sighting.author%>')"
+              >
+                Edit Identification
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="metadata">
-          <h2>Metadata</h2>
-          <p><strong>Date:</strong> <%= sighting.date %></p>
-          <p><strong>Author:</strong> <%= sighting.author %></p>
-          <p><strong>Location:</strong> <%= sighting.location %></p>
-          <p><strong>Description:</strong> <%= sighting.description %></p>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="card-title">Metadata</h2>
+            <p><strong>Date:</strong> <%= sighting.date %></p>
+            <p><strong>Author:</strong> <%= sighting.author %></p>
+            <p id="location">
+              <strong>Location:</strong> <%= sighting.location %>
+            </p>
+            <div id="map" class="map-container"></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <script>
-      const updateBtn = document.getElementById("update-btn");
-      const modal = document.getElementById("modal");
-      const saveBtn = document.getElementById("save-btn");
-      const cancelBtn = document.getElementById("cancel-btn");
+    <!-- Modal for updating identification -->
+    <div id="modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Identification</h5>
+            <button
+              type="button"
+              class="close-btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Search area -->
+            <form class="form-inline" id="search-form" onsubmit="return false;">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  id="search-text"
+                  name="search-text"
+                  class="form-control"
+                  placeholder="Enter the bird name to search:"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                onclick="searchBird()"
+              >
+                Search
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="clear-btn"
+                onclick="clearSearch()"
+              >
+                Clear
+              </button>
+            </form>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="list-group" id="search-results">
+                  <!-- Search results will be appended here -->
+                </div>
+              </div>
+            </div>
 
-      // update input
-      const birdNameInput = document.getElementById("modal-bird-name");
-      const descriptionInput = document.getElementById("modal-description");
-      const urlInput = document.getElementById("modal-url");
+            <!-- Update identification form -->
+            <form id="modal-form">
+              <div class="mb-3">
+                <label for="modal-bird-name" class="form-label"
+                  >Bird Name:</label
+                >
+                <input type="text" id="modal-bird-name" class="form-control" />
+              </div>
+              <div class="mb-3">
+                <label for="modal-description" class="form-label"
+                  >Description:</label
+                >
+                <textarea
+                  id="modal-description"
+                  class="form-control"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="modal-url" class="form-label">URL:</label>
+                <input type="text" id="modal-url" class="form-control" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button id="to-top-btn" class="btn btn-primary" onclick="goToTop()">
+              Back to Top
+            </button>
+            <button
+              id="save-btn"
+              class="btn btn-primary"
+              onclick="saveChanges('<%=sighting._id%>')"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    map-->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
+      async
+      defer
+    ></script>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 53.381766908539895, lng: -1.4816093444824219 },
+          zoom: 12,
+        });
+
+        map.addListener(function (e) {
+          var location = e.latLng;
+          var locationInfo = document.getElementById("location");
+          locationInfo.innerText =
+            "Location:" +
+            "Latitude: " +
+            location.lat() +
+            ", Longitude: " +
+            location.lng();
+          // alert('The location you chose is: ' + location.lat() + ',' + location.lng());
+        });
+      }
+    </script>
+
+    <!-- <script>
+      // buttons
+      const modal = document.getElementById("modal");
+      const bootstrapModal = new bootstrap.Modal(modal);
+      const saveBtn = document.getElementById("save-btn");
+      const updateBtn = document.getElementById("update-btn");
+      const clearBtn = document.getElementById("clear-btn");
+      const toTopBtn = document.getElementById("to-top-btn");
+
       // saved data
       const birdName = document.getElementById("birdName");
       const description = document.getElementById("description");
       const url = document.getElementById("url");
 
-      // Add event listener to Update button
-      updateBtn.addEventListener("click", () => {
-        // Populate modal inputs with current identification data
-        birdNameInput.value = birdName.textContent;
-        descriptionInput.value = description.textContent;
-        urlInput.value = url.textContent;
+      // update input
+      const birdNameInput = document.getElementById("modal-bird-name");
+      const descriptionInput = document.getElementById("modal-description");
+      const urlInput = document.getElementById("modal-url");
 
-        // Show modal dialog box
-        modal.style.display = "block";
+      // search area
+      const searchForm = document.getElementById("search-form");
+      const searchText = document.getElementById("search-text");
+      const searchResults = document.getElementById("search-results");
+
+      clearBtn.addEventListener("click", () => {
+        searchText.value = "";
+        searchResults.innerHTML = "";
       });
 
-      // Add event listener to Save button
+      searchForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const sanitisedSearch = searchText.value.replace(/[^a-zA-Z0-9]/g, "");
+
+        // TODO: Use fetch-sparql-endpoint module
+        // try {
+        //   const bird = await fetchBirdData(sanitisedSearch);
+        //   console.log(bird);
+        // } catch (error) {
+        //   console.error(error);
+        //   resultContainer.innerHTML = `<p>Failed to fetch bird details</p>`;
+        // }
+
+        // Query DBPedia to get bird information
+        const query = `
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX dbo: <http://dbpedia.org/ontology/>
+        SELECT ?bird ?label ?description ?image
+        WHERE {
+          ?bird a dbo:Bird;
+          rdfs:label ?label;
+          dbo:abstract ?description;
+          dbo:thumbnail ?image.
+          FILTER(LANG(?label) = 'en' && LANG(?description) = 'en' && regex(?label, '${sanitisedSearch}',"i"))
+        }
+        LIMIT 5
+        `;
+
+        const url = `https://dbpedia.org/sparql?query=${encodeURIComponent(
+          query
+        )}&format=json`;
+        const response = await fetch(url);
+        // const response = await fetch(`/search?text=${searchText}`);
+
+        if (response.ok) {
+          const data = await response.json();
+          displayResults(data);
+          // console.log(data.results.bindings[0].image.value);
+        } else {
+          console.error("Failed to fetch search results:", response.status);
+        }
+      });
+
+      function displayResults(data) {
+        // Results area
+        const resultsContainer = document.getElementById("search-results");
+        resultsContainer.innerHTML = "";
+        const bindings = data.results.bindings;
+
+        // Make the resultsContainer visible
+        resultsContainer.style.display = "block";
+
+        if (bindings.length === 0) {
+          resultsContainer.innerHTML = "<p>No results found.</p>";
+        } else {
+          const list = document.createElement("ul");
+          const label = document.createElement("div");
+          label.innerHTML =
+            "<h5>Please click the image to choose the bird</h5>";
+          list.appendChild(label);
+
+          // Obtain each bird's info
+          for (const binding of bindings) {
+            const birdName = binding.label.value
+              .split("/")
+              .pop()
+              .replace(/_/g, " ");
+            const description = binding.description.value;
+            const url = binding.bird.value;
+            const imgSrc = binding.image.value;
+
+            // Create a new form group for each bird
+            const formGroup = document.createElement("div");
+            formGroup.classList.add("bird-results-container");
+            formGroup.classList.add("mb-3");
+
+            // Display the bird image
+            const img = document.createElement("img");
+            img.setAttribute("src", imgSrc);
+            img.setAttribute("alt", birdName);
+            img.setAttribute("class", "result-img");
+            formGroup.appendChild(img);
+
+            // Create label for bird name
+            const birdLabel = document.createElement("label");
+            birdLabel.classList.add("form-label");
+            birdLabel.textContent = "Bird Name:";
+            formGroup.appendChild(birdLabel);
+
+            // Create input for bird name
+            const nameInput = document.createElement("input");
+            nameInput.setAttribute("type", "text");
+            nameInput.setAttribute("class", "form-control");
+            nameInput.setAttribute("value", birdName);
+            nameInput.setAttribute("readonly", "true");
+            formGroup.appendChild(nameInput);
+
+            // Create label for description
+            const desLabel = document.createElement("label");
+            desLabel.classList.add("form-label");
+            desLabel.textContent = "Description:";
+            formGroup.appendChild(desLabel);
+
+            // Create textarea for description
+            const textarea = document.createElement("textarea");
+            textarea.setAttribute("class", "form-control");
+            textarea.setAttribute("readonly", "true");
+            textarea.textContent = description;
+            formGroup.appendChild(textarea);
+
+            // Create label for URL
+            const urlLabel = document.createElement("label");
+            urlLabel.classList.add("form-label");
+            urlLabel.textContent = "URL:";
+            formGroup.appendChild(urlLabel);
+
+            // Create input for URL
+            const URLInput = document.createElement("input");
+            URLInput.setAttribute("type", "text");
+            URLInput.setAttribute("class", "form-control");
+            URLInput.setAttribute("value", url);
+            URLInput.setAttribute("readonly", "true");
+            formGroup.appendChild(URLInput);
+
+            // Add click event to image
+            img.addEventListener("click", () => {
+              birdNameInput.value = birdName;
+              descriptionInput.value = description;
+              urlInput.value = url;
+              birdNameInput.focus();
+            });
+
+            // Append each formGroup to resultsContainer
+            list.appendChild(formGroup);
+          }
+          resultsContainer.appendChild(list);
+        }
+      }
+
+      // Go back to search
+      toTopBtn.addEventListener("click", () => {
+        searchText.focus();
+      });
+
+      // Show edit indentification modal
+      updateBtn.addEventListener("click", () => {
+        // Check if the current user is the author
+        const username = sessionStorage.getItem("username");
+        const author = "<%= sighting.author %>";
+        if (username === author) {
+          // Populate modal inputs with current identification data
+          birdNameInput.value = birdName.textContent;
+          descriptionInput.value = description.textContent;
+          urlInput.value = url.textContent;
+
+          // Show modal dialog box
+          bootstrapModal.show();
+        } else {
+          alert("Sorry, you don't have permission to edit the page.");
+        }
+      });
+
+      // Save changes to identification
       saveBtn.addEventListener("click", async () => {
         const sightingId = "<%= sighting._id %>";
+        console.log(sightingId);
         const data = {
           birdName: birdNameInput.value,
           description: descriptionInput.value,
@@ -143,49 +453,44 @@
 
         if (response.ok) {
           window.location.reload();
+          birdName.textContent = data.birdName;
+          description.textContent = data.description;
+          url.textContent = data.url;
+          // Hide modal dialog box
+          bootstrapModal.hide();
         } else {
           console.error("Failed to update identification data");
         }
       });
 
-      // Add event listener to Cancel button
-      cancelBtn.addEventListener("click", () => {
-        // Hide modal dialog box
-        modal.style.display = "none";
-      });
+      // OLD VERSION:
+      // function displayResults(data) {
+      //   const resultsContainer = document.querySelector("#search-results");
+      //   resultsContainer.innerHTML = "";
 
-      // // Add event listener to Save button
-      // saveBtn.addEventListener("click", () => {
-      //   const sightingId = "<%= sighting._id %>";
-      //   const data = {
-      //     birdName: birdNameInput.value,
-      //     description: descriptionInput.value,
-      //     url: urlInput.value,
-      //   };
+      //   const bindings = data.results.bindings;
+      //   // Make the resultsContainer visible
+      //   resultsContainer.style.display = "block";
+      //   if (bindings.length === 0) {
+      //     resultsContainer.innerHTML = "<p>No results found.</p>";
+      //   } else {
+      //     const list = document.createElement("ul");
+      //     for (const binding of bindings) {
+      //       const birdName = binding.label.value
+      //         .split("/")
+      //         .pop()
+      //         .replace(/_/g, " ");
+      //       const description = binding.description.value;
+      //       const url = binding.bird.value;
 
-      //   // Send AJAX request to server to update identification data
-      //   fetch(`/details?id=${sightingId}`, {
-      //     method: "PUT",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(data),
-      //   })
-      //     .then((res) => res.json())
-      //     .then((data) => {
-      //       // Update identification data on page with new values
-      //       birdName.textContent = data.birdName;
-      //       description.textContent = data.description;
-      //       url.textContent = data.url;
-
-      //       // Hide modal dialog box
-      //       modal.style.display = "none";
-      //       window.location.reload();
-      //     })
-      //     .catch((err) => {
-      //       console.error(err);
-      //     });
-      // });
-    </script>
+      //       // Show the items in a list
+      //       const listItem = document.createElement("li");
+      //       listItem.innerHTML = `<h3>${birdName} <a href="${url}">${url}</a></h3><p>Description: ${description}</p>`;
+      //       list.appendChild(listItem);
+      //     }
+      //     resultsContainer.appendChild(list);
+      //   }
+      // }
+    </script> -->
   </body>
 </html>
