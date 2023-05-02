@@ -5,24 +5,24 @@
     <link rel="stylesheet" href=".././stylesheets/create.css" />
     <%- include('partials/header') %>
 
-<!--    get current location-->
-    <script>
-      var latitude=null;
-      var longitude=null;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          latitude = position.coords.latitude;
-          longitude = position.coords.longitude;
-          // console.log('Latitude:', latitude, 'Longitude:', longitude);
-          // alert('您选择的位置是：' + latitude + ',' + longitude);
-        }, function(error) {
-          console.log('Error getting current position:', error);
-        });
-      } else {
-        console.log('Geolocation is not supported by this browser.');
-      }
+<!--&lt;!&ndash;    get current location&ndash;&gt;-->
+<!--    <script>-->
+<!--      var latitude=null;-->
+<!--      var longitude=null;-->
+<!--      if (navigator.geolocation) {-->
+<!--        navigator.geolocation.getCurrentPosition(function(position) {-->
+<!--          latitude = position.coords.latitude;-->
+<!--          longitude = position.coords.longitude;-->
+<!--          // console.log('Latitude:', latitude, 'Longitude:', longitude);-->
+<!--          // alert('您选择的位置是：' + latitude + ',' + longitude);-->
+<!--        }, function(error) {-->
+<!--          console.log('Error getting current position:', error);-->
+<!--        });-->
+<!--      } else {-->
+<!--        console.log('Geolocation is not supported by this browser.');-->
+<!--      }-->
 
-    </script>
+<!--    </script>-->
   </head>
   <body>
     <div class="container">
@@ -51,10 +51,10 @@
             <input type="text" placeholder="Please select from the map" id="position" name="position" required disabled />
           </div>
 
-          <div class="input-container">
-            <label for="distance">Distance:</label>
-            <input type="text" id="distance" name="distance" required disabled />
-          </div>
+<!--          <div class="input-container">-->
+<!--            <label for="distance">Distance:</label>-->
+<!--            <input type="text" id="distance" name="distance" required disabled />-->
+<!--          </div>-->
 
           <div id="map" style="height: 300px;width: 700px"></div>
           <hr />
@@ -126,10 +126,10 @@
               map: map
             });
 
-            const distance = getDistanceFromLatLonInKm(location.lat(), location.lng(), latitude,longitude );
-            // alert(distance); // （单位：千米）
-            var DistanceInput =document.getElementById('distance');
-            DistanceInput.value=distance+'km';
+            // const distance = getDistanceFromLatLonInKm(location.lat(), location.lng(), latitude,longitude );
+            // // alert(distance); // （单位：千米）
+            // var DistanceInput =document.getElementById('distance');
+            // DistanceInput.value=distance+'km';
 
             getAddressFromLatLng(location.lat(), location.lng())
                     .then(function(address) {
@@ -156,22 +156,22 @@
         // }
 
         // compute distance
-        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-          const R = 6371; // 地球半径（单位：千米）
-          const dLat = deg2rad(lat2 - lat1);
-          const dLon = deg2rad(lon2 - lon1);
-          const a =
-                  Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                  Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-                  Math.sin(dLon / 2) * Math.sin(dLon / 2);
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-          const distance = R * c; // 距离（单位：千米）
-          return distance;
-        }
-
-        function deg2rad(deg) {
-          return deg * (Math.PI/180);
-        }
+        // function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+        //   const R = 6371; // 地球半径（单位：千米）
+        //   const dLat = deg2rad(lat2 - lat1);
+        //   const dLon = deg2rad(lon2 - lon1);
+        //   const a =
+        //           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        //           Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        //           Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        //   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        //   const distance = R * c; // 距离（单位：千米）
+        //   return distance;
+        // }
+        //
+        // function deg2rad(deg) {
+        //   return deg * (Math.PI/180);
+        // }
 
         function getAddressFromLatLng(lat, lng) {
           return new Promise(function(resolve, reject) {
@@ -209,7 +209,7 @@
               author: username,
               location: document.getElementById("location").value,
               position: document.getElementById("position").value,
-              distance: document.getElementById("distance").value,
+              // distance: document.getElementById("distance").value,
               identification: document.getElementById("identification").value,
               birdName: document.getElementById("bird-name").value,
               birdDescription:
