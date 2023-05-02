@@ -224,12 +224,22 @@
     ></script>
     <script>
       function initMap() {
+        const location = "<%= sighting.location %>";
+        const location_sight =location.split(",");
         var map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 53.381766908539895, lng: -1.4816093444824219 },
+          center: { lat: parseFloat(location_sight[0]), lng: parseFloat(location_sight[1]) },
           zoom: 12,
-          position: location,
+          // position: location,
           draggable: true
         });
+
+        var myLatlng = new google.maps.LatLng(location_sight[0], location_sight[1]);
+        marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map
+        });
+
+
 
         map.addListener(function (e) {
           var location = e.latLng;
