@@ -2,241 +2,298 @@
 <html>
   <head>
     <title>Create a new Sighting</title>
+    <%- include('partials/head') %>
+
     <link rel="stylesheet" href=".././stylesheets/create.css" />
     <%- include('partials/header') %>
 
-<!--&lt;!&ndash;    get current location&ndash;&gt;-->
-<!--    <script>-->
-<!--      var latitude=null;-->
-<!--      var longitude=null;-->
-<!--      if (navigator.geolocation) {-->
-<!--        navigator.geolocation.getCurrentPosition(function(position) {-->
-<!--          latitude = position.coords.latitude;-->
-<!--          longitude = position.coords.longitude;-->
-<!--          // console.log('Latitude:', latitude, 'Longitude:', longitude);-->
-<!--          // alert('您选择的位置是：' + latitude + ',' + longitude);-->
-<!--        }, function(error) {-->
-<!--          console.log('Error getting current position:', error);-->
-<!--        });-->
-<!--      } else {-->
-<!--        console.log('Geolocation is not supported by this browser.');-->
-<!--      }-->
-
-<!--    </script>-->
+    <!--    get current location-->
+    <script>
+      var latitude = null;
+      var longitude = null;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            // console.log('Latitude:', latitude, 'Longitude:', longitude);
+            // alert('您选择的位置是：' + latitude + ',' + longitude);
+          },
+          function (error) {
+            console.log("Error getting current position:", error);
+          }
+        );
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+    </script>
   </head>
+
   <body>
     <div class="container">
       <div class="title-container">
         <h1 class="page-title">Create a new Sighting</h1>
       </div>
       <form class="sighting-form" id="sighting-form">
-        <div class="form-container">
-          <div class="input-container">
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description" required />
-          </div>
-
-          <div class="input-container">
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" required />
-          </div>
-
-          <div class="input-container">
-            <label for="location">Location:</label>
-            <input type="text" placeholder="Please select from the map" id="location" name="location" required disabled />
-          </div>
-
-          <div class="input-container">
-            <label for="position">Position:</label>
-            <input type="text" placeholder="Please select from the map" id="position" name="position" required disabled />
-          </div>
-
-<!--          <div class="input-container">-->
-<!--            <label for="distance">Distance:</label>-->
-<!--            <input type="text" id="distance" name="distance" required disabled />-->
-<!--          </div>-->
-
-          <div id="map" style="height: 300px;width: 700px"></div>
-          <hr />
-
-          <div class="input-container">
-            <label for="identification">Identification:</label>
-            <input
-              type="text"
-              id="identification"
-              name="identification"
-              required
-            />
-          </div>
-
-          <div class="input-container">
-            <label for="bird-name">Bird Name:</label>
-            <input type="text" id="bird-name" name="bird-name" required />
-          </div>
-
-          <div class="input-container">
-            <label for="description">Bird Description:</label>
-            <textarea
-              id="bird-description"
-              name="bird-description"
-              required
-            ></textarea>
-          </div>
-
-          <div class="input-container">
-            <label for="url">URL:</label>
-            <input type="text" id="url" name="url" />
-          </div>
-
-          <div class="input-container">
-            <label for="image">Image:</label>
-            <input type="file" id="image" name="image" />
-          </div>
-
-          <button type="submit" class="create-btn">
-            <i class="fa fa-plus-circle"></i> Create
-          </button>
+        <!-- <div class="form-container"> -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description:</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            class="form-control"
+            required
+          />
         </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date:</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location:</label>
+          <input
+            type="text"
+            placeholder="Please select from the map"
+            id="location"
+            name="location"
+            class="form-control"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="position" class="form-label">Position:</label>
+          <input
+            type="text"
+            id="position"
+            name="position"
+            class="form-control"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="distance" class="form-label">Distance:</label>
+          <input
+            type="text"
+            id="distance"
+            name="distance"
+            class="form-control"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <div id="map"></div>
+        </div>
+        <hr />
+
+        <div class="mb-3">
+          <label for="identification" class="form-label">Identification:</label>
+          <input
+            type="text"
+            id="identification"
+            name="identification"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="bird-name" class="form-label">Bird Name:</label>
+          <input
+            type="text"
+            id="bird-name"
+            name="bird-name"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Bird Description:</label>
+          <textarea
+            id="bird-description"
+            name="bird-description"
+            class="form-control"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="url" class="form-label">URL:</label>
+          <input type="text" id="url" name="url" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Image:</label>
+          <input type="file" id="image" name="image" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+        <!-- </div> -->
       </form>
+    </div>
 
-      <!--    map-->
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en" async defer></script>
-      <script>
-        function initMap() {
-          var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 53.381766908539895, lng: -1.4816093444824219},
-            zoom: 12
+    <!-- Map -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
+      async
+      defer
+    ></script>
+
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 53.381766908539895, lng: -1.4816093444824219 },
+          zoom: 12,
+        });
+
+        var marker = null;
+
+        map.addListener("click", function (e) {
+          var location = e.latLng;
+          var locationInput = document.getElementById("location");
+          locationInput.value = location.lat() + "," + location.lng();
+          // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
+
+          // 删除先前的标记
+          if (marker !== null) {
+            marker.setMap(null);
+          }
+          var myLatlng = new google.maps.LatLng(location.lat(), location.lng());
+          marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
           });
 
-          var marker = null;
+          const distance = getDistanceFromLatLonInKm(
+            location.lat(),
+            location.lng(),
+            latitude,
+            longitude
+          );
+          // alert(distance); // （单位：千米）
+          var DistanceInput = document.getElementById("distance");
+          DistanceInput.value = distance + "km";
 
-          map.addListener('click', function(e) {
-            var location = e.latLng;
-            var locationInput = document.getElementById('location');
-            locationInput.value =location.lat() + ',' + location.lng();
-            // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
-
-            // 删除先前的标记
-            if (marker !== null) {
-              marker.setMap(null);
-            }
-            var myLatlng = new google.maps.LatLng(location.lat(), location.lng());
-            marker = new google.maps.Marker({
-              position: myLatlng,
-              map: map
+          getAddressFromLatLng(location.lat(), location.lng())
+            .then(function (address) {
+              var PositionInput = document.getElementById("position");
+              PositionInput.value = address;
+              // Do something with the address string, such as display it on the page
+            })
+            .catch(function (error) {
+              console.log("Error getting address: " + error);
             });
+        });
+      }
 
-            // const distance = getDistanceFromLatLonInKm(location.lat(), location.lng(), latitude,longitude );
-            // // alert(distance); // （单位：千米）
-            // var DistanceInput =document.getElementById('distance');
-            // DistanceInput.value=distance+'km';
+      // // Adds a marker to the map.
+      // function addMarker(location, map) {
+      //   // Add the marker at the clicked location, and add the next-available label
+      //   // from the array of alphabetical characters.
+      //   new google.maps.Marker({
+      //     position: location,
+      //     label: labels[labelIndex++ % labels.length],
+      //     map: map,
+      //   });
+      // }
 
-            getAddressFromLatLng(location.lat(), location.lng())
-                    .then(function(address) {
-                      var PositionInput =document.getElementById('position');
-                      PositionInput.value=address;
-                      // Do something with the address string, such as display it on the page
-                    })
-                    .catch(function(error) {
-                      console.log('Error getting address: ' + error);
-                    });
+      // compute distance
+      function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+        const R = 6371; // 地球半径（单位：千米）
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(lat1)) *
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // 距离（单位：千米）
+        return distance;
+      }
 
-          });
-        }
+      function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+      }
 
-        // // Adds a marker to the map.
-        // function addMarker(location, map) {
-        //   // Add the marker at the clicked location, and add the next-available label
-        //   // from the array of alphabetical characters.
-        //   new google.maps.Marker({
-        //     position: location,
-        //     label: labels[labelIndex++ % labels.length],
-        //     map: map,
-        //   });
-        // }
-
-        // compute distance
-        // function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-        //   const R = 6371; // 地球半径（单位：千米）
-        //   const dLat = deg2rad(lat2 - lat1);
-        //   const dLon = deg2rad(lon2 - lon1);
-        //   const a =
-        //           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        //           Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-        //           Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        //   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        //   const distance = R * c; // 距离（单位：千米）
-        //   return distance;
-        // }
-        //
-        // function deg2rad(deg) {
-        //   return deg * (Math.PI/180);
-        // }
-
-        function getAddressFromLatLng(lat, lng) {
-          return new Promise(function(resolve, reject) {
-            var geocoder = new google.maps.Geocoder();
-            var latlng = new google.maps.LatLng(lat, lng);
-            geocoder.geocode({'latLng': latlng}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                  var address = results[0].formatted_address;
-                  resolve(address);
-                } else {
-                  reject('No results found');
-                }
+      function getAddressFromLatLng(lat, lng) {
+        return new Promise(function (resolve, reject) {
+          var geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(lat, lng);
+          geocoder.geocode({ latLng: latlng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0]) {
+                var address = results[0].formatted_address;
+                resolve(address);
               } else {
-                reject('Geocoder failed due to: ' + status);
+                reject("No results found");
               }
-            });
-          });
-        }
-      </script>
-
-
-      <script>
-        const username = sessionStorage.getItem("username");
-
-        document.addEventListener("DOMContentLoaded", () => {
-          const form = document.getElementById("sighting-form");
-
-          form.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Prevent form from submitting normally
-
-            const data = {
-              description: document.getElementById("description").value,
-              date: document.getElementById("date").value,
-              author: username,
-              location: document.getElementById("location").value,
-              position: document.getElementById("position").value,
-              // distance: document.getElementById("distance").value,
-              identification: document.getElementById("identification").value,
-              birdName: document.getElementById("bird-name").value,
-              birdDescription:
-                document.getElementById("bird-description").value,
-              url: document.getElementById("url").value,
-              image: document.getElementById("image").files[0],
-            };
-
-            const formData = new FormData();
-            for (const key in data) {
-              formData.append(key, data[key]);
-            }
-
-            const response = await fetch("/add", {
-              method: "POST",
-              body: formData,
-            });
-
-            if (response.ok) {
-              alert("Sighting created successfully!");
-              form.reset();
             } else {
-              alert("Error creating sighting");
+              reject("Geocoder failed due to: " + status);
             }
           });
         });
-      </script>
-    </div>
+      }
+    </script>
+
+    <!-- Submit the form -->
+    <script>
+      const username = sessionStorage.getItem("username");
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("sighting-form");
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault(); // Prevent form from submitting normally
+
+          const data = {
+            description: document.getElementById("description").value,
+            date: document.getElementById("date").value,
+            author: username,
+            location: document.getElementById("location").value,
+            position: document.getElementById("position").value,
+            distance: document.getElementById("distance").value,
+            identification: document.getElementById("identification").value,
+            birdName: document.getElementById("bird-name").value,
+            birdDescription: document.getElementById("bird-description").value,
+            url: document.getElementById("url").value,
+            image: document.getElementById("image").files[0],
+          };
+
+          const formData = new FormData();
+          for (const key in data) {
+            formData.append(key, data[key]);
+          }
+
+          const response = await fetch("/add", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            alert("Sighting created successfully!");
+            form.reset();
+          } else {
+            alert("Error creating sighting");
+          }
+        });
+      });
+    </script>
   </body>
 </html>
