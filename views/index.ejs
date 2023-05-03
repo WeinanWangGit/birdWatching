@@ -81,25 +81,25 @@
         </tbody>
       </table>
 
-      <table id="table-Distance" style="display: none" >
-        <thead>
-        <tr>
-          <th>Distance</th>
-          <th>Identification</th>
-          <th>User</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody id="table-body">
-        <% sightings.forEach(function (sighting) { %>
-          <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
-            <td><%= sighting.distance %></td>
-            <td><%= sighting.identification.birdName %></td>
-            <td><%= sighting.author %></td>
-          </tr>
-        <% }); %>
-        </tbody>
-      </table>
+<!--      <table id="table-Distance" style="display: none" >-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th>Distance</th>-->
+<!--          <th>Identification</th>-->
+<!--          <th>User</th>-->
+<!--          <th></th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody id="table-body">-->
+<!--        <% sightings.forEach(function (sighting) { %>-->
+<!--          <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">-->
+<!--            <td><%= sighting.distance %></td>-->
+<!--            <td><%= sighting.identification.birdName %></td>-->
+<!--            <td><%= sighting.author %></td>-->
+<!--          </tr>-->
+<!--        <% }); %>-->
+<!--        </tbody>-->
+<!--      </table>-->
 
       <div id="grid-view" class="grid-layout" style="display: none">
         <% sightings.forEach(function(sighting) { %>
@@ -132,7 +132,7 @@
             <i class="fa fa-exchange"></i>
             <span id="toggle-text">Sort by distance</span>
           </button>
-        </div>--
+        </div>
       </div>
 
 
@@ -241,7 +241,7 @@
 
     <script>
       var currentView = 0;
-      var views = ["table-view", "table-Distance", "grid-view"];
+      var views = ["table-view", "grid-view"];
       var toggleText = document.querySelector("span");
 
       function toggleGrid(n) {
@@ -260,8 +260,6 @@
           toggleText.innerHTML = "Sort by distance";
         } else if (currentView == 1) {
           toggleText.innerHTML = "Sort by grid";
-        } else {
-          toggleText.innerHTML = "Sort by time";
         }
       }
     </script>
