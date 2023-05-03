@@ -36,8 +36,6 @@
       </div>
       <form class="sighting-form" id="sighting-form">
         <!-- <div class="form-container"> -->
-
-        <!-- <div class="form-container"> -->
         <div class="mb-3">
           <label for="description" class="form-label">Description:</label>
           <input
@@ -69,6 +67,7 @@
             name="location"
             class="form-control"
             required
+            disabled
           />
         </div>
 
@@ -146,167 +145,15 @@
         <button type="submit" class="btn btn-primary">Create</button>
         <!-- </div> -->
       </form>
-      <<<<<<< HEAD
-
-      <!--    map-->
-      <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
-        async
-        defer
-      ></script>
-      <script>
-        function initMap() {
-          var map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 53.381766908539895, lng: -1.4816093444824219 },
-            zoom: 12,
-          });
-
-          var marker = null;
-
-          map.addListener("click", function (e) {
-            var location = e.latLng;
-            var locationInput = document.getElementById("location");
-            locationInput.value = location.lat() + "," + location.lng();
-            // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
-
-            // 删除先前的标记
-            if (marker !== null) {
-              marker.setMap(null);
-            }
-            var myLatlng = new google.maps.LatLng(
-              location.lat(),
-              location.lng()
-            );
-            marker = new google.maps.Marker({
-              position: myLatlng,
-              map: map,
-            });
-
-            const distance = getDistanceFromLatLonInKm(
-              location.lat(),
-              location.lng(),
-              latitude,
-              longitude
-            );
-            // alert(distance); // （单位：千米）
-            var DistanceInput = document.getElementById("distance");
-            DistanceInput.value = distance + "km";
-
-            getAddressFromLatLng(location.lat(), location.lng())
-              .then(function (address) {
-                var PositionInput = document.getElementById("position");
-                PositionInput.value = address;
-                // Do something with the address string, such as display it on the page
-              })
-              .catch(function (error) {
-                console.log("Error getting address: " + error);
-              });
-          });
-        }
-
-        // // Adds a marker to the map.
-        // function addMarker(location, map) {
-        //   // Add the marker at the clicked location, and add the next-available label
-        //   // from the array of alphabetical characters.
-        //   new google.maps.Marker({
-        //     position: location,
-        //     label: labels[labelIndex++ % labels.length],
-        //     map: map,
-        //   });
-        // }
-
-        // compute distance
-        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-          const R = 6371; // 地球半径（单位：千米）
-          const dLat = deg2rad(lat2 - lat1);
-          const dLon = deg2rad(lon2 - lon1);
-          const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(deg2rad(lat1)) *
-              Math.cos(deg2rad(lat2)) *
-              Math.sin(dLon / 2) *
-              Math.sin(dLon / 2);
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-          const distance = R * c; // 距离（单位：千米）
-          return distance;
-        }
-
-        function deg2rad(deg) {
-          return deg * (Math.PI / 180);
-        }
-
-        function getAddressFromLatLng(lat, lng) {
-          return new Promise(function (resolve, reject) {
-            var geocoder = new google.maps.Geocoder();
-            var latlng = new google.maps.LatLng(lat, lng);
-            geocoder.geocode({ latLng: latlng }, function (results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                  var address = results[0].formatted_address;
-                  resolve(address);
-                } else {
-                  reject("No results found");
-                }
-              } else {
-                reject("Geocoder failed due to: " + status);
-              }
-            });
-          });
-        }
-      </script>
-
-      <script>
-        const username = sessionStorage.getItem("username");
-
-        document.addEventListener("DOMContentLoaded", () => {
-          const form = document.getElementById("sighting-form");
-
-          form.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Prevent form from submitting normally
-
-            const data = {
-              description: document.getElementById("description").value,
-              date: document.getElementById("date").value,
-              author: username,
-              location: document.getElementById("location").value,
-              position: document.getElementById("position").value,
-              distance: document.getElementById("distance").value,
-              identification: document.getElementById("identification").value,
-              birdName: document.getElementById("bird-name").value,
-              birdDescription:
-                document.getElementById("bird-description").value,
-              url: document.getElementById("url").value,
-              image: document.getElementById("image").files[0],
-            };
-
-            const formData = new FormData();
-            for (const key in data) {
-              formData.append(key, data[key]);
-            }
-
-            const response = await fetch("/add", {
-              method: "POST",
-              body: formData,
-            });
-
-            if (response.ok) {
-              alert("Sighting created successfully!");
-              form.reset();
-            } else {
-              alert("Error creating sighting");
-            }
-          });
-        });
-      </script>
-      ======= >>>>>>> main
     </div>
 
-    <!--    map-->
+    <!-- Map -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
       async
       defer
     ></script>
+
     <script>
       function initMap() {
         var map = new google.maps.Map(document.getElementById("map"), {
@@ -314,11 +161,23 @@
           zoom: 12,
         });
 
+        var marker = null;
+
         map.addListener("click", function (e) {
           var location = e.latLng;
           var locationInput = document.getElementById("location");
           locationInput.value = location.lat() + "," + location.lng();
           // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
+
+          // 删除先前的标记
+          if (marker !== null) {
+            marker.setMap(null);
+          }
+          var myLatlng = new google.maps.LatLng(location.lat(), location.lng());
+          marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+          });
 
           const distance = getDistanceFromLatLonInKm(
             location.lat(),
@@ -329,8 +188,29 @@
           // alert(distance); // （单位：千米）
           var DistanceInput = document.getElementById("distance");
           DistanceInput.value = distance + "km";
+
+          getAddressFromLatLng(location.lat(), location.lng())
+            .then(function (address) {
+              var PositionInput = document.getElementById("position");
+              PositionInput.value = address;
+              // Do something with the address string, such as display it on the page
+            })
+            .catch(function (error) {
+              console.log("Error getting address: " + error);
+            });
         });
       }
+
+      // // Adds a marker to the map.
+      // function addMarker(location, map) {
+      //   // Add the marker at the clicked location, and add the next-available label
+      //   // from the array of alphabetical characters.
+      //   new google.maps.Marker({
+      //     position: location,
+      //     label: labels[labelIndex++ % labels.length],
+      //     map: map,
+      //   });
+      // }
 
       // compute distance
       function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -351,9 +231,29 @@
       function deg2rad(deg) {
         return deg * (Math.PI / 180);
       }
+
+      function getAddressFromLatLng(lat, lng) {
+        return new Promise(function (resolve, reject) {
+          var geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(lat, lng);
+          geocoder.geocode({ latLng: latlng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0]) {
+                var address = results[0].formatted_address;
+                resolve(address);
+              } else {
+                reject("No results found");
+              }
+            } else {
+              reject("Geocoder failed due to: " + status);
+            }
+          });
+        });
+      }
     </script>
 
-    <!-- <script>
+    <!-- Submit the form -->
+    <script>
       const username = sessionStorage.getItem("username");
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -367,6 +267,7 @@
             date: document.getElementById("date").value,
             author: username,
             location: document.getElementById("location").value,
+            position: document.getElementById("position").value,
             distance: document.getElementById("distance").value,
             identification: document.getElementById("identification").value,
             birdName: document.getElementById("bird-name").value,
@@ -393,6 +294,6 @@
           }
         });
       });
-    </script> -->
+    </script>
   </body>
 </html>
