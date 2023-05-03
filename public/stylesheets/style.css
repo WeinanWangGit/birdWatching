@@ -116,6 +116,21 @@ td input[type="text"] {
   background-image: linear-gradient(to right, #7dd56f, #28b487);
 }
 
+.change-button {
+  position: absolute;
+  bottom: 10rem;
+  right: 10rem;
+}
+.change-button button {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+}
+
 /* Responsive grid layout*/
 @media only screen and (max-width: 767px) {
   .grid-layout {

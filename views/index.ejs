@@ -52,13 +52,13 @@
       <table id="table-view">
         <thead>
           <tr>
-            <th>Date/Time</th>
+            <th><button onclick="toggleTable(0)">Data/time</button></th>
             <th>Identification</th>
             <th>User</th>
             <th></th>
           </tr>
         </thead>
-        <tbody id="table-body">
+        <tbody id="table-body-date">
           <% sightings.forEach(function(sighting) { %>
           <tr
             data-id="<%= sighting._id %>"
@@ -69,6 +69,15 @@
             <td><%= sighting.author %></td>
           </tr>
           <% }); %>
+        </tbody>
+        <tbody id="table-body-distance" style="display:none">
+        <% sightings.forEach(function (sighting) { %>
+          <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
+            <td><%= sighting.distance %></td>
+            <td><%= sighting.identification.birdName %></td>
+            <td><%= sighting.author %></td>
+          </tr>
+        <% }); %>
         </tbody>
       </table>
 
@@ -119,7 +128,7 @@
 
       <div class="header-container clearfix">
         <div class="toggle-button">
-          <button onclick="toggleGrid()">
+          <button onclick="toggleGrid(0)">
             <i class="fa fa-exchange"></i>
             <span id="toggle-text">Sort by distance</span>
           </button>
@@ -133,12 +142,109 @@
       </div>
     </div>
 
+<!--    切换表格-->
+    <script>
+      function toggleTable(n) {
+        var toggleText = document.querySelector("button");
+        var table1 = document.getElementById("table-body-date");
+        var table2 = document.getElementById("table-body-distance");
+
+        if (table1.style.display === "none") {
+          table1.style.display = "table-row-group";
+          table2.style.display = "none";
+          toggleText.innerHTML = "Data/time";
+
+        } else {
+          table1.style.display = "none";
+          table2.style.display = "table-row-group";
+          toggleText.innerHTML = "Distance";
+        }
+        sortTable(n);
+      }
+    </script>
+<!--    切换表格-->
+<!--    <script>-->
+<!--      const table = document.getElementById('table-view');-->
+<!--      const headers = table.querySelectorAll('th');-->
+
+<!--      headers.forEach((header) => {-->
+<!--        header.addEventListener('click', () => {-->
+<!--          const columnIndex = header.cellIndex;-->
+
+<!--          // 根据列索引设置要提取的数据字段-->
+<!--          let field;-->
+<!--          switch (columnIndex) {-->
+<!--            case 0:-->
+<!--              field = 'distance';-->
+<!--              break;-->
+<!--            case 1:-->
+<!--              field = 'birdName';-->
+<!--              break;-->
+<!--            case 2:-->
+<!--              field = 'author';-->
+<!--              break;-->
+<!--            default:-->
+<!--              field = '';-->
+<!--          }-->
+
+<!--          // 获取所有行，并更新单元格内容-->
+<!--          const rows = table.querySelectorAll('tbody tr');-->
+<!--          rows.forEach((row) => {-->
+<!--            const cell = row.querySelector(`td:nth-child(${columnIndex + 1})`);-->
+<!--            const data = row.dataset[field];-->
+<!--            cell.innerText = data;-->
+<!--          });-->
+<!--        });-->
+<!--      });-->
+<!--    </script>-->
+
+<!--    排序-->
+    <script>
+      function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("table-body-distance");
+        switching = true;
+        dir = "asc"; // Set the sorting direction to ascending
+        while (switching) {
+          switching = false;
+          rows = table.rows;
+          for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir == "asc") {
+              if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+          } else {
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+      }
+    </script>
+
     <script>
       var currentView = 0;
       var views = ["table-view", "table-Distance", "grid-view"];
       var toggleText = document.querySelector("button");
 
-      function toggleGrid() {
+      function toggleGrid(n) {
+        sortTable(n)
         var viewToHide = views[currentView];
         currentView = (currentView + 1) % views.length;
         var viewToShow = views[currentView];
