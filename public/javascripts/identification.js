@@ -11,8 +11,12 @@ async function searchBird() {
   const sanitisedSearch = searchText.value.replace(/[^a-zA-Z0-9]/g, "");
 
   if (!sanitisedSearch) {
-    alert("Please enter a bird name.");
+    // leave blank
   } else {
+    // Show loading spinner
+    const spinner = document.getElementById("spinner");
+    spinner.classList.remove("d-none");
+
     // Query DBPedia to get bird information
     const query = `
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -59,6 +63,7 @@ async function searchBird() {
     if (response.ok) {
       const data = await response.json();
       displayResults(data);
+      spinner.classList.add("d-none");
       // console.log(data.results.bindings[0].image.value);
     } else {
       console.error("Failed to fetch search results:", response.status);
@@ -78,6 +83,7 @@ function displayResults(data) {
   if (bindings.length === 0) {
     resultsContainer.innerHTML = "<p>No results found.</p>";
   } else {
+    // Create result area title
     const list = document.createElement("ul");
     const label = document.createElement("div");
     label.innerHTML = "<h5>Please click the image to choose the bird</h5>";
