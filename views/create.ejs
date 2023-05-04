@@ -83,7 +83,7 @@
           />
         </div>
 
-        <div style="display: none" class="mb-3" >
+        <div style="display: none" class="mb-3">
           <label for="distance" class="form-label">Distance:</label>
           <input
             type="text"
@@ -189,7 +189,7 @@
           // alert(distance); // （单位：千米）
           const distance_format = distance.toFixed(2);
           var DistanceInput = document.getElementById("distance");
-          DistanceInput.value = distance_format + "  "+ "km";
+          DistanceInput.value = distance.toFixed(2) + "km";
 
           getAddressFromLatLng(location.lat(), location.lng())
             .then(function (address) {
