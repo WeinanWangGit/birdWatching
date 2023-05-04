@@ -39,7 +39,9 @@ a {
   /*width: 15rem;*/
 }
 .toggle-button button {
-  padding: 0.5rem 1.3rem;
+  /*padding: 0.5rem 1.3rem;*/
+  width: 10rem;
+  height: 2rem;
   font-size: 1rem;
   color: white;
   border: none;
@@ -127,7 +129,9 @@ td input[type="text"] {
   right: 5rem;
 }
 .add-button button {
-  padding: 0.5rem 1rem;
+  /*padding: 0.5rem 1rem;*/
+  width: 10rem;
+  height: 2rem;
   font-size: 1rem;
   color: white;
   border: none;
