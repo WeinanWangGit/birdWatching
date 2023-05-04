@@ -12,6 +12,9 @@
   </head>
 
   <body onload="init('<%=JSON.stringify(sighting)%>')">
+    <!-- <body
+    onload="init(decodeURIComponent('<%=encodeURIComponent(JSON.stringify(sighting))%>'))"
+  > -->
     <div class="container">
       <!-- <div class="row"> -->
       <div class="col-md-6">
@@ -113,6 +116,8 @@
             <h2 class="card-title">Metadata</h2>
             <p><strong>Date:</strong> <%= sighting.date %></p>
             <p><strong>Author:</strong> <%= sighting.author %></p>
+            <p><strong>Description:</strong> <%= sighting.description %></p>
+
             <p id="location">
               <strong>Location:</strong> <%= sighting.location %>
             </p>
@@ -222,24 +227,29 @@
       async
       defer
     ></script>
+
     <script>
       function initMap() {
         const location = "<%= sighting.location %>";
-        const location_sight =location.split(",");
+        const location_sight = location.split(",");
         var map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: parseFloat(location_sight[0]), lng: parseFloat(location_sight[1]) },
+          center: {
+            lat: parseFloat(location_sight[0]),
+            lng: parseFloat(location_sight[1]),
+          },
           zoom: 12,
           // position: location,
-          draggable: true
+          draggable: true,
         });
 
-        var myLatlng = new google.maps.LatLng(location_sight[0], location_sight[1]);
+        var myLatlng = new google.maps.LatLng(
+          location_sight[0],
+          location_sight[1]
+        );
         marker = new google.maps.Marker({
           position: myLatlng,
-          map: map
+          map: map,
         });
-
-
 
         map.addListener(function (e) {
           var location = e.latLng;
@@ -250,7 +260,6 @@
             location.lat() +
             ", Longitude: " +
             location.lng();
-
 
           geocoder.geocode({ location: location }, function (results, status) {
             if (status === "OK") {
@@ -266,8 +275,6 @@
           });
           // alert('The location you chose is: ' + location.lat() + ',' + location.lng());
         });
-
-
       }
     </script>
 

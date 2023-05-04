@@ -10,52 +10,59 @@ async function searchBird() {
   const searchText = document.getElementById("search-text");
   const sanitisedSearch = searchText.value.replace(/[^a-zA-Z0-9]/g, "");
 
-  // Query DBPedia to get bird information
-  const query = `
-  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  PREFIX dbo: <http://dbpedia.org/ontology/>
-  SELECT ?bird ?label ?description ?image
-  WHERE {
-    ?bird a dbo:Bird;
-    rdfs:label ?label;
-    dbo:abstract ?description;
-    dbo:thumbnail ?image.
-    FILTER(LANG(?label) = 'en' && LANG(?description) = 'en' && regex(?label, '${sanitisedSearch}',"i"))
-  }
-  LIMIT 5
-  `;
-  const url = `https://dbpedia.org/sparql?query=${encodeURIComponent(
-    query
-  )}&format=json`;
-  const response = await fetch(url);
-
-  // TODO: fetch-sparql-endpoint
-  // const endpoint = "https://dbpedia.org/sparql";
-  // const query = `
-  //   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  //   PREFIX dbo: <http://dbpedia.org/ontology/>
-  //   SELECT ?bird ?label ?description
-  //   WHERE {
-  //     ?bird a dbo:Bird;
-  //     rdfs:label ?label;
-  //     dbo:abstract ?description;
-  //     FILTER(LANG(?label) = 'en' && LANG(?description) = 'en' && regex(?label, '${sanitisedSearch}',"i"))
-  //   }
-  //   LIMIT 5
-  // `;
-  // const options = {
-  //   headers: {
-  //     Accept: "application/sparql-results+json",
-  //   },
-  // };
-  // const response = await fetchSPARQLEndpoint(endpoint, query, options);
-
-  if (response.ok) {
-    const data = await response.json();
-    displayResults(data);
-    // console.log(data.results.bindings[0].image.value);
+  if (!sanitisedSearch) {
+    alert("Please enter a bird name.");
   } else {
-    console.error("Failed to fetch search results:", response.status);
+    // Query DBPedia to get bird information
+    const query = `
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX dbo: <http://dbpedia.org/ontology/>
+    SELECT ?bird ?label ?description ?image
+    WHERE {
+      ?bird a dbo:Bird;
+      rdfs:label ?label;
+      dbo:abstract ?description;
+      dbo:thumbnail ?image.
+      FILTER(LANG(?label) = 'en' && LANG(?description) = 'en' && regex(?label, '${sanitisedSearch}',"i"))
+    }
+    LIMIT 5`;
+
+    // const url = `https://dbpedia.org/sparql?query=${encodeURIComponent(
+    //   query
+    // )}&format=json`;
+    const endpointUrl = "https://dbpedia.org/sparql";
+    const encodedQuery = encodeURIComponent(query);
+    const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
+    const response = await fetch(url);
+
+    // TODO: fetch-sparql-endpoint
+    // const endpoint = "https://dbpedia.org/sparql";
+    // const query = `
+    //   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    //   PREFIX dbo: <http://dbpedia.org/ontology/>
+    //   SELECT ?bird ?label ?description
+    //   WHERE {
+    //     ?bird a dbo:Bird;
+    //     rdfs:label ?label;
+    //     dbo:abstract ?description;
+    //     FILTER(LANG(?label) = 'en' && LANG(?description) = 'en' && regex(?label, '${sanitisedSearch}',"i"))
+    //   }
+    //   LIMIT 5
+    // `;
+    // const options = {
+    //   headers: {
+    //     Accept: "application/sparql-results+json",
+    //   },
+    // };
+    // const response = await fetchSPARQLEndpoint(endpoint, query, options);
+
+    if (response.ok) {
+      const data = await response.json();
+      displayResults(data);
+      // console.log(data.results.bindings[0].image.value);
+    } else {
+      console.error("Failed to fetch search results:", response.status);
+    }
   }
 }
 
@@ -174,9 +181,9 @@ function updateIdentification(author) {
   const username = sessionStorage.getItem("username");
   if (username === author) {
     // Populate modal inputs with current identification data
-    birdNameInput.value = birdName.textContent;
-    descriptionInput.value = description.textContent;
-    urlInput.value = url.textContent;
+    birdNameInput.value = birdName.textContent.trim();
+    descriptionInput.value = description.textContent.trim();
+    urlInput.value = url.textContent.trim();
 
     // Show modal dialog box
     bootstrapModal.show();
@@ -197,10 +204,11 @@ async function saveChanges(sightingId) {
   const modal = document.getElementById("modal");
   const bootstrapModal = new bootstrap.Modal(modal);
 
+  // remove '' to avoid uncaught syntax error for JSON.stringify
   const data = {
-    birdName: birdNameInput.value,
-    description: descriptionInput.value,
-    url: urlInput.value,
+    birdName: birdNameInput.value.replace(/'/g, ""),
+    description: descriptionInput.value.replace(/'/g, ""),
+    url: urlInput.value.replace(/'/g, ""),
   };
   const response = await fetch(`/details?id=${sightingId}`, {
     method: "PUT",
