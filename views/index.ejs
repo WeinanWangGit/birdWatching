@@ -52,33 +52,37 @@
       <table id="table-view">
         <thead>
           <tr>
-            <th>Identification</th>
-            <th><button onclick="toggle_Date()">Data/time</button></th>
-            <th><button onclick="toggle_Distance(2)">Distance</button></th>
             <th>User</th>
-            <th></th>
+            <th>Identification</th>
+            <th>position</th>
+            <th><button class="list-button" onclick="toggle_Distance(2)">Distance</button></th>
+            <th><button class="list-button" onclick="toggle_Date()">Data/time</button></th>
           </tr>
         </thead>
+
         <tbody id="table-body-date">
           <% sightings.forEach(function(sighting) { %>
           <tr
             data-id="<%= sighting._id %>"
-            onclick="location.href='/details?id=<%= sighting._id %>'"
-          >
-            <td><%= sighting.identification.birdName %></td>
-            <td><%= new Date(sighting.date).toLocaleString() %></td>
-            <td><%= sighting.distance %></td>
+            onclick="location.href='/details?id=<%= sighting._id %>'">
             <td><%= sighting.author %></td>
+            <td><%= sighting.identification.birdName %></td>
+            <td><%= sighting.position %></td>
+            <td><%= sighting.distance %></td>
+            <td><%= new Date(sighting.date).toLocaleString() %></td>
           </tr>
           <% }); %>
         </tbody>
+
         <tbody id="table-body-distance" style="display:none">
         <% sightings.forEach(function (sighting) { %>
-          <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
-            <td><%= sighting.identification.birdName %></td>
-            <td><%= new Date(sighting.date).toLocaleString() %></td>
-            <td><%= sighting.distance %></td>
+          <tr data-id="<%= sighting._id %>"
+              onclick="location.href='/details?id=<%= sighting._id %>'">
             <td><%= sighting.author %></td>
+            <td><%= sighting.identification.birdName %></td>
+            <td><%= sighting.position %></td>
+            <td><%= sighting.distance %></td>
+            <td><%= new Date(sighting.date).toLocaleString() %></td>
           </tr>
         <% }); %>
         </tbody>

@@ -34,22 +34,30 @@ a {
 
 .toggle-button {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  width: 15rem;
+  top: 10rem;
+  right: 5rem;
+  /*width: 15rem;*/
 }
 .toggle-button button {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.3rem;
   font-size: 1rem;
   color: white;
   border: none;
   border-radius: 0.5rem;
-  /*cursor: pointer;*/
-  background-image: linear-gradient(to left, #7dd56f, #28b487);
+  cursor: pointer;
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
 }
 
+/*.list-button{*/
+/*  position: center;*/
+/*  padding: 0.5rem 1rem;*/
+/*  text-align: center;*/
+/*  font-size: 1rem;*/
+/*} !*对应表单第一项排序功能的按钮*!*/
+
 table {
-  width: 50%;
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+  width: 90%;
   border-collapse: collapse;
   /*border: 0.3rem solid #4caf50;*/
   border-radius: 0.5rem;
@@ -58,12 +66,23 @@ table {
 th,
 td {
   padding: 0.5rem 0.55rem;
-  text-align: left;
+  text-align: center;
 }
 
 th {
-  background-color: #4caf50;
+  /*background-image: linear-gradient(to right, #7dd56f, #28b487);*/
+  background-color:#28b487;
   color: white;
+}
+
+.list-button{
+  background-image: linear-gradient(to left, #7dd56f, #28b487);
+  color: white;
+  border-radius: 0.5rem;
+  border-style: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
 td input[type="datetime-local"],
@@ -104,8 +123,8 @@ td input[type="text"] {
 
 .add-button {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  top: 7rem;
+  right: 5rem;
 }
 .add-button button {
   padding: 0.5rem 1rem;
