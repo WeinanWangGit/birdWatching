@@ -72,23 +72,6 @@ async function addSighting(sighting) {
     const transaction = db.transaction([objectStoreName], 'readwrite');
     const objectStore = transaction.objectStore(objectStoreName);
 
-    // console.log(sighting._id)
-    // // Check if the sighting already exists in the store
-    // const existingSightingRequest = objectStore.get(sighting._id);
-    // const existingSighting = await new Promise((resolve, reject) => {
-    //     existingSightingRequest.onsuccess = function() {
-    //         resolve(existingSightingRequest.result);
-    //     };
-    //     existingSightingRequest.onerror = reject;
-    // });
-    // console.log(existingSighting)
-    //
-    // if (existingSighting) {
-    //     console.log('Sighting already exists in IndexedDB');
-    //     return;
-    // }
-
-
     // Add the sighting to the store
     await objectStore.add(sighting);
 
