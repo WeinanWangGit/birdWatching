@@ -52,8 +52,9 @@
       <table id="table-view">
         <thead>
           <tr>
-            <th><button onclick="toggleTable(0)">Data/time</button></th>
             <th>Identification</th>
+            <th><button onclick="toggle_Date()">Data/time</button></th>
+            <th><button onclick="toggle_Distance(2)">Distance</button></th>
             <th>User</th>
             <th></th>
           </tr>
@@ -64,8 +65,9 @@
             data-id="<%= sighting._id %>"
             onclick="location.href='/details?id=<%= sighting._id %>'"
           >
-            <td><%= new Date(sighting.date).toLocaleString() %></td>
             <td><%= sighting.identification.birdName %></td>
+            <td><%= new Date(sighting.date).toLocaleString() %></td>
+            <td><%= sighting.distance %></td>
             <td><%= sighting.author %></td>
           </tr>
           <% }); %>
@@ -73,8 +75,9 @@
         <tbody id="table-body-distance" style="display:none">
         <% sightings.forEach(function (sighting) { %>
           <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
-            <td><%= sighting.distance %></td>
             <td><%= sighting.identification.birdName %></td>
+            <td><%= new Date(sighting.date).toLocaleString() %></td>
+            <td><%= sighting.distance %></td>
             <td><%= sighting.author %></td>
           </tr>
         <% }); %>
@@ -145,22 +148,29 @@
 
 <!--    切换表格-->
     <script>
-      function toggleTable(n) {
-        var toggleText = document.querySelector("button");
+      const STATUS_DATE = 'pending';
+      const STATUS_DISTANCE = 'success';
+      let status = STATUS_DATE;
+
+      function toggle_Date() {
         var table1 = document.getElementById("table-body-date");
         var table2 = document.getElementById("table-body-distance");
 
         if (table1.style.display === "none") {
           table1.style.display = "table-row-group";
           table2.style.display = "none";
-          toggleText.innerHTML = "Data/time";
-
-        } else {
+        }
+      }
+      function toggle_Distance(n) {
+        var table1 = document.getElementById("table-body-date");
+        var table2 = document.getElementById("table-body-distance");
+        if (table2.style.display === "none") {
           table1.style.display = "none";
           table2.style.display = "table-row-group";
-          toggleText.innerHTML = "Distance";
         }
         sortTable(n);
+
+
       }
     </script>
 <!--    切换表格-->
@@ -209,7 +219,7 @@
         while (switching) {
           switching = false;
           rows = table.rows;
-          for (i = 1; i < (rows.length - 1); i++) {
+          for (i = 0; i < (rows.length - 1); i++) {
             shouldSwitch = false;
             x = rows[i].getElementsByTagName("TD")[n];
             y = rows[i + 1].getElementsByTagName("TD")[n];
