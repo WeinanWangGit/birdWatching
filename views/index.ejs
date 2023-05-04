@@ -2,25 +2,8 @@
 <html>
   <head>
     <title>Bird Sighting</title>
-    <script>
-      // Ask for username and save to sessionStorage
-      const username = sessionStorage.getItem("username");
-      const MAX_LENGTH = 20;
 
-      if (!username) {
-        let isValid = false;
-        while (!isValid) {
-          const username = prompt(
-            "Please enter your username (no more than 20 characters):"
-          );
-          if (username && username.length <= MAX_LENGTH) {
-            sessionStorage.setItem("username", username);
-            isValid = true;
-          }
-        }
-      }
-    </script>
-
+    <script src="../public/javascripts/index.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -29,7 +12,7 @@
     <%- include('partials/header_index') %>
   </head>
   <body>
-    <div class="container">
+  <div class="container">
       <table id="table-view">
         <thead>
           <tr>
@@ -43,7 +26,7 @@
           <% sightings.forEach(function(sighting) { %>
           <tr
             data-id="<%= sighting._id %>"
-            onclick="location.href='/details?id=<%= sighting._id %>'"
+            data-sighting='<%= JSON.stringify(sighting) %>'
           >
             <td><%= new Date(sighting.date).toLocaleString() %></td>
             <td><%= sighting.identification.birdName %></td>
@@ -53,12 +36,13 @@
         </tbody>
       </table>
 
+
       <div id="grid-view" class="grid-layout" style="display: none">
         <% sightings.forEach(function(sighting) { %>
         <div
           class="grid-item"
           data-id="<%= sighting._id %>"
-          onclick="location.href='/details?id=<%= sighting._id %>'"
+          data-sighting='<%= JSON.stringify(sighting) %>'
         >
           <img
             src="<%= sighting.image %>"
@@ -110,6 +94,29 @@
           toggleText.innerHTML = "Toggle Table View";
         }
       }
+
+
+      const tableBody = document.querySelector('#table-body');
+      tableBody.addEventListener('click', (event) => {
+        const sighting = JSON.parse(event.target.closest('tr').dataset.sighting);
+        console.log(sighting);
+        // add sighting to indexedDb
+         addSighting(sighting)
+                // .then(() => {
+                //   console.log('Sighting added to IndexedDB++++');
+                //
+                // })
+                // .catch((error) => {
+                //   console.error('Error adding sighting to IndexedDB:', error);
+                // });
+        if (sighting._id) {
+          const id = sighting._id;
+          // Redirect to the details page with the ID parameter
+          location.href = `/details?id=${id}`;
+        }
+      });
+
     </script>
+
   </body>
 </html>
