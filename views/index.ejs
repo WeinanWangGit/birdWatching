@@ -99,20 +99,28 @@
       const tableBody = document.querySelector('#table-body');
       tableBody.addEventListener('click', (event) => {
         const sighting = JSON.parse(event.target.closest('tr').dataset.sighting);
-        console.log(sighting);
         // add sighting to indexedDb
          addSighting(sighting)
-                // .then(() => {
-                //   console.log('Sighting added to IndexedDB++++');
-                //
-                // })
-                // .catch((error) => {
-                //   console.error('Error adding sighting to IndexedDB:', error);
-                // });
+
         if (sighting._id) {
           const id = sighting._id;
-          // Redirect to the details page with the ID parameter
-          location.href = `/details?id=${id}`;
+          // Use fetch to make a request for the details page
+          fetch(`/details?id=${id}`).then(response => {
+            if (response.ok) {
+              console.log(response.body);
+              // If the response is OK, redirect to the details page
+              return response;
+            } else {
+              // If the response is not OK, handle the error
+              console.log('Error fetching details page:', response.status);
+            }
+          }).then(response => {
+            // Redirect to the details page
+            window.location.href = response.url;
+          }).catch(error => {
+            // Handle network errors
+            console.log('Network error fetching details page:', error);
+          });
         }
       });
 

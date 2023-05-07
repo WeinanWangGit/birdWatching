@@ -54,18 +54,6 @@ try {
 
 
 
-// async function addSighting(sighting) {
-//     openSightingsDB();
-//     const transaction = db.transaction([objectStoreName], 'readwrite');
-//     const objectStore = transaction.objectStore(objectStoreName);
-//
-//     objectStore.add(sighting);
-//
-//     transaction.oncomplete = function () {
-//         console.log('Sighting added to IndexedDB');
-//     };
-// }
-
 
 async function addSighting(sighting) {
     openSightingsDB();
@@ -79,6 +67,16 @@ async function addSighting(sighting) {
         console.log('Sighting added to IndexedDB');
     };
 }
+
+//register service worker
+navigator.serviceWorker.register("serviceworker.js").then(
+    (register)=>{
+        console.log("Registered: "+register.scope)
+    },
+    (err)=>{
+        console.log("Failed registration"+err)
+    }
+)
 
 
 
