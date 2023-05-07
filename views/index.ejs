@@ -52,6 +52,10 @@
   <body>
     <div class="container">
       <div class="table-responsive">
+        <div id="pagination-buttons">
+          <button onclick="showPage(currentPage - 1)">Prev</button>
+          <button onclick="showPage(currentPage + 1)">Next</button>
+        </div>
         <table class="table" id="table-view">
           <thead>
             <tr>
@@ -192,7 +196,7 @@
     </div>
   </body>
 
-  <!--    切换表格-->
+  <!--    switch table-->
   <script>
     const STATUS_DATE = "pending";
     const STATUS_DISTANCE = "success";
@@ -201,11 +205,11 @@
     function toggle_Date() {
       var table1 = document.getElementById("table-body-date");
       var table2 = document.getElementById("table-body-distance");
-
       if (table1.style.display === "none") {
         table1.style.display = "table-row-group";
         table2.style.display = "none";
       }
+      showPage(1);
     }
     function toggle_Distance(n) {
       var table1 = document.getElementById("table-body-date");
@@ -217,43 +221,76 @@
       sortTable(n);
     }
   </script>
-  <!--    切换表格-->
-  <!--    <script>-->
-  <!--      const table = document.getElementById('table-view');-->
-  <!--      const headers = table.querySelectorAll('th');-->
 
-  <!--      headers.forEach((header) => {-->
-  <!--        header.addEventListener('click', () => {-->
-  <!--          const columnIndex = header.cellIndex;-->
 
-  <!--          // 根据列索引设置要提取的数据字段-->
-  <!--          let field;-->
-  <!--          switch (columnIndex) {-->
-  <!--            case 0:-->
-  <!--              field = 'distance';-->
-  <!--              break;-->
-  <!--            case 1:-->
-  <!--              field = 'birdName';-->
-  <!--              break;-->
-  <!--            case 2:-->
-  <!--              field = 'author';-->
-  <!--              break;-->
-  <!--            default:-->
-  <!--              field = '';-->
-  <!--          }-->
+<!--  page-->
+  <script>
+    const table_distance = document.getElementById("table-body-distance");
+    const table_date = document.getElementById("table-body-date");
+    let currentPage = 1;
+    const rowsPerPage = 3;
+    function showPage(page) {
+      let table =null;
+      if(table_distance.display ==="none"){
+        table = table_date;
+      }else{
+        table =table_distance;
+      }
 
-  <!--          // 获取所有行，并更新单元格内容-->
-  <!--          const rows = table.querySelectorAll('tbody tr');-->
-  <!--          rows.forEach((row) => {-->
-  <!--            const cell = row.querySelector(`td:nth-child(${columnIndex + 1})`);-->
-  <!--            const data = row.dataset[field];-->
-  <!--            cell.innerText = data;-->
-  <!--          });-->
-  <!--        });-->
-  <!--      });-->
-  <!--    </script>-->
+      currentPage = page; // update current page number
+      const startIndex = (page - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      const rows_distance = Array.from(table_distance.rows).slice(0); // Get all rows except the header
+      const rows_date = Array.from(table_date.rows).slice(0); // Get all rows except the header
+      const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
+      const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
+      if(currentPage<=numPages+1 && currentPage>0){
+        rows_distance.forEach(row => row.style.display = "none"); // hide all rows
+        rows_date.forEach(row => row.style.display = "none");
+        rows_distance.slice(startIndex, endIndex).forEach(row => row.style.display = ""); // Display the rows of the specified page
+        rows_date.slice(startIndex, endIndex).forEach(row => row.style.display = "");
+      }else if(currentPage===0){
+        alert("no more");
+        currentPage++;
+      }else{
+        alert("no more");
+        currentPage--;
+      }
 
-  <!--    排序-->
+
+    }
+    // function createPagination(table) {
+    //   const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
+    //   const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
+    //   const pagination = document.createElement("div");
+    //   // pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
+    //   for (let i = 1; i <= numPages; i++) {
+    //     const link = document.createElement("a");
+    //     link.href = "#";
+    //     link.textContent = i;
+    //     // if (i === currentPage) {
+    //     //   link.classList.add("active"); // Add CSS styles to identify the current page number
+    //     // }
+    //     link.addEventListener("click", event => {
+    //       event.preventDefault();
+    //       showPage(i);
+    //       pagination.querySelectorAll("a").forEach(a => a.classList.remove("active"));
+    //       link.classList.add("active");
+    //     });
+    //     pagination.appendChild(link);
+    //   }
+    //   document.body.appendChild(pagination); // Add a pagination bar to the page
+    // }
+    window.addEventListener("load", () => {
+      showPage(1);
+      // createPagination(table_date);
+      // createPagination(table_distance);
+    });
+  </script>
+
+
+
+  <!--    sort-->
   <script>
     function sortTable(n) {
       var table,
@@ -298,6 +335,7 @@
           }
         }
       }
+      showPage(1);
     }
   </script>
 
