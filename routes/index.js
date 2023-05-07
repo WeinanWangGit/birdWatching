@@ -16,6 +16,24 @@ router.get("/", async function (req, res) {
   }
 });
 
+/**
+ * @swagger
+ * deleteSighting
+ */
+router.post("/delete", async function (req, res) {
+  const id = req.query.id;
+  try {
+    const result = await sighting_controller.deleteSighting(id);
+    if (result === true) {
+      res.redirect("/");
+    } else {
+      throw new Error("Failed to delete sighting");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
+});
 
 /* go to create page. */
 router.get("/create", function (req, res, next) {

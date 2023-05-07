@@ -2,6 +2,9 @@
 <html>
   <head>
     <title>Bird Sighting</title>
+    <%- include('partials/head') %>
+    <script src="../public/javascripts/deleteSighting.js"></script>
+
     <script>
       // Ask for username and save to sessionStorage
       const username = sessionStorage.getItem("username");
@@ -42,13 +45,10 @@
       }
     </script>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     <link rel="stylesheet" href="../public/stylesheets/style.css" />
     <%- include('partials/header_index') %>
   </head>
+
   <body>
     <div class="container">
       <div class="table-responsive">
@@ -60,36 +60,85 @@
               <th>Spotted Location</th>
               <th class="headClickable" onclick="toggle_Distance(3)">
                 Distance
+                <!-- <i class="fa fa-sort"></i> -->
               </th>
               <th class="headClickable" onclick="toggle_Date()">Date/time</th>
+              <th></th>
             </tr>
           </thead>
 
           <tbody id="table-body-date">
             <% sightings.forEach(function(sighting) { %>
-            <tr
-              data-id="<%= sighting._id %>"
-              onclick="location.href='/details?id=<%= sighting._id %>'"
-            >
+            <tr data-id="<%= sighting._id %>">
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
               <td><%= sighting.distance %></td>
               <td><%= sighting.date %></td>
+              <td>
+                <div class="button-group">
+                  <button
+                    id="details-btn"
+                    class="btn btn-outline-success"
+                    onclick="location.href='/details?id=<%= sighting._id %>'"
+                  >
+                    Details
+                  </button>
+
+                  <form action="/delete" method="post">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="<%= sighting._id %>"
+                    />
+                    <button
+                      type="submit"
+                      class="btn btn-outline-danger"
+                      onclick="deleteSighting(event,'<%= sighting._id %>')"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
             </tr>
             <% }); %>
           </tbody>
+
           <tbody id="table-body-distance" style="display: none">
             <% sightings.forEach(function(sighting) { %>
-            <tr
-              data-id="<%= sighting._id %>"
-              onclick="location.href='/details?id=<%= sighting._id %>'"
-            >
+            <tr data-id="<%= sighting._id %>">
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
               <td><%= sighting.distance %></td>
               <td><%= sighting.date %></td>
+              <td>
+                <div class="button-group">
+                  <button
+                    id="details-btn"
+                    class="btn btn-outline-success"
+                    onclick="location.href='/details?id=<%= sighting._id %>'"
+                  >
+                    Details
+                  </button>
+
+                  <form action="/delete" method="post">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="<%= sighting._id %>"
+                    />
+                    <button
+                      type="submit"
+                      class="btn btn-outline-danger"
+                      onclick="deleteSighting(event,'<%= sighting._id %>')"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
             </tr>
             <% }); %>
           </tbody>
@@ -128,7 +177,7 @@
 
       <!-- <div class="header-container clearfix"> -->
       <div class="toggle-button mb-3">
-        <button class="btn btn-secondary" onclick="toggleGrid(0)">
+        <button class="btn btn-light" onclick="toggleGrid(0)">
           <i class="fa fa-exchange"></i>
           <span id="toggle-text">To Grid View</span>
         </button>
@@ -270,14 +319,14 @@
       viewToShowElement.style.display = "";
 
       if (currentView == 0) {
-        toggleText.innerHTML = "To List View";
+        toggleText.innerHTML = "To Grid View";
       } else if (currentView == 1) {
         toggleText.innerHTML = "To List View";
       }
     }
   </script>
 
-  <script>
+  <!-- <script>
     const newSightings = sightings.map((sighting) => {
       // 对每个sighting进行操作
       const location = sighting.location;
@@ -309,5 +358,5 @@
     function deg2rad(deg) {
       return deg * (Math.PI / 180);
     }
-  </script>
+  </script> -->
 </html>
