@@ -81,6 +81,9 @@ body {
 .bird-results-container {
   display: flex;
   flex-direction: column;
+
+  border: 1px solid #ccc;
+  padding: 1rem;
 }
 .result-img {
   max-width: 50%;
@@ -88,7 +91,6 @@ body {
 }
 .modal-content {
   max-width: 40rem;
-  margin: auto;
 }
 .modal-form {
   margin-top: 1rem;

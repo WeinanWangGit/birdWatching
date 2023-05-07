@@ -22,6 +22,7 @@ function insertSighting(req, res) {
     date: req.body.date,
     author: req.body.author,
     location: req.body.location,
+    position: req.body.position,
     distance: req.body.distance,
     identification: {
       birdName: req.body.birdName,
@@ -101,6 +102,19 @@ async function getSightingById(id) {
   }
 }
 
+async function deleteSighting(id) {
+  if (!id) {
+    throw new Error("Missing sighting ID");
+  }
+  try {
+    await Sighting.deleteOne({ _id: id });
+    return true;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
 // NOT IN USE
 // async function getSightingByIdAndUpdate(id, identification) {
 //   try {
@@ -135,6 +149,7 @@ module.exports = {
   insertSighting,
   getSightingList,
   getSightingById,
+  deleteSighting,
   // getSightingByIdAndUpdate,
   updateIdentification,
   updateSighting,

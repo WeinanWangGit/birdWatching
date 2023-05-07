@@ -2,6 +2,9 @@
 <html>
   <head>
     <title>Bird Sighting</title>
+    <%- include('partials/head') %>
+    <script src="../public/javascripts/deleteSighting.js"></script>
+
     <script>
       // Ask for username and save to sessionStorage
       const username = sessionStorage.getItem("username");
@@ -21,123 +24,339 @@
       }
     </script>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <!--    get current location-->
+    <script>
+      var latitude = null;
+      var longitude = null;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            // console.log('Latitude:', latitude, 'Longitude:', longitude);
+            // alert('您选择的位置是：' + latitude + ',' + longitude);
+          },
+          function (error) {
+            console.log("Error getting current position:", error);
+          }
+        );
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+    </script>
+
     <link rel="stylesheet" href="../public/stylesheets/style.css" />
     <%- include('partials/header_index') %>
   </head>
+
   <body>
     <div class="container">
-      <table id="table-view">
-        <thead>
-          <tr>
-            <th>Date/Time</th>
-            <th>Identification</th>
-            <th>User</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <% sightings.forEach(function(sighting) { %>
-          <tr
+      <div class="table-responsive">
+        <table class="table" id="table-view">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Identification</th>
+              <th>Spotted Location</th>
+              <th class="headClickable" onclick="toggle_Distance(3)">
+                Distance
+                <!-- <i class="fa fa-sort"></i> -->
+              </th>
+              <th class="headClickable" onclick="toggle_Date()">Date/time</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody id="table-body-date">
+            <% sightings.forEach(function(sighting) { %>
+            <tr data-id="<%= sighting._id %>">
+              <td><%= sighting.author %></td>
+              <td><%= sighting.identification.birdName %></td>
+              <td><%= sighting.position %></td>
+              <td><%= sighting.distance %></td>
+              <td><%= sighting.date %></td>
+              <td>
+                <div class="button-group">
+                  <button
+                    id="details-btn"
+                    class="btn btn-outline-success"
+                    onclick="location.href='/details?id=<%= sighting._id %>'"
+                  >
+                    Details
+                  </button>
+
+                  <form action="/delete" method="post">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="<%= sighting._id %>"
+                    />
+                    <button
+                      type="submit"
+                      class="btn btn-outline-danger"
+                      onclick="deleteSighting(event,'<%= sighting._id %>')"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+
+          <tbody id="table-body-distance" style="display: none">
+            <% sightings.forEach(function(sighting) { %>
+            <tr data-id="<%= sighting._id %>">
+              <td><%= sighting.author %></td>
+              <td><%= sighting.identification.birdName %></td>
+              <td><%= sighting.position %></td>
+              <td><%= sighting.distance %></td>
+              <td><%= sighting.date %></td>
+              <td>
+                <div class="button-group">
+                  <button
+                    id="details-btn"
+                    class="btn btn-outline-success"
+                    onclick="location.href='/details?id=<%= sighting._id %>'"
+                  >
+                    Details
+                  </button>
+
+                  <form action="/delete" method="post">
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="<%= sighting._id %>"
+                    />
+                    <button
+                      type="submit"
+                      class="btn btn-outline-danger"
+                      onclick="deleteSighting(event,'<%= sighting._id %>')"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="grid-view" class="row" style="display: none">
+        <% sightings.forEach(function(sighting) { %>
+        <div class="col-sm-4 col-md-3 mb-3">
+          <div
+            class="card"
             data-id="<%= sighting._id %>"
             onclick="location.href='/details?id=<%= sighting._id %>'"
           >
-            <td><%= new Date(sighting.date).toLocaleString() %></td>
-            <td><%= sighting.identification.birdName %></td>
-            <td><%= sighting.author %></td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>
-
-      <table id="table-Distance" style="display: none" >
-        <thead>
-        <tr>
-          <th>Distance</th>
-          <th>Identification</th>
-          <th>User</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody id="table-body">
-        <% sightings.forEach(function (sighting) { %>
-          <tr data-id="<%= sighting._id %>" onclick="location.href='/details?id=<%= sighting._id %>'">
-            <td><%= sighting.distance %></td>
-            <td><%= sighting.identification.birdName %></td>
-            <td><%= sighting.author %></td>
-          </tr>
-        <% }); %>
-        </tbody>
-      </table>
-
-      <div id="grid-view" class="grid-layout" style="display: none">
-        <% sightings.forEach(function(sighting) { %>
-        <div
-          class="grid-item"
-          data-id="<%= sighting._id %>"
-          onclick="location.href='/details?id=<%= sighting._id %>'"
-        >
-          <img
-            src="<%= sighting.image %>"
-            alt="Bird image"
-            style="max-width: 100%"
-          />
-          <p>
-            <strong>Date/Time: </strong><%= new
-            Date(sighting.date).toLocaleString() %>
-          </p>
-          <p>
-            <strong>Identification: </strong><%=
-            sighting.identification.birdName %>
-          </p>
-          <p><strong>User: </strong><%= sighting.author %></p>
+            <img
+              class="card-img-top"
+              src="<%= sighting.image %>"
+              alt="Bird image"
+            />
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= sighting.identification.birdName %>
+              </h5>
+              <p class="card-text">
+                <strong>Date/Time:</strong> <%= new
+                Date(sighting.date).toLocaleString() %>
+              </p>
+              <p class="card-text">
+                <strong>User:</strong> <%= sighting.author %>
+              </p>
+            </div>
+          </div>
         </div>
         <% }); %>
       </div>
 
-      <div class="header-container clearfix">
-        <div class="toggle-button">
-          <button onclick="toggleGrid()">
-            <i class="fa fa-exchange"></i>
-            <span id="toggle-text">Sort by distance</span>
-          </button>
-        </div>
+      <!-- <div class="header-container clearfix"> -->
+      <div class="toggle-button mb-3">
+        <button class="btn btn-light" onclick="toggleGrid(0)">
+          <i class="fa fa-exchange"></i>
+          <span id="toggle-text">To Grid View</span>
+        </button>
       </div>
+      <!-- </div> -->
 
       <div class="add-button">
-        <button onclick="location.href='/create'">
+        <button class="btn btn-primary" onclick="location.href='/create'">
           <i class="fa fa-plus-circle"></i> Add New Sighting
         </button>
       </div>
     </div>
+  </body>
 
-    <script>
-      var currentView = 0;
-      var views = ["table-view", "table-Distance", "grid-view"];
-      var toggleText = document.querySelector("button");
+  <!--    切换表格-->
+  <script>
+    const STATUS_DATE = "pending";
+    const STATUS_DISTANCE = "success";
+    let status = STATUS_DATE;
 
-      function toggleGrid() {
-        var viewToHide = views[currentView];
-        currentView = (currentView + 1) % views.length;
-        var viewToShow = views[currentView];
+    function toggle_Date() {
+      var table1 = document.getElementById("table-body-date");
+      var table2 = document.getElementById("table-body-distance");
 
-        var viewToHideElement = document.getElementById(viewToHide);
-        var viewToShowElement = document.getElementById(viewToShow);
+      if (table1.style.display === "none") {
+        table1.style.display = "table-row-group";
+        table2.style.display = "none";
+      }
+    }
+    function toggle_Distance(n) {
+      var table1 = document.getElementById("table-body-date");
+      var table2 = document.getElementById("table-body-distance");
+      if (table2.style.display === "none") {
+        table1.style.display = "none";
+        table2.style.display = "table-row-group";
+      }
+      sortTable(n);
+    }
+  </script>
+  <!--    切换表格-->
+  <!--    <script>-->
+  <!--      const table = document.getElementById('table-view');-->
+  <!--      const headers = table.querySelectorAll('th');-->
 
-        viewToHideElement.style.display = "none";
-        viewToShowElement.style.display = "";
+  <!--      headers.forEach((header) => {-->
+  <!--        header.addEventListener('click', () => {-->
+  <!--          const columnIndex = header.cellIndex;-->
 
-        if (currentView == 0) {
-          toggleText.innerHTML = "Sort by distance";
-        } else if (currentView == 1) {
-          toggleText.innerHTML = "Sort by grid";
+  <!--          // 根据列索引设置要提取的数据字段-->
+  <!--          let field;-->
+  <!--          switch (columnIndex) {-->
+  <!--            case 0:-->
+  <!--              field = 'distance';-->
+  <!--              break;-->
+  <!--            case 1:-->
+  <!--              field = 'birdName';-->
+  <!--              break;-->
+  <!--            case 2:-->
+  <!--              field = 'author';-->
+  <!--              break;-->
+  <!--            default:-->
+  <!--              field = '';-->
+  <!--          }-->
+
+  <!--          // 获取所有行，并更新单元格内容-->
+  <!--          const rows = table.querySelectorAll('tbody tr');-->
+  <!--          rows.forEach((row) => {-->
+  <!--            const cell = row.querySelector(`td:nth-child(${columnIndex + 1})`);-->
+  <!--            const data = row.dataset[field];-->
+  <!--            cell.innerText = data;-->
+  <!--          });-->
+  <!--        });-->
+  <!--      });-->
+  <!--    </script>-->
+
+  <!--    排序-->
+  <script>
+    function sortTable(n) {
+      var table,
+        rows,
+        switching,
+        i,
+        x,
+        y,
+        shouldSwitch,
+        dir,
+        switchcount = 0;
+      table = document.getElementById("table-body-distance");
+      switching = true;
+      dir = "asc"; // Set the sorting direction to ascending
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 0; i < rows.length - 1; i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          if (dir == "asc") {
+            if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          switchcount++;
         } else {
-          toggleText.innerHTML = "Sort by time";
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
         }
       }
-    </script>
-  </body>
+    }
+  </script>
+
+  <script>
+    var currentView = 0;
+    var views = ["table-view", "grid-view"];
+    var toggleText = document.querySelector("span");
+
+    function toggleGrid(n) {
+      sortTable(n);
+      var viewToHide = views[currentView];
+      currentView = (currentView + 1) % views.length;
+      var viewToShow = views[currentView];
+
+      var viewToHideElement = document.getElementById(viewToHide);
+      var viewToShowElement = document.getElementById(viewToShow);
+
+      viewToHideElement.style.display = "none";
+      viewToShowElement.style.display = "";
+
+      if (currentView == 0) {
+        toggleText.innerHTML = "To Grid View";
+      } else if (currentView == 1) {
+        toggleText.innerHTML = "To List View";
+      }
+    }
+  </script>
+
+  <!-- <script>
+    const newSightings = sightings.map((sighting) => {
+      // 对每个sighting进行操作
+      const location = sighting.location;
+      const location_sight = location.split(",");
+      const distance = getDistanceFromLatLonInKm(
+        latitude,
+        longitude,
+        location_sight[0],
+        location_sight[1]
+      );
+      return { ...sighting, distance }; // 返回新的对象，包括原对象的属性和新属性distance
+    });
+
+    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+      const R = 6371; // 地球半径（单位：千米）
+      const dLat = deg2rad(lat2 - lat1);
+      const dLon = deg2rad(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) *
+          Math.cos(deg2rad(lat2)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c; // 距离（单位：千米）
+      return distance;
+    }
+
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180);
+    }
+  </script> -->
 </html>
