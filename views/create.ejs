@@ -17,7 +17,7 @@
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
             // console.log('Latitude:', latitude, 'Longitude:', longitude);
-            // alert('您选择的位置是：' + latitude + ',' + longitude);
+            // alert('The location you have selected is：' + latitude + ',' + longitude);
           },
           function (error) {
             console.log("Error getting current position:", error);
@@ -151,7 +151,7 @@
           var location = e.latLng;
           var locationInput = document.getElementById("location");
           locationInput.value = location.lat() + "," + location.lng();
-          // alert('您选择的位置是：' + location.lat() + ',' + location.lng());
+          // alert('The location you have selected is：' + location.lat() + ',' + location.lng());
 
           const distance = getDistanceFromLatLonInKm(
             location.lat(),
@@ -159,7 +159,7 @@
             latitude,
             longitude
           );
-          // alert(distance); // （单位：千米）
+          // alert(distance); // （Unit: kilometre）
           var DistanceInput = document.getElementById("distance");
           DistanceInput.value = distance + "km";
         });
@@ -177,7 +177,7 @@
             Math.sin(dLon / 2) *
             Math.sin(dLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c; // 距离（单位：千米）
+        const distance = R * c; // Distance (in kilometres)
         return distance;
       }
 
