@@ -259,32 +259,31 @@
 
 
     }
-    // function createPagination(table) {
-    //   const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
-    //   const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
-    //   const pagination = document.createElement("div");
-    //   // pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
-    //   for (let i = 1; i <= numPages; i++) {
-    //     const link = document.createElement("a");
-    //     link.href = "#";
-    //     link.textContent = i;
-    //     // if (i === currentPage) {
-    //     //   link.classList.add("active"); // Add CSS styles to identify the current page number
-    //     // }
-    //     link.addEventListener("click", event => {
-    //       event.preventDefault();
-    //       showPage(i);
-    //       pagination.querySelectorAll("a").forEach(a => a.classList.remove("active"));
-    //       link.classList.add("active");
-    //     });
-    //     pagination.appendChild(link);
-    //   }
-    //   document.body.appendChild(pagination); // Add a pagination bar to the page
-    // }
+    function createPagination(table) {
+      const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
+      const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
+      const pagination = document.createElement("div");
+      pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
+      for (let i = 1; i <= numPages+1; i++) {
+        const link = document.createElement("a");
+        link.href = "#";
+        link.textContent = i;
+        if (i === currentPage) {
+          link.classList.add("active"); // Add CSS styles to identify the current page number
+        }
+        link.addEventListener("click", event => {
+          event.preventDefault();
+          showPage(i);
+          pagination.querySelectorAll("a").forEach(a => a.classList.remove("active"));
+          link.classList.add("active");
+        });
+        pagination.appendChild(link);
+      }
+      document.body.appendChild(pagination); // Add a pagination bar to the page
+    }
     window.addEventListener("load", () => {
       showPage(1);
-      // createPagination(table_date);
-      // createPagination(table_distance);
+      createPagination(table_distance);
     });
   </script>
 

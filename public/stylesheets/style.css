@@ -100,3 +100,17 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.pagination {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+
+.pagination a {
+  display: inline-block;
+  margin: 0 10px;
+
+}
+
