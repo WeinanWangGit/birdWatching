@@ -169,7 +169,7 @@
           locationInput.value = location.lat() + "," + location.lng();
           // alert('The location you have selected is：' + location.lat() + ',' + location.lng());
 
-          // 删除先前的标记
+          // Delete the previous marker
           if (marker !== null) {
             marker.setMap(null);
           }
@@ -215,7 +215,7 @@
 
       // compute distance
       function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-        const R = 6371; // 地球半径（单位：千米）
+        const R = 6371; //Radius of the Earth (in kilometres)
         const dLat = deg2rad(lat2 - lat1);
         const dLon = deg2rad(lon2 - lon1);
         const a =
@@ -282,6 +282,7 @@
             formData.append(key, data[key]);
           }
 
+          //todo check offline and store sighting in indexedDbs
           const response = await fetch("/add", {
             method: "POST",
             body: formData,
