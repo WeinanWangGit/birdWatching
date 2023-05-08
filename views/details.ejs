@@ -22,10 +22,17 @@
           <div class="card-header">
             <h5 class="card-title mb-0">Sighting Image</h5>
           </div>
+
           <div class="card-body">
-            <% if (sighting.image) { %>
+            <% if (sighting.image.data) { %>
             <img
-              src="<%= sighting.image %>"
+              src="<%= sighting.image.data %>"
+              alt="<%= sighting.identification.birdName %> Image"
+              class="img-fluid"
+            />
+            <% } else if (sighting.image.url) { %>
+            <img
+              src="<%= sighting.image.url %>"
               alt="<%= sighting.identification.birdName %> Image"
               class="img-fluid"
             />

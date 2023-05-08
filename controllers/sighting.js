@@ -1,6 +1,9 @@
 const Sighting = require("../models/sighting");
 const multer = require("multer");
 
+const https = require("https");
+const fs = require("fs");
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/uploads/");
@@ -17,6 +20,44 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 function insertSighting(req, res) {
+  // TODO: figure out the way to reference image with a url
+  // const imageUrl = req.body.imageUrl;
+  // let imageData = null;
+
+  // if (req.file) {
+  //   // if image is uploaded via file, read and store the file
+  //   imageData = {
+  //     data: req.file ? req.file.path : null,
+  //     // data: fs.readFileSync(req.file.path),
+  //     // contentType: req.file.mimetype,
+  //   };
+  // } else if (imageUrl) {
+  //   https
+  //     .get(imageUrl, (response) => {
+  //       const contentType = response.headers["content-type"];
+  //       let imageData = "";
+
+  //       response.setEncoding("binary");
+
+  //       response.on("data", (chunk) => {
+  //         imageData += chunk;
+  //       });
+
+  //       response.on("end", () => {
+  //         fs.writeFileSync("image.jpg", imageData, "binary");
+  //         console.log("Image downloaded successfully.");
+
+  //         // update imageData with the downloaded image data and content type
+  //         imageData = {
+  //           data: imageData,
+  //         };
+  //       });
+  //     })
+  //     .on("error", (error) => {
+  //       console.error(`Error downloading image: ${error.message}`);
+  //     });
+  // }
+
   const sighting = new Sighting({
     description: req.body.description,
     date: req.body.date,
@@ -29,7 +70,12 @@ function insertSighting(req, res) {
       description: req.body.birdDescription,
       url: req.body.url,
     },
-    image: req.file.path,
+    image: {
+      data: req.file ? req.file.path : null,
+      // url: req.body.imageUrl ? req.body.imageUrl : null,
+      url: req.body.imageUrl !== undefined ? req.body.imageUrl : null,
+    },
+    // image: imageData,
   });
 
   console.log(sighting);

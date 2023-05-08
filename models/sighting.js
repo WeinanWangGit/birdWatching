@@ -23,8 +23,8 @@ const SightingSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now,
-    get: (v) => v.toDateString(), // convert Date object to string
+    // default: Date.now,
+    // get: (v) => v.toDateString(), // convert Date object to string
     required: true,
   },
   author: {
@@ -35,11 +35,11 @@ const SightingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  distance:{
+  distance: {
     type: String,
     required: true,
   },
-  position:{
+  position: {
     type: String,
     required: true,
   },
@@ -60,9 +60,37 @@ const SightingSchema = new mongoose.Schema({
     type: IdentificationSchema,
     required: true,
   },
+
+  // ORIGINAL
+  // image: {
+  //   type: Buffer,
+  // },
+
+  // TODO
+  // image: {
+  //   data: { type: Buffer, required: true },
+  //   contentType: { type: String, required: true },
+  // },
+
+  // IN USE NOW
   image: {
-    type: Buffer,
+    data: {
+      type: Buffer,
+      required: function () {
+        return !this.image.url;
+      },
+    },
+    url: {
+      type: String,
+      validate: {
+        validator: function (v) {
+          return !this.image.data || !v;
+        },
+        message: "Either data or url must be set for image",
+      },
+    },
   },
+
   // messages: {
   //   type: [String], // string array
   //   default: [], // default empty array

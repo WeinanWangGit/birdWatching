@@ -138,14 +138,65 @@
         </div>
 
         <div class="mb-3">
+          <div class="form-group">
+            <label for="image-input-type">Select image source:</label>
+            <select id="image-input-type" class="form-control">
+              <option value="">Select image source</option>
+              <option value="file">Upload from file</option>
+              <option value="url">Use image URL</option>
+            </select>
+          </div>
+
+          <div id="file-upload" class="form-group" style="display: none">
+            <label for="file">Choose image file:</label>
+            <input type="file" id="image" name="image" class="form-control" />
+          </div>
+
+          <div id="url-upload" class="form-group" style="display: none">
+            <label for="imageUrl">Enter image URL:</label>
+            <input
+              type="text"
+              id="imageUrl"
+              name="imageUrl"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <!-- 
+        <div class="mb-3">
           <label for="image" class="form-label">Image:</label>
           <input type="file" id="image" name="image" class="form-control" />
-        </div>
+        </div> -->
 
         <button type="submit" class="btn btn-primary">Create</button>
         <!-- </div> -->
       </form>
     </div>
+
+    <!-- Toggle image upload fileds -->
+    <script>
+      const imageInputType = document.getElementById("image-input-type");
+      const fileUpload = document.getElementById("file-upload");
+      const urlUpload = document.getElementById("url-upload");
+
+      // Show the initial upload field based on the select value
+      function showUploadField() {
+        if (imageInputType.value === "file") {
+          fileUpload.style.display = "block";
+          urlUpload.style.display = "none";
+        } else if (imageInputType.value === "url") {
+          fileUpload.style.display = "none";
+          urlUpload.style.display = "block";
+        } else {
+          fileUpload.style.display = "none";
+          urlUpload.style.display = "none";
+        }
+      }
+      showUploadField();
+
+      // Add an event listener to show/hide upload fields based on the select value
+      imageInputType.addEventListener("change", showUploadField);
+    </script>
 
     <!-- Map -->
     <script
@@ -275,6 +326,7 @@
             birdDescription: document.getElementById("bird-description").value,
             url: document.getElementById("url").value,
             image: document.getElementById("image").files[0],
+            imageUrl: document.getElementById("imageUrl").value,
           };
 
           const formData = new FormData();
