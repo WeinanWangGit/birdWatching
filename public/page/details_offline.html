@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>details</title>
+    <link rel="stylesheet" href="../stylesheets/details_offline.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- <div class="row"> -->
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Sighting Image</h5>
+            </div>
+            <div class="card-body">
+                <img
+                        src="sighting_image.jpg"
+                        alt="Bird Image"
+                        class="img-fluid"
+                        style="max-width: 100%; max-height: 100%;"
+                />
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Chat</h5>
+            </div>
+            <div class="card-body">
+                <div id="chat_history" class="history">
+                    <div class="message">
+                        <div class="message-text">Hello, how are you?</div>
+                        <div class="message-sentAt">
+                            5/9/2023, 2:15:35 PM
+                        </div>
+                    </div>
+                </div>
+                <form id="chat_form" onsubmit="return false;">
+                    <div class="mb-3">
+                        <label for="chat_input" class="form-label"
+                        >Enter message:</label
+                        >
+                        <textarea
+                                id="chat_input"
+                                class="form-control chat_input"
+                        ></textarea>
+                    </div>
+                    <button
+                            id="chat_send"
+                            class="btn btn-primary"
+                    >
+                        Send
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2 class="card-title">Identification Form</h2>
+                <div class="mb-3">
+                    <label for="birdName" class="form-label">Bird Name:</label>
+                    <div class="form-text" id="birdName">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <div class="form-text" id="description">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body" id="metadata">
+                <h2 class="card-title">Metadata</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../public/javascripts/idb.js" type="module"></script>
+<script type="module">
+    import { getSighting, setSighting, putSighting } from '../public/javascripts/idb.js';
+
+    let sighting;
+
+    fetchData();
+
+    async function fetchData() {
+        try {
+            sighting = await getSighting('1');
+            console.log(sighting)
+            populateSightingData(sighting);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function populateSightingData(sighting) {
+        // Update Sighting Image
+        const imageElement = document.querySelector('.img-fluid');
+
+        const imageFile = sighting.image;
+
+        // Create a FileReader to read the image file
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            // Set the source of the image element to the loaded image data
+            imageElement.src = event.target.result;
+        };
+
+        reader.onerror = function (event) {
+            console.error('Error reading image file:', event.target.error);
+        };
+
+        // Read the image file as a data URL
+        reader.readAsDataURL(imageFile);
+
+
+        // Update Identification Form
+        const birdNameElement = document.getElementById('birdName');
+        birdNameElement.textContent = sighting.birdName;
+
+        const descriptionElement = document.getElementById('description');
+        descriptionElement.textContent = sighting.description;
+
+
+
+        // Update Metadata
+        const dateElement = document.createElement('p');
+        dateElement.innerHTML = `<strong>Date:</strong> ${sighting.date}`;
+        document.getElementById('metadata').appendChild(dateElement);
+
+        const authorElement = document.createElement('p');
+        authorElement.innerHTML = `<strong>Author:</strong> ${sighting.author}`;
+        document.getElementById('metadata').appendChild(authorElement);
+
+        const descriptionMetadataElement = document.createElement('p');
+        descriptionMetadataElement.innerHTML = `<strong>Description:</strong> ${sighting.description}`;
+        document.getElementById('metadata').appendChild(descriptionMetadataElement);
+    }
+
+
+    // Add event listener to the button
+    document.getElementById('chat_send').addEventListener('click', sendChatText);
+
+    function sendChatText() {
+        // Get the chat input value
+        var chatInput = document.getElementById('chat_input').value;
+
+        if (chatInput.trim() !== '') {
+            var message = {
+                text: chatInput,
+                sentAt: new Date().toISOString(),
+            };
+
+            // Add the message to the sighting's messages array
+            if (!sighting.messages) {
+                sighting.messages = [];
+            }
+
+            sighting.messages.push(message);
+
+            // Create a new message element
+            var messageContainer = document.createElement('div');
+            messageContainer.className = 'message';
+
+            var messageText = document.createElement('div');
+            messageText.className = 'message-text';
+            messageText.textContent = chatInput;
+
+            var messageSentAt = document.createElement('div');
+            messageSentAt.className = 'message-sentAt';
+            var currentDate = new Date();
+            messageSentAt.textContent = currentDate.toLocaleString();
+
+            // Append the message elements to the chat history
+            messageContainer.appendChild(messageText);
+            messageContainer.appendChild(messageSentAt);
+
+            var chatHistory = document.getElementById('chat_history');
+            chatHistory.appendChild(messageContainer);
+
+            // Clear the chat input
+            document.getElementById('chat_input').value = '';
+
+            saveSighting(sighting)
+        }
+    }
+
+    //
+    // window.addEventListener('beforeunload', function (event) {
+    //     // Save the sighting object before leaving the page
+    //     console.log("save sighting")
+    //     saveSighting(sighting);
+    // });
+
+    function saveSighting(sighting) {
+        console.log(sighting)
+        putSighting(sighting)
+    }
+
+
+</script>
+</body>
+</html>

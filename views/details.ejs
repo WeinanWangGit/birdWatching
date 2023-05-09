@@ -12,10 +12,14 @@
   </head>
 
   <body onload="init('<%=JSON.stringify(sighting)%>')">
-    <!-- <body
-    onload="init(decodeURIComponent('<%=encodeURIComponent(JSON.stringify(sighting))%>'))"
-  > -->
+
     <div class="container">
+      <div class="offline_div" id="offline_div"
+           style="position: fixed; bottom: 0; width: 200px;margin: 0 auto; display: none">
+        <div class="alert alert-info" role="alert">
+          Your are offline.
+        </div>
+      </div>
       <!-- <div class="row"> -->
       <div class="col-md-6">
         <div class="card mb-3">
