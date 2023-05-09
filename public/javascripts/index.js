@@ -16,7 +16,6 @@ if (!username) {
 }
 
 
-<!--    get current location-->
 var latitude = null;
 var longitude = null;
 if (navigator.geolocation) {
@@ -25,7 +24,6 @@ if (navigator.geolocation) {
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
             // console.log('Latitude:', latitude, 'Longitude:', longitude);
-            // alert('您选择的位置是：' + latitude + ',' + longitude);
         },
         function (error) {
             console.log("Error getting current position:", error);
@@ -77,4 +75,9 @@ async function deleteSighting(event, id) {
         return;
     }
 }
+
+import { openSightingDB } from './idb.js';
+
+//open idb
+openSightingDB()
 

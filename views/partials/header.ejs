@@ -3,11 +3,32 @@
 
 <header>
   <div class="title">
-    <h1>Bird Sighting</h1>
+      <h1 onclick="window.location.href = '/'">Bird Sighting</h1>
   </div>
   <div class="nav">
-    <a href="/">
-      <button class="sighting-btn" type="submit">Sighting List</button>
-    </a>
+    <div class="add-button">
+      <button class="btn btn-primary" onclick="handleButtonClick()">
+        <i class="fa fa-plus-circle"></i> Add New Sighting
+      </button>
+    </div>
   </div>
+  <!-- Add a modal container -->
+  <%- include('../../public/page/create_offline.html') %>
 </header>
+
+<script>
+
+  // Function to handle the button click event
+  function handleButtonClick() {
+    if (!navigator.onLine) {
+      // If the browser is offline, display the offline modal window
+      var offlineModal = document.getElementById('offlineModal');
+      offlineModal.style.display = 'block';
+
+    } else {
+      // If the browser is online, redirect to the "/create" page
+      window.location.href = '/create';
+    }
+  }
+
+</script>
