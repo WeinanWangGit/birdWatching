@@ -27,7 +27,7 @@ export async function openSightingDB() {
 
         openRequest.onupgradeneeded = function (event) {
             db = event.target.result;
-            const objectStore = db.createObjectStore(objectStoreName);
+            const objectStore = db.createObjectStore(objectStoreName, {keyPath: "_id"});
             objectStore.createIndex('timestamp', 'timestamp', { unique: false });
         };
     });
@@ -84,3 +84,24 @@ export async function putSighting(sighting) {
     }
 
 }
+
+
+export async function getAllSightings() {
+    await openSightingDB();
+    const transaction = db.transaction([objectStoreName], 'readonly');
+    const objectStore = transaction.objectStore(objectStoreName);
+    const req = objectStore.getAll();
+
+    return new Promise((resolve, reject) => {
+        req.onsuccess = function (event) {
+            const sightings = event.target.result;
+            resolve(sightings);
+        };
+
+        req.onerror = function (event) {
+            reject(event.target.error);
+        };
+    });
+}
+
+

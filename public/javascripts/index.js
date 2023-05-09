@@ -76,8 +76,40 @@ async function deleteSighting(event, id) {
     }
 }
 
-import { openSightingDB } from './idb.js';
+import {openSightingDB, putSighting, setSighting} from './idb.js';
 
 //open idb
 openSightingDB()
+
+
+
+
+
+// Get all the elements that need the click event listener
+const elements = document.querySelectorAll('.card, #table-body-distance tr, #table-body-date tr');
+
+// Add the click event listener to each element
+elements.forEach(element => {
+    element.addEventListener('click', (event) => {
+        // Get the sighting data from the clicked element
+        const sighting = JSON.parse(element.dataset.sighting);
+
+        // Add sighting to IndexedDB
+         putSighting(sighting).then(() => {
+             console.log("Sighting created successfully in indexedDB!");
+        }).catch((error) => {
+             console.log("Error creating sighting");
+         }
+        )
+
+        if (sighting._id) {
+            const id = sighting._id;
+            // Redirect to the details page
+            window.location.href = `/details?id=${id}`;
+        }
+    });
+});
+
+
+
 

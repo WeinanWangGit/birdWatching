@@ -43,9 +43,10 @@ self.addEventListener("install", (event) => {
             "/public/javascripts/idb.js",
             "/page/create_offline.html",
             "/page/details_offline.html",
+            "/page/index_offline.html",
             "/stylesheets/create_offline.css",
             "/stylesheets/details_offline.css",
-            "/public/uploads/*"
+            // "/public/uploads/*"
         ]),
     );
 });

@@ -3,7 +3,7 @@
 
 <header>
   <div class="title">
-      <h1 onclick="window.location.href = '/'">Bird Sighting</h1>
+     <h1 id="title">Bird Sighting</h1>
   </div>
   <div class="nav">
     <div class="add-button">
@@ -17,6 +17,23 @@
 </header>
 
 <script>
+
+  // Get the h1 element by its ID
+  const titleElement = document.getElementById('title');
+
+  // Add the click event listener to the h1 element
+  titleElement.addEventListener('click', () => {
+
+    if (!navigator.onLine) {
+       window.location.href = '/page/index_offline.html'
+
+    } else {
+       window.location.href = '/';
+    }
+
+
+  });
+
 
   // Function to handle the button click event
   function handleButtonClick() {

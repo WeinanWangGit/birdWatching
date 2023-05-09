@@ -93,34 +93,91 @@
 
     async function fetchData() {
         try {
-            sighting = await getSighting('1');
-            console.log(sighting)
+            const sightingId = localStorage.getItem("sightingId")
+            console.log(sightingId + "before move")
+            if(sightingId || sightingId != 1){
+                localStorage.removeItem("sightingId")
+                sighting = await getSighting(sightingId);
+            }else{
+                sighting = await getSighting('1'); // offline add default id
+            }
             populateSightingData(sighting);
+
         } catch (error) {
             console.error(error);
         }
     }
 
+
+    function processImageFile(imageFile) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const imageUrl = event.target.result;
+                resolve(imageUrl);
+            };
+
+            reader.onerror = function (event) {
+                console.error('Error reading image file:', event.target.error);
+                reject(event.target.error);
+            };
+
+            reader.readAsDataURL(imageFile);
+        });
+    }
+
+
+    function processImageBuffer(imageBuffer) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const imageUrl = event.target.result;
+                resolve(imageUrl);
+            };
+
+            reader.onerror = function (event) {
+                console.error('Error reading image buffer:', event.target.error);
+                reject(event.target.error);
+            };
+
+            const blob = new Blob([imageBuffer]);
+            reader.readAsDataURL(blob);
+        });
+    }
+
+
     function populateSightingData(sighting) {
         // Update Sighting Image
         const imageElement = document.querySelector('.img-fluid');
-
         const imageFile = sighting.image;
+        console.log(sighting.image.type)
 
-        // Create a FileReader to read the image file
-        const reader = new FileReader();
-
-        reader.onload = function (event) {
-            // Set the source of the image element to the loaded image data
-            imageElement.src = event.target.result;
-        };
-
-        reader.onerror = function (event) {
-            console.error('Error reading image file:', event.target.error);
-        };
-
-        // Read the image file as a data URL
-        reader.readAsDataURL(imageFile);
+        if(sighting.image.type == "image/png"){
+        processImageFile(imageFile)
+            .then((imageUrl) => {
+                imageElement.src = imageUrl;
+                // Perform additional tasks with the imageUrl if needed
+            })
+            .catch((error) => {
+                // Handle any errors that occur during image processing
+                console.error('Image processing error:', error);
+            });
+        }else if(sighting.image.type == "Buffer"){
+            //TODO show base64 Buffer image
+            const imageBuffer = sighting.image.data;
+            processImageBuffer(imageBuffer)
+                .then((imageUrl) => {
+                    imageElement.src = imageUrl;
+                    console.log(imageUrl)
+                    // Perform additional tasks with the imageUrl if needed
+                })
+                .catch((error) => {
+                    // Handle any errors that occur during image processing
+                    console.error('Image processing error:', error);
+                });
+        }
 
 
         // Update Identification Form

@@ -32,7 +32,10 @@
 
           <tbody id="table-body-date">
             <% sightings.forEach(function(sighting) { %>
-            <tr data-id="<%= sighting._id %>">
+            <tr
+                data-id="<%= sighting._id %>"
+                data-sighting='<%= JSON.stringify(sighting) %>'
+            >
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
@@ -70,7 +73,10 @@
 
           <tbody id="table-body-distance" style="display: none">
             <% sightings.forEach(function(sighting) { %>
-            <tr data-id="<%= sighting._id %>">
+              <tr
+                data-id="<%= sighting._id %>"
+                data-sighting='<%= JSON.stringify(sighting) %>'
+              >
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
@@ -114,7 +120,7 @@
           <div
             class="card"
             data-id="<%= sighting._id %>"
-            onclick="location.href='/details?id=<%= sighting._id %>'"
+            data-sighting='<%= JSON.stringify(sighting) %>'
           >
             <img
               class="card-img-top"
