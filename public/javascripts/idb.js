@@ -37,7 +37,6 @@ export async function openSightingDB() {
 
 export async function getSighting(key) {
     await openSightingDB();
-    console.log(key, db);
     const transaction = db.transaction([objectStoreName], 'readonly');
     const objectStore = transaction.objectStore(objectStoreName);
     const req = objectStore.get(key);

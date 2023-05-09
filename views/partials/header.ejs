@@ -15,10 +15,8 @@
   <!-- Add a modal container -->
   <%- include('../../public/page/create_offline.html') %>
 </header>
-
 <script>
 
-  // Get the h1 element by its ID
   const titleElement = document.getElementById('title');
 
   // Add the click event listener to the h1 element
@@ -34,7 +32,6 @@
 
   });
 
-
   // Function to handle the button click event
   function handleButtonClick() {
     if (!navigator.onLine) {
@@ -47,5 +44,29 @@
       window.location.href = '/create';
     }
   }
+
+
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    /**
+     * When the client gets off-line, it shows an off line warning to the user
+     * so that it is clear that the data is stale
+     */
+    window.addEventListener('offline', function(e) {
+      // Queue up events for server.
+      console.log("You are offline");
+    }, false);
+
+
+
+    window.addEventListener('online', async function(e) {
+      // Resync data with the server.
+      console.log("You are online");
+    }, false);
+
+
+  });
+
 
 </script>

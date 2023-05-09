@@ -88,18 +88,18 @@
     import { getSighting, setSighting, putSighting } from '../public/javascripts/idb.js';
 
     let sighting;
+    const defaultId ="1";
 
     fetchData();
 
     async function fetchData() {
         try {
             const sightingId = localStorage.getItem("sightingId")
-            console.log(sightingId + "before move")
-            if(sightingId || sightingId != 1){
+            if(sightingId && sightingId !== defaultId){
                 localStorage.removeItem("sightingId")
                 sighting = await getSighting(sightingId);
             }else{
-                sighting = await getSighting('1'); // offline add default id
+                sighting = await getSighting(defaultId); // offline add default id
             }
             populateSightingData(sighting);
 

@@ -113,23 +113,39 @@ elements.forEach(element => {
 
 
 
-/**
- * When the client gets off-line, it shows an off line warning to the user
- * so that it is clear that the data is stale
- */
-window.addEventListener('offline', function(e) {
-  // Queue up events for server.
-  console.log("You are offline");
-}, false);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    /**
+     * When the client gets online, it hides the offline warning
+     */
+    window.addEventListener('online', async function(e) {
+        // Resync data with the server.
+        console.log("You are online from index");
+
+        uploadNewCreateData()
+            .then((response) => console.log("Upload new data:"+ response.status))
+            .catch(error => console.log("Upload new data error:", error));
+
+        // updateDataMessage()
+        //     .then(() => console.log("Update message success"))
+        //     .catch(error => console.log("Update message error:", error));
+
+        // Clean indexedDB
+        await clearSightings();
+    }, false);
+});
+
 
 
 let defaultLocalId = "1";
 async function uploadNewCreateData() {
-    sighting = await getSighting(defaultLocalId);
+    const sighting = await getSighting(defaultLocalId);
     const formData = new FormData();
     for (const key in sighting) {
         formData.append(key, sighting[key]);
     }
+    console.log(sighting)
 
     const response = await fetch("/add", {
         method: "POST",
@@ -159,24 +175,10 @@ async function updateDataMessage() {
             'Content-Type': 'application/json',
         },
     });
-
     return response;
 }
 
 
-/**
- * When the client gets online, it hides the off line warning
- */
-window.addEventListener('online', async function (e) {
-    // Resync data with server.
-    console.log("You are online");
-
-    uploadNewCreateData().then(r => console.log("upload new data success")).catch(e => console.log(e.error()));
-    updateDataMessage().then(r => console.log("update message success")).catch(e => console.log(e.error()));
-    // clean indexedDB
-    await clearSightings();
-
-}, false);
 
 
 // function showOfflineWarning() {

@@ -22,13 +22,13 @@ function insertSighting(req, res) {
     description: req.body.description,
     date: req.body.date,
     author: req.body.author,
-    location: req.body.location,
-    position: req.body.position,
-    distance: req.body.distance,
+    location: req.body.location ?? "",
+    position: req.body.position ?? "",
+    distance: req.body.distance ?? "",
     identification: {
-      birdName: req.body.birdName,
-      description: req.body.birdDescription,
-      url: req.body.url,
+      birdName: req.body.birdName ?? "",
+      description: req.body.birdDescription ?? "",
+      url: req.body.url ?? "",
     },
     image: req.file.path,
   });
@@ -58,6 +58,7 @@ function updateMessageList(sightingId, message) {
     }
 
     if (message.length > sighting.message.length) {
+
       sighting.message = message;
       sighting.save((err) => {
         if (err) {
