@@ -1,35 +1,3 @@
-// const dbNAme = 'sightingsDB';
-// const dbVersion = 1;
-// const objectStoreName = 'sightings';
-//
-//
-// let db = null;
-
-//
-// function openSightingDB() {
-//     if(db) {
-//         console.log("Database is already open");
-//         return;
-//     }
-//     const openRequest = indexedDB.open(dbNAme, dbVersion)
-//
-//     openRequest.onsuccess = function (event) {
-//         db = event.target.result;
-//         console.log("openDb DONE");
-//     };
-//
-//     openRequest.onerror = function (event) {
-//         console.error("openDb:", event.target.errorCode);
-//     };
-//
-//     openRequest.onupgradeneeded = function (event) {
-//         db = event.target.result;
-//         const objectStore = db.createObjectStore(objectStoreName, {keyPath: "_id"});
-//         objectStore.createIndex('timestamp', 'timestamp', {unique: false})
-//     };
-// }
-
-
 const addResourcesToCache = async (resources) => {
     const cache = await caches.open("v1");
     await cache.addAll(resources);

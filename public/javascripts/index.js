@@ -76,7 +76,7 @@ async function deleteSighting(event, id) {
     }
 }
 
-import {openSightingDB, putSighting, setSighting} from './idb.js';
+import {openSightingDB, putSighting, setSighting, getSighting, getAllSightings, clearSightings} from './idb.js';
 
 //open idb
 openSightingDB()
@@ -109,6 +109,86 @@ elements.forEach(element => {
         }
     });
 });
+
+
+
+
+/**
+ * When the client gets off-line, it shows an off line warning to the user
+ * so that it is clear that the data is stale
+ */
+window.addEventListener('offline', function(e) {
+  // Queue up events for server.
+  console.log("You are offline");
+}, false);
+
+
+let defaultLocalId = "1";
+async function uploadNewCreateData() {
+    sighting = await getSighting(defaultLocalId);
+    const formData = new FormData();
+    for (const key in sighting) {
+        formData.append(key, sighting[key]);
+    }
+
+    const response = await fetch("/add", {
+        method: "POST",
+        body: formData,
+    });
+    return response;
+}
+
+async function updateDataMessage() {
+    const sightings = await getAllSightings();
+    const formDataArray = [];
+
+    sightings.forEach((sighting) => {
+        const formData = new FormData();
+
+        for (const key in sighting) {
+            formData.append(key, sighting[key]);
+        }
+
+        formDataArray.push(formData);
+    });
+
+    const response = await fetch('/upload', {
+        method: 'POST',
+        body: JSON.stringify(formDataArray),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    return response;
+}
+
+
+/**
+ * When the client gets online, it hides the off line warning
+ */
+window.addEventListener('online', async function (e) {
+    // Resync data with server.
+    console.log("You are online");
+
+    uploadNewCreateData().then(r => console.log("upload new data success")).catch(e => console.log(e.error()));
+    updateDataMessage().then(r => console.log("update message success")).catch(e => console.log(e.error()));
+    // clean indexedDB
+    await clearSightings();
+
+}, false);
+
+
+// function showOfflineWarning() {
+//   if (document.getElementById('offline_div') != null)
+//     document.getElementById('offline_div').style.display = 'block';
+// }
+//
+// function hideOfflineWarning() {
+//   if (document.getElementById('offline_div') != null)
+//     document.getElementById('offline_div').style.display = 'none';
+// }
+
 
 
 

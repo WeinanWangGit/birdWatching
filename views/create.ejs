@@ -161,7 +161,6 @@
             formData.append(key, data[key]);
           }
 
-          //todo check offline and store sighting in indexedDbs
           const response = await fetch("/add", {
             method: "POST",
             body: formData,

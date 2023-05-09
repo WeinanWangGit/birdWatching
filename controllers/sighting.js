@@ -1,3 +1,4 @@
+
 const Sighting = require("../models/sighting");
 const multer = require("multer");
 
@@ -42,6 +43,45 @@ function insertSighting(req, res) {
       res.status(201).json(savedSighting);
     }
   });
+}
+
+
+function updateMessageList(sightingId, message) {
+  Sighting.findById(sightingId, (err, sighting) => {
+    if (err) {
+      console.error("Error finding sighting:", err);
+      return;
+    }
+    if (!sighting) {
+      console.error("Sighting not found");
+      return;
+    }
+
+    if (message.length > sighting.message.length) {
+      sighting.message = message;
+      sighting.save((err) => {
+        if (err) {
+          console.error("Error saving sighting:", err);
+          return;
+        }
+        console.log("Sighting message updated successfully");
+      });
+    }
+  });
+}
+
+
+function uploadOfflineSighting(req, res) {
+  let formDataArray = JSON.parse(res.body);
+
+  for (const formData of formDataArray) {
+    const { _id, message } = formData;
+    if (_id !== 1) {
+      updateMessageList(_id, message);
+    }
+  }
+
+  res.status(200).send("Sightings uploaded successfully.");
 }
 
 // NOT IN USE
@@ -154,4 +194,5 @@ module.exports = {
   updateIdentification,
   updateSighting,
   upload,
+  uploadOfflineSighting
 };

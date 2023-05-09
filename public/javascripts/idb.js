@@ -105,3 +105,22 @@ export async function getAllSightings() {
 }
 
 
+export async function clearSightings() {
+    await openSightingDB();
+    const transaction = db.transaction([objectStoreName], 'readwrite');
+    const objectStore = transaction.objectStore(objectStoreName);
+    const req = objectStore.clear();
+
+    return new Promise((resolve, reject) => {
+        req.onsuccess = function () {
+            resolve();
+        };
+
+        req.onerror = function (event) {
+            reject(event.target.error);
+        };
+    });
+}
+
+
+
