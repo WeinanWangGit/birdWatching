@@ -1,0 +1,105 @@
+body {
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.2rem;
+  margin-left: 2rem;
+  font-weight: bold;
+  color: #28b487;
+}
+
+.button {
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.5rem;
+}
+
+.button:hover {
+  background-image: linear-gradient(to right, #28b487, #7dd56f);
+}
+
+.container {
+  align-items: center;
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 80rem;
+}
+
+/* TABLE  */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.table th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #f2f2f2;
+}
+
+/* .headClickable:hover {
+    background-color: #e6e6e6;
+    cursor: pointer;
+  } */
+
+.table td,
+.table th {
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+/* Set some basic styles for the details button */
+.button-group button {
+  color: #198754;
+  border-color: #198754;
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 10px;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Change the details button background color on hover */
+.button-group button:hover {
+  color: #fff;
+  background-color: #198754;
+}
+
+/* .button-group form {
+    display: inline-block;
+  }
+  .button-group form button {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: #fff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  .button-group form button:hover {
+    background-color: #c82333;
+  } */
