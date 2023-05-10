@@ -2,12 +2,11 @@
 <html>
   <head>
     <title>Bird Sighting</title>
+    <%- include('partials/head') %>
+
     <script src="../public/javascripts/idb.js" type="module"></script>
     <script src="../public/javascripts/index.js" type="module"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+
     <link rel="stylesheet" href="../public/stylesheets/style.css" />
     <%- include('partials/header') %>
   </head>
@@ -32,22 +31,25 @@
 
           <tbody id="table-body-date">
             <% sightings.forEach(function(sighting) { %>
-            <tr
-                data-id="<%= sighting._id %>"
-                data-sighting='<%= JSON.stringify(sighting) %>'
-            >
+            <tr data-id="<%= sighting._id %>">
+              <!-- data-sighting="<%= JSON.stringify(sighting) %>" -->
+
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
               <td><%= sighting.distance %></td>
               <td><%= sighting.date %></td>
+
               <td>
                 <div class="button-group">
                   <button
                     id="details-btn"
                     class="btn btn-outline-success"
-                    onclick="location.href='/details?id=<%= sighting._id %>'"
+                    data-id="<%= sighting._id %>"
+                    data-sighting="<%= JSON.stringify(sighting) %>"
                   >
+                    <!-- onclick="location.href='/details?id=<%= sighting._id %>'" -->
+
                     Details
                   </button>
 
@@ -58,10 +60,14 @@
                       value="<%= sighting._id %>"
                     />
                     <button
+                      id="delete-btn"
                       type="submit"
                       class="btn btn-outline-danger"
-                      onclick="deleteSighting(event,'<%= sighting._id %>')"
+                      data-id="<%= sighting._id %>"
+                      data-sighting="<%= JSON.stringify(sighting) %>"
                     >
+                      <!-- onclick="deleteSighting(event,'<%= sighting._id %>')" -->
+
                       Delete
                     </button>
                   </form>
@@ -73,10 +79,10 @@
 
           <tbody id="table-body-distance" style="display: none">
             <% sightings.forEach(function(sighting) { %>
-              <tr
-                data-id="<%= sighting._id %>"
-                data-sighting='<%= JSON.stringify(sighting) %>'
-              >
+            <tr
+              data-id="<%= sighting._id %>"
+              data-sighting="<%= JSON.stringify(sighting) %>"
+            >
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
@@ -120,7 +126,7 @@
           <div
             class="card"
             data-id="<%= sighting._id %>"
-            data-sighting='<%= JSON.stringify(sighting) %>'
+            data-sighting="<%= JSON.stringify(sighting) %>"
           >
             <img
               class="card-img-top"
@@ -152,8 +158,6 @@
         </button>
       </div>
       <!-- </div> -->
-
-
     </div>
   </body>
 
@@ -285,5 +289,4 @@
       }
     }
   </script>
-
 </html>
