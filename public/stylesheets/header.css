@@ -60,3 +60,15 @@ header {
     margin-top: 0.5rem;
   }
 }
+
+
+.offline-bar {
+  display: none;
+  height: 30px;
+  background-color: pink;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}

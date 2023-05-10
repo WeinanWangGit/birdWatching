@@ -169,9 +169,9 @@ document.addEventListener("DOMContentLoaded", function () {
       //   .then((response) => console.log("Upload new data:" + response.status))
       //   .catch((error) => console.log("Upload new data error:", error));
 
-      updateDataMessage()
-          .then(() => console.log("Update message success"))
-          .catch(error => console.log("Update message error:", error));
+      // updateDataMessage()
+      //     .then(() => console.log("Update message success"))
+      //     .catch(error => console.log("Update message error:", error));
 
       // Clean indexedDB
       // await clearSightings();
