@@ -165,16 +165,16 @@ document.addEventListener("DOMContentLoaded", function () {
       // Resync data with the server.
       console.log("You are online from index");
 
-      uploadNewCreateData()
-        .then((response) => console.log("Upload new data:" + response.status))
-        .catch((error) => console.log("Upload new data error:", error));
+      // uploadNewCreateData()
+      //   .then((response) => console.log("Upload new data:" + response.status))
+      //   .catch((error) => console.log("Upload new data error:", error));
 
-      // updateDataMessage()
-      //     .then(() => console.log("Update message success"))
-      //     .catch(error => console.log("Update message error:", error));
+      updateDataMessage()
+          .then(() => console.log("Update message success"))
+          .catch(error => console.log("Update message error:", error));
 
       // Clean indexedDB
-      await clearSightings();
+      // await clearSightings();
     },
     false
   );
@@ -198,27 +198,36 @@ async function uploadNewCreateData() {
 
 async function updateDataMessage() {
   const sightings = await getAllSightings();
-  const formDataArray = [];
+  if(sightings){
+    let formDataArray = [];
+    let formData;
 
-  sightings.forEach((sighting) => {
-    const formData = new FormData();
+    sightings.forEach((sighting) => {
+      formData = new FormData();
 
-    for (const key in sighting) {
-      formData.append(key, sighting[key]);
-    }
+      formData.append("_id", sighting._id);
+      sighting.messages.forEach((message) => {
+        formData.append("messages", message);
+      });
 
-    formDataArray.push(formData);
-  });
+      formDataArray.push(formData);
+      console.log(formData.get("_id"),  formData.get("messages"))
+    });
 
-  const response = await fetch("/upload", {
-    method: "POST",
-    body: JSON.stringify(formDataArray),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response;
+    console.log(formDataArray)
+
+    const response = await fetch("/upload", {
+      method: "POST",
+      body: JSON.stringify(formDataArray),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  }
+
 }
+
 
 // function showOfflineWarning() {
 //   if (document.getElementById('offline_div') != null)

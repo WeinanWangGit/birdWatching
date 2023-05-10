@@ -46,7 +46,7 @@ function insertSighting(req, res) {
 }
 
 
-function updateMessageList(sightingId, message) {
+function updateMessageList(sightingId, messages) {
   Sighting.findById(sightingId, (err, sighting) => {
     if (err) {
       console.error("Error finding sighting:", err);
@@ -57,9 +57,9 @@ function updateMessageList(sightingId, message) {
       return;
     }
 
-    if (message.length > sighting.message.length) {
+    if (messages.length > sighting.messages.length) {
 
-      sighting.message = message;
+      sighting.messages = messages;
       sighting.save((err) => {
         if (err) {
           console.error("Error saving sighting:", err);
@@ -73,14 +73,22 @@ function updateMessageList(sightingId, message) {
 
 
 function uploadOfflineSighting(req, res) {
-  let formDataArray = JSON.parse(res.body);
+  const formDataArray = req.body;
+  console.log(formDataArray)
 
-  for (const formData of formDataArray) {
-    const { _id, message } = formData;
-    if (_id !== 1) {
-      updateMessageList(_id, message);
+
+  // Iterate over each form data object in the array
+  formDataArray.forEach((formData) => {
+    const sightingId = formData.get('_id');
+    const messages = formData.getAll('messages');
+
+    // Process the _id and messages as needed
+    console.log('_id:', sightingId);
+    console.log('messages:', messages);
+    if (sightingId !== 1) {
+      updateMessageList(sightingId, messages);
     }
-  }
+  });
 
   res.status(200).send("Sightings uploaded successfully.");
 }
