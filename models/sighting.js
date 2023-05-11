@@ -33,29 +33,16 @@ const SightingSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true,
+    required: false,
   },
   distance:{
     type: String,
-    required: true,
+    required: false,
   },
   position:{
     type: String,
-    required: true,
+    required: false,
   },
-  // identification: {
-  //   birdName: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   description: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   url: {
-  //     type: String,
-  //   },
-  // },
   identification: {
     type: IdentificationSchema,
     required: true,
@@ -63,11 +50,6 @@ const SightingSchema = new mongoose.Schema({
   image: {
     type: Buffer,
   },
-  // messages: {
-  //   type: [String], // string array
-  //   default: [], // default empty array
-  // },
-
   messages: [
     {
       text: {

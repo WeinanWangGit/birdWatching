@@ -9,4 +9,11 @@ router.post(
   sighting_controller.insertSighting
 );
 
+
+
+router.post(
+    "/upload",
+    sighting_controller.uploadOfflineSighting
+);
+
 module.exports = router;

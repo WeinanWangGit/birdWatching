@@ -41,6 +41,7 @@ body {
 .button-group {
   display: flex;
   gap: 0.5rem;
+  /* align-items: center; */
 }
 
 /* Style the grid view */
@@ -77,7 +78,7 @@ body {
 }
 
 /* Style buttons */
-.btn {
+/* .btn {
   border-radius: 5px;
   cursor: pointer;
 }
@@ -99,7 +100,7 @@ body {
 .add-button {
   display: flex;
   justify-content: center;
-}
+} */
 
 .pagination {
   text-align: center;

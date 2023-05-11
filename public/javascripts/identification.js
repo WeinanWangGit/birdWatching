@@ -248,3 +248,5 @@ async function saveChanges(sightingId) {
     console.error("Failed to update identification data");
   }
 }
+
+

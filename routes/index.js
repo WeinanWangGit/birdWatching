@@ -22,6 +22,7 @@ router.get("/", async function (req, res) {
  */
 router.post("/delete", async function (req, res) {
   const id = req.query.id;
+  // const id = req.body.id;
   try {
     const result = await sighting_controller.deleteSighting(id);
     if (result === true) {

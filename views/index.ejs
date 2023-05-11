@@ -3,50 +3,12 @@
   <head>
     <title>Bird Sighting</title>
     <%- include('partials/head') %>
-    <script src="../public/javascripts/deleteSighting.js"></script>
 
-    <script>
-      // Ask for username and save to sessionStorage
-      const username = sessionStorage.getItem("username");
-      const MAX_LENGTH = 20;
-
-      if (!username) {
-        let isValid = false;
-        while (!isValid) {
-          const username = prompt(
-            "Please enter your username (no more than 20 characters):"
-          );
-          if (username && username.length <= MAX_LENGTH) {
-            sessionStorage.setItem("username", username);
-            isValid = true;
-          }
-        }
-      }
-    </script>
-
-    <!--    get current location-->
-    <script>
-      var latitude = null;
-      var longitude = null;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-            // console.log('Latitude:', latitude, 'Longitude:', longitude);
-            // alert('您选择的位置是：' + latitude + ',' + longitude);
-          },
-          function (error) {
-            console.log("Error getting current position:", error);
-          }
-        );
-      } else {
-        console.log("Geolocation is not supported by this browser.");
-      }
-    </script>
+    <script src="../public/javascripts/idb.js" type="module"></script>
+    <script src="../public/javascripts/index.js" type="module"></script>
 
     <link rel="stylesheet" href="../public/stylesheets/style.css" />
-    <%- include('partials/header_index') %>
+    <%- include('partials/header') %>
   </head>
 
   <body>
@@ -74,18 +36,24 @@
           <tbody id="table-body-date">
             <% sightings.forEach(function(sighting) { %>
             <tr data-id="<%= sighting._id %>">
+              <!-- data-sighting="<%= JSON.stringify(sighting) %>" -->
+
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
               <td><%= sighting.distance %></td>
               <td><%= sighting.date %></td>
+
               <td>
                 <div class="button-group">
                   <button
                     id="details-btn"
                     class="btn btn-outline-success"
-                    onclick="location.href='/details?id=<%= sighting._id %>'"
+                    data-id="<%= sighting._id %>"
+                    data-sighting="<%= JSON.stringify(sighting) %>"
                   >
+                    <!-- onclick="location.href='/details?id=<%= sighting._id %>'" -->
+
                     Details
                   </button>
 
@@ -96,10 +64,14 @@
                       value="<%= sighting._id %>"
                     />
                     <button
+                      id="delete-btn"
                       type="submit"
                       class="btn btn-outline-danger"
-                      onclick="deleteSighting(event,'<%= sighting._id %>')"
+                      data-id="<%= sighting._id %>"
+                      data-sighting="<%= JSON.stringify(sighting) %>"
                     >
+                      <!-- onclick="deleteSighting(event,'<%= sighting._id %>')" -->
+
                       Delete
                     </button>
                   </form>
@@ -111,7 +83,10 @@
 
           <tbody id="table-body-distance" style="display: none">
             <% sightings.forEach(function(sighting) { %>
-            <tr data-id="<%= sighting._id %>">
+            <tr
+              data-id="<%= sighting._id %>"
+              data-sighting="<%= JSON.stringify(sighting) %>"
+            >
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
@@ -155,7 +130,7 @@
           <div
             class="card"
             data-id="<%= sighting._id %>"
-            onclick="location.href='/details?id=<%= sighting._id %>'"
+            data-sighting="<%= JSON.stringify(sighting) %>"
           >
             <img
               class="card-img-top"
@@ -187,12 +162,6 @@
         </button>
       </div>
       <!-- </div> -->
-
-      <div class="add-button">
-        <button class="btn btn-primary" onclick="location.href='/create'">
-          <i class="fa fa-plus-circle"></i> Add New Sighting
-        </button>
-      </div>
     </div>
   </body>
 
@@ -221,7 +190,28 @@
       sortTable(n);
     }
   </script>
+  <!--    <script>-->
+  <!--      const table = document.getElementById('table-view');-->
+  <!--      const headers = table.querySelectorAll('th');-->
 
+  <!--      headers.forEach((header) => {-->
+  <!--        header.addEventListener('click', () => {-->
+  <!--          const columnIndex = header.cellIndex;-->
+
+  <!--          let field;-->
+  <!--          switch (columnIndex) {-->
+  <!--            case 0:-->
+  <!--              field = 'distance';-->
+  <!--              break;-->
+  <!--            case 1:-->
+  <!--              field = 'birdName';-->
+  <!--              break;-->
+  <!--            case 2:-->
+  <!--              field = 'author';-->
+  <!--              break;-->
+  <!--            default:-->
+  <!--              field = '';-->
+  <!--          }-->
 
 <!--  page-->
   <script>
@@ -290,6 +280,16 @@
 
 
   <!--    sort-->
+  <!--          const rows = table.querySelectorAll('tbody tr');-->
+  <!--          rows.forEach((row) => {-->
+  <!--            const cell = row.querySelector(`td:nth-child(${columnIndex + 1})`);-->
+  <!--            const data = row.dataset[field];-->
+  <!--            cell.innerText = data;-->
+  <!--          });-->
+  <!--        });-->
+  <!--      });-->
+  <!--    </script>-->
+
   <script>
     function sortTable(n) {
       var table,
@@ -362,38 +362,4 @@
       }
     }
   </script>
-
-  <!-- <script>
-    const newSightings = sightings.map((sighting) => {
-      // 对每个sighting进行操作
-      const location = sighting.location;
-      const location_sight = location.split(",");
-      const distance = getDistanceFromLatLonInKm(
-        latitude,
-        longitude,
-        location_sight[0],
-        location_sight[1]
-      );
-      return { ...sighting, distance }; // 返回新的对象，包括原对象的属性和新属性distance
-    });
-
-    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-      const R = 6371; // 地球半径（单位：千米）
-      const dLat = deg2rad(lat2 - lat1);
-      const dLon = deg2rad(lon2 - lon1);
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(deg2rad(lat1)) *
-          Math.cos(deg2rad(lat2)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = R * c; // 距离（单位：千米）
-      return distance;
-    }
-
-    function deg2rad(deg) {
-      return deg * (Math.PI / 180);
-    }
-  </script> -->
 </html>

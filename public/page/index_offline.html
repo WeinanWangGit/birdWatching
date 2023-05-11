@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sighting list</title>
+    <link rel="stylesheet" href="../stylesheets/index_offline.css" />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="title">
+        <h1 id="title">Bird Sighting</h1>
+      </div>
+      <div class="nav">
+        <button class="button" onclick="handleButtonClick()">
+          Add New Sighting
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <table class="table" id="table-view">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Identification</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody id="table-body-date">
+          <!-- Start of iteration -->
+          <tr data-id="sighting._id" data-sighting="JSON.stringify(sighting)">
+            <td>sighting.author</td>
+            <td>sighting.author</td>
+            <td>sighting.date</td>
+            <td>
+              <div class="button-group">
+                <button id="details-btn" class="btn btn-outline-success">
+                  Details
+                </button>
+
+                <!--        <form action="/delete" method="post">-->
+                <!--          <input type="hidden" name="id" value="sighting._id" />-->
+                <!--          <button-->
+                <!--                  type="submit"-->
+                <!--                  class="btn btn-outline-danger"-->
+                <!--                  onclick="deleteSighting(event, 'sighting._id')"-->
+                <!--          >-->
+                <!--            Delete-->
+                <!--          </button>-->
+                <!--        </form>-->
+              </div>
+            </td>
+          </tr>
+          <!-- End of iteration -->
+        </tbody>
+      </table>
+
+      <script src="../public/javascripts/idb.js" type="module"></script>
+      <script type="module">
+        import { getAllSightings } from "../public/javascripts/idb.js";
+
+        const sightingsContainer = document.getElementById("table-body-date");
+
+        async function displaySightings() {
+          try {
+            const sightings = await getAllSightings();
+
+            // Clear existing content in the container
+            sightingsContainer.innerHTML = "";
+
+            sightings.forEach((sighting) => {
+              const row = document.createElement("tr");
+              row.setAttribute("data-id", sighting._id);
+              row.setAttribute("data-sighting", JSON.stringify(sighting));
+
+              const authorCell = document.createElement("td");
+              authorCell.textContent = sighting.author;
+              row.appendChild(authorCell);
+
+              const birdNameCell = document.createElement("td");
+              if (sighting.identification.birdName) {
+                birdNameCell.textContent = sighting.identification.birdName;
+              } else {
+                birdNameCell.textContent = sighting.birdName;
+              }
+              row.appendChild(birdNameCell);
+
+              const dateCell = document.createElement("td");
+              dateCell.textContent = sighting.date;
+              row.appendChild(dateCell);
+
+              const actionCell = document.createElement("td");
+              const buttonGroup = document.createElement("div");
+              buttonGroup.className = "button-group";
+
+              const detailsButton = document.createElement("button");
+              detailsButton.id = "details-btn";
+              detailsButton.className = "btn btn-outline-success";
+              detailsButton.textContent = "Details";
+              detailsButton.onclick = () => {
+                const id = sighting._id;
+                console.log(id);
+                localStorage.setItem("sightingId", id);
+                location.href = "/page/details_offline.html";
+              };
+              buttonGroup.appendChild(detailsButton);
+
+              actionCell.appendChild(buttonGroup);
+
+              row.appendChild(actionCell);
+
+              sightingsContainer.appendChild(row);
+            });
+          } catch (error) {
+            console.error("Error retrieving sightings:", error);
+          }
+        }
+
+        displaySightings();
+      </script>
+    </div>
+  </body>
+
+  <!-- TODO: still need refreshing and recheck the checkbox -->
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const titleElement = document.getElementById("title");
+      window.addEventListener(
+        "offline",
+        function (e) {
+          // Add the click event listener to the h1 element
+          titleElement.addEventListener("click", () => {
+            window.location.href = "/page/index_offline.html";
+          });
+        },
+        false
+      );
+
+      window.addEventListener(
+        "online",
+        async function (e) {
+          titleElement.addEventListener("click", () => {
+            window.location.href = "/";
+          });
+        },
+        false
+      );
+    });
+  </script> -->
+</html>

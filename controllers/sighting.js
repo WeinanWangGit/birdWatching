@@ -1,3 +1,4 @@
+
 const Sighting = require("../models/sighting");
 const multer = require("multer");
 
@@ -21,13 +22,13 @@ function insertSighting(req, res) {
     description: req.body.description,
     date: req.body.date,
     author: req.body.author,
-    location: req.body.location,
-    position: req.body.position,
-    distance: req.body.distance,
+    location: req.body.location ?? "",
+    position: req.body.position ?? "",
+    distance: req.body.distance ?? "",
     identification: {
-      birdName: req.body.birdName,
-      description: req.body.birdDescription,
-      url: req.body.url,
+      birdName: req.body.birdName ?? "",
+      description: req.body.birdDescription ?? "",
+      url: req.body.url ?? "",
     },
     image: req.file.path,
   });
@@ -42,6 +43,53 @@ function insertSighting(req, res) {
       res.status(201).json(savedSighting);
     }
   });
+}
+
+
+function updateMessageList(sightingId, messages) {
+  Sighting.findById(sightingId, (err, sighting) => {
+    if (err) {
+      console.error("Error finding sighting:", err);
+      return;
+    }
+    if (!sighting) {
+      console.error("Sighting not found");
+      return;
+    }
+
+    if (messages.length > sighting.messages.length) {
+
+      sighting.messages = messages;
+      sighting.save((err) => {
+        if (err) {
+          console.error("Error saving sighting:", err);
+          return;
+        }
+        console.log("Sighting message updated successfully");
+      });
+    }
+  });
+}
+
+
+function uploadOfflineSighting(req, res) {
+  const sightings = req.body;
+  const defaultId = "1";
+
+  try {
+    sightings.forEach((sighting) => {
+      const sightingId = sighting._id
+      const messages = sighting.messages
+      if (sightingId !== defaultId) {
+        updateMessageList(sightingId, messages);
+      }
+    });
+    res.status(200).send("Sightings message uploaded successfully.");
+
+  }catch (e) {
+    res.status(500).send("Sightings message uploaded fail")
+  }
+
 }
 
 // NOT IN USE
@@ -154,4 +202,5 @@ module.exports = {
   updateIdentification,
   updateSighting,
   upload,
+  uploadOfflineSighting
 };

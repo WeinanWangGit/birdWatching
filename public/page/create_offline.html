@@ -1,0 +1,141 @@
+<!-- createoffline.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Offline</title>
+    <!-- Include any necessary CSS stylesheets -->
+    <link rel="stylesheet" href="../stylesheets/create_offline.css" />
+  </head>
+  <body>
+    <!-- Add a modal container -->
+    <div id="offlineModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>New sighting</h2>
+          <button class="close-button" onclick="closeModal()">X</button>
+        </div>
+        <form class="offlineForm" id="offlineForm">
+          <!-- <div class="form-container"> -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="date" class="form-label">Date:</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <hr />
+
+          <div class="mb-3">
+            <label for="identification" class="form-label"
+              >Identification:</label
+            >
+            <input
+              type="text"
+              id="identification"
+              name="identification"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="bird-name" class="form-label">Bird Name:</label>
+            <input
+              type="text"
+              id="bird-name"
+              name="bird-name"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label"
+              >Bird Description:</label
+            >
+            <textarea
+              id="bird-description"
+              name="bird-description"
+              class="form-control"
+              required
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="url" class="form-label">URL:</label>
+            <input type="text" id="url" name="url" class="form-control" />
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Image:</label>
+            <input type="file" id="image" name="image" class="form-control" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create</button>
+          <!-- </div> -->
+        </form>
+      </div>
+    </div>
+
+    <script src="../public/javascripts/idb.js" type="module"></script>
+    <script type="module">
+      import { setSighting } from "../public/javascripts/idb.js";
+
+      // Add event listener to the offline form submit event
+      var offlineForm = document.getElementById("offlineForm");
+      offlineForm.addEventListener("submit", handleOfflineSubmit);
+
+      window.closeModal = function () {
+        var modal = document.getElementById("offlineModal");
+        modal.style.display = "none";
+      };
+
+      const username = sessionStorage.getItem("username");
+      // Function to handle the offline form submit event
+      async function handleOfflineSubmit(event) {
+        console.log("enter save sighting");
+        // event.preventDefault();
+        event.preventDefault(); // Prevent form from submitting normally
+
+        const data = {
+          description: document.getElementById("description").value,
+          date: document.getElementById("date").value,
+          author: username,
+          identification: document.getElementById("identification").value,
+          birdName: document.getElementById("bird-name").value,
+          birdDescription: document.getElementById("bird-description").value,
+          image: document.getElementById("image").files[0],
+          _id: "1",
+        };
+
+        await setSighting(data)
+          .then(() => {
+            alert("Sighting created successfully in indexedDB!");
+          })
+          .catch((error) => {
+            alert("Error creating sighting");
+          });
+
+        closeModal();
+        window.location.href = "/page/details_offline.html"; // Navigate to details.html
+      }
+    </script>
+  </body>
+</html>

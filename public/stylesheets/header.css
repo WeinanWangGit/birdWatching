@@ -20,21 +20,27 @@ header {
 }
 
 /* BUTTON */
-button {
+.btn-primary {
+  background-image: linear-gradient(to right, #7dd56f, #28b487);
+}
+.btn-primary:hover {
+  background-image: linear-gradient(to left, #7dd56f, #28b487);
+}
+
+/* .add-button {
   display: inline-block;
-  padding: 1rem 2rem;
   font-size: 1.8rem;
   border-radius: 0.5rem;
   text-decoration: none;
   background-image: linear-gradient(to right, #7dd56f, #28b487);
   color: white;
-  cursor: pointer;
   border: none;
   margin-right: 2rem;
 }
-button:hover {
+.add-button:hover {
   background-image: linear-gradient(to left, #7dd56f, #28b487);
 }
+ */
 
 @media (max-width: 576px) {
   /* Reduce padding for smaller screens */
@@ -48,9 +54,21 @@ button:hover {
   }
 
   /* Make button full width for smaller screens */
-  button {
+  .add-button {
     display: block;
     width: 100%;
     margin-top: 0.5rem;
   }
+}
+
+
+.offline-bar {
+  display: none;
+  height: 30px;
+  background-color: pink;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
