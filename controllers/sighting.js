@@ -73,24 +73,23 @@ function updateMessageList(sightingId, messages) {
 
 
 function uploadOfflineSighting(req, res) {
-  const formDataArray = req.body;
-  console.log(formDataArray)
+  const sightings = req.body;
+  const defaultId = "1";
 
+  try {
+    sightings.forEach((sighting) => {
+      const sightingId = sighting._id
+      const messages = sighting.messages
+      if (sightingId !== defaultId) {
+        updateMessageList(sightingId, messages);
+      }
+    });
+    res.status(200).send("Sightings message uploaded successfully.");
 
-  // Iterate over each form data object in the array
-  formDataArray.forEach((formData) => {
-    const sightingId = formData.get('_id');
-    const messages = formData.getAll('messages');
+  }catch (e) {
+    res.status(500).send("Sightings message uploaded fail")
+  }
 
-    // Process the _id and messages as needed
-    console.log('_id:', sightingId);
-    console.log('messages:', messages);
-    if (sightingId !== 1) {
-      updateMessageList(sightingId, messages);
-    }
-  });
-
-  res.status(200).send("Sightings uploaded successfully.");
 }
 
 // NOT IN USE

@@ -165,16 +165,34 @@ document.addEventListener("DOMContentLoaded", function () {
       // Resync data with the server.
       console.log("You are online from index");
 
-      // uploadNewCreateData()
-      //   .then((response) => console.log("Upload new data:" + response.status))
-      //   .catch((error) => console.log("Upload new data error:", error));
+      uploadNewCreateData()
+          .then((response) => {
+            if (response.ok) {
+              console.log("Upload new data success");
+            } else {
+              console.log("Upload new data error:", response.status);
+            }
+          })
+          .catch((error) => console.log("Upload new data error:", error))
 
-      // updateDataMessage()
-      //     .then(() => console.log("Update message success"))
-      //     .catch(error => console.log("Update message error:", error));
 
-      // Clean indexedDB
-      // await clearSightings();
+      updateDataMessage()
+          .then((response) => {
+            if (response.ok) {
+              console.log("Update message success");
+            } else {
+              console.log("Update message error:", response.status);
+            }
+          })
+          .catch((error) => console.log("Update message error:", error))
+          .finally(async () => {
+            // Clean indexedDB
+            await clearSightings();
+
+            // Reload the home page
+            window.location.href = "http://localhost:3000";
+          });
+
     },
     false
   );
@@ -196,45 +214,21 @@ async function uploadNewCreateData() {
   return response;
 }
 
+
+
 async function updateDataMessage() {
   const sightings = await getAllSightings();
-  if(sightings){
-    let formDataArray = [];
-    let formData;
-
-    sightings.forEach((sighting) => {
-      formData = new FormData();
-
-      formData.append("_id", sighting._id);
-      sighting.messages.forEach((message) => {
-        formData.append("messages", message);
-      });
-
-      formDataArray.push(formData);
-      console.log(formData.get("_id"),  formData.get("messages"))
-    });
-
-    console.log(formDataArray)
-
+  if (sightings) {
     const response = await fetch("/upload", {
       method: "POST",
-      body: JSON.stringify(formDataArray),
+      body: JSON.stringify(sightings),
       headers: {
         "Content-Type": "application/json",
       },
     });
     return response;
   }
-
 }
 
 
-// function showOfflineWarning() {
-//   if (document.getElementById('offline_div') != null)
-//     document.getElementById('offline_div').style.display = 'block';
-// }
-//
-// function hideOfflineWarning() {
-//   if (document.getElementById('offline_div') != null)
-//     document.getElementById('offline_div').style.display = 'none';
-// }
+
