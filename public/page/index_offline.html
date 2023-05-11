@@ -24,7 +24,7 @@
           <tr>
             <th>User</th>
             <th>Identification</th>
-            <th>Data</th>
+            <th>Date</th>
             <th></th>
           </tr>
         </thead>
@@ -33,7 +33,7 @@
           <!-- Start of iteration -->
           <tr data-id="sighting._id" data-sighting="JSON.stringify(sighting)">
             <td>sighting.author</td>
-            <td>sighting.identification.birdName</td>
+            <td>sighting.author</td>
             <td>sighting.date</td>
             <td>
               <div class="button-group">
@@ -81,7 +81,12 @@
               row.appendChild(authorCell);
 
               const birdNameCell = document.createElement("td");
-              birdNameCell.textContent = sighting.identification.birdName;
+              if (sighting.identification.birdName) {
+                console.log("Identification");
+                birdNameCell.textContent = sighting.identification.birdName;
+              } else {
+                birdNameCell.textContent = sighting.birdName;
+              }
               row.appendChild(birdNameCell);
 
               const dateCell = document.createElement("td");

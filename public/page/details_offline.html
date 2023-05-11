@@ -178,7 +178,12 @@
 
         // Update Identification Form
         const birdNameElement = document.getElementById("birdName");
-        birdNameElement.textContent = sighting.birdName;
+        if (sighting.identification.birdName) {
+          birdNameElement.textContent = sighting.identification.birdName;
+        } else {
+          birdNameElement.textContent = sighting.birdName;
+        }
+        // birdNameElement.textContent = sighting.birdName;
 
         const descriptionElement = document.getElementById("description");
         descriptionElement.textContent = sighting.description;

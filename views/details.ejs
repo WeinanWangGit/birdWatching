@@ -12,13 +12,19 @@
   </head>
 
   <body onload="init('<%=JSON.stringify(sighting)%>')">
-
     <div class="container">
-      <div class="offline_div" id="offline_div"
-           style="position: fixed; bottom: 0; width: 200px;margin: 0 auto; display: none">
-        <div class="alert alert-info" role="alert">
-          Your are offline.
-        </div>
+      <div
+        class="offline_div"
+        id="offline_div"
+        style="
+          position: fixed;
+          bottom: 0;
+          width: 200px;
+          margin: 0 auto;
+          display: none;
+        "
+      >
+        <div class="alert alert-info" role="alert">Your are offline.</div>
       </div>
       <!-- <div class="row"> -->
       <div class="col-md-6">
@@ -81,8 +87,10 @@
 
       <div class="col-md-6">
         <div class="card mb-3">
-          <div class="card-body">
+          <div class="card-header">
             <h2 class="card-title">Identification Form</h2>
+          </div>
+          <div class="card-body">
             <div class="mb-3">
               <label for="birdName" class="form-label">Bird Name:</label>
               <div class="form-text" id="birdName">
@@ -116,8 +124,10 @@
         </div>
 
         <div class="card mb-3">
-          <div class="card-body">
+          <div class="card-header">
             <h2 class="card-title">Metadata</h2>
+          </div>
+          <div class="card-body">
             <p><strong>Date:</strong> <%= sighting.date %></p>
             <p><strong>Author:</strong> <%= sighting.author %></p>
             <p><strong>Description:</strong> <%= sighting.description %></p>
