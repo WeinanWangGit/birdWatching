@@ -82,7 +82,6 @@
 
               const birdNameCell = document.createElement("td");
               if (sighting.identification.birdName) {
-                console.log("Identification");
                 birdNameCell.textContent = sighting.identification.birdName;
               } else {
                 birdNameCell.textContent = sighting.birdName;
@@ -125,28 +124,30 @@
     </div>
   </body>
 
+  <!-- TODO: still need refreshing and recheck the checkbox -->
   <!-- <script>
-    const titleElement = document.getElementById("title");
+    document.addEventListener("DOMContentLoaded", function () {
+      const titleElement = document.getElementById("title");
+      window.addEventListener(
+        "offline",
+        function (e) {
+          // Add the click event listener to the h1 element
+          titleElement.addEventListener("click", () => {
+            window.location.href = "/page/index_offline.html";
+          });
+        },
+        false
+      );
 
-    // Add the click event listener to the h1 element
-    titleElement.addEventListener("click", () => {
-      if (!navigator.onLine) {
-        window.location.href = "/page/index_offline.html";
-      } else {
-        window.location.href = "/";
-      }
+      window.addEventListener(
+        "online",
+        async function (e) {
+          titleElement.addEventListener("click", () => {
+            window.location.href = "/";
+          });
+        },
+        false
+      );
     });
-
-    // Function to handle the button click event
-    function handleButtonClick() {
-      if (!navigator.onLine) {
-        // If the browser is offline, display the offline modal window
-        var offlineModal = document.getElementById("offlineModal");
-        offlineModal.style.display = "block";
-      } else {
-        // If the browser is online, redirect to the "/create" page
-        window.location.href = "/create";
-      }
-    }
   </script> -->
 </html>
