@@ -113,6 +113,12 @@ body {
   margin-bottom: 1rem;
 }
 
+.map-container {
+  margin-top: 1rem;
+  height: 20rem;
+  max-width: 100%;
+}
+
 /* Responsive styles for small screens */
 @media screen and (max-width: 767px) {
   .container {
