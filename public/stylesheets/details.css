@@ -119,6 +119,15 @@ body {
   max-width: 100%;
 }
 
+/* Style edit identification modal */
+.modal-content {
+  background-color: #fefefe;
+  margin: 20% auto;
+  padding: 1rem;
+  border: 1px solid #888;
+  width: 50%;
+}
+
 /* Responsive styles for small screens */
 @media screen and (max-width: 767px) {
   .container {

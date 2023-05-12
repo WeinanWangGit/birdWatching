@@ -90,6 +90,7 @@ function displayResults(data) {
       // Create label for bird name
       const birdLabel = document.createElement("label");
       birdLabel.classList.add("form-label");
+      birdLabel.setAttribute("style", "display: block;");
       birdLabel.textContent = "Bird Name:";
       formGroup.appendChild(birdLabel);
 
@@ -140,8 +141,12 @@ function displayResults(data) {
         birdNameInput.focus();
       });
 
-      // Append each formGroup to resultsContainer
+      // Append each formGroup and horizontal rule to resultsContainer
       list.appendChild(formGroup);
+      list.appendChild(document.createElement("hr"));
+
+      // Append each formGroup to resultsContainer
+      // list.appendChild(formGroup);
     }
     resultsContainer.appendChild(list);
   }
@@ -227,5 +232,3 @@ async function saveChanges(sightingId) {
     console.error("Failed to update identification data");
   }
 }
-
-

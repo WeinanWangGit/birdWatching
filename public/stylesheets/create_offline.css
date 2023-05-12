@@ -22,19 +22,15 @@
   margin: 0;
 }
 
-.modal-content {
+.offlineModal-content {
   background-color: #fefefe;
   margin: 20% auto;
-  padding: 20px;
+  padding: 2rem;
   border: 1px solid #888;
-  width: 50%;
+  width: 40%;
 }
 
 #offlineForm {
   display: flex;
   flex-direction: column;
-}
-
-button[type="submit"] {
-  margin-top: 10px;
 }
