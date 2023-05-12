@@ -22,7 +22,6 @@ if (navigator.geolocation) {
     function (position) {
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
-      // console.log('Latitude:', latitude, 'Longitude:', longitude);
     },
     function (error) {
       console.log("Error getting current position:", error);
@@ -115,45 +114,6 @@ document.addEventListener("click", (event) => {
     }
   }
 });
-
-// const elements = document.querySelectorAll(".card, #details-btn");
-
-// // Add the click event listener to each element
-// elements.forEach((element) => {
-//   element.addEventListener("click", (event) => {
-//     // Get the sighting data from the clicked element
-//     const sighting = JSON.parse(element.dataset.sighting);
-
-//     // Add sighting to IndexedDB
-//     putSighting(sighting)
-//       .then(() => {
-//         console.log("Sighting created successfully in indexedDB!");
-//       })
-//       .catch((error) => {
-//         console.log("Error creating sighting");
-//       });
-
-//     if (sighting._id) {
-//       const id = sighting._id;
-//       // Redirect to the details page
-//       window.location.href = `/details?id=${id}`;
-//     }
-//   });
-// });
-
-// // Get delete button and add eventListener
-// document.addEventListener("DOMContentLoaded", () => {
-//   const deleteBtn = document.querySelector("#delete-btn");
-//   deleteBtn.addEventListener("click", (event) => {
-//     const sighting = JSON.parse(deleteBtn.dataset.sighting);
-//     if (sighting._id) {
-//       const id = sighting._id;
-//       // call deleteSighting func
-//       deleteSighting(event, id);
-//       console.log(id);
-//     }
-//   });
-// });
 
 document.addEventListener("DOMContentLoaded", function () {
   /**

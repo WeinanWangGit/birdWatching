@@ -3,11 +3,10 @@
   <head>
     <title>Create a new Sighting</title>
     <%- include('partials/head') %>
-
     <link rel="stylesheet" href=".././stylesheets/create.css" />
     <%- include('partials/header') %>
-    <!--    get current location-->
     <script src="../public/javascripts/create.js"></script>
+    <!--    get current location-->
     <script
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
             async
@@ -21,7 +20,6 @@
         <h1 class="page-title">Create a new Sighting</h1>
       </div>
       <form class="sighting-form" id="sighting-form">
-        <!-- <div class="form-container"> -->
         <div class="mb-3">
           <label for="description" class="form-label">Description:</label>
           <input
@@ -129,11 +127,9 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Create</button>
-        <!-- </div> -->
       </form>
     </div>
-
-    <!-- Map -->
+  </body>
 
 
     <!-- Submit the form -->
@@ -179,5 +175,4 @@
         });
       });
     </script>
-  </body>
 </html>

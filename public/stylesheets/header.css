@@ -27,21 +27,6 @@ header {
   background-image: linear-gradient(to left, #7dd56f, #28b487);
 }
 
-/* .add-button {
-  display: inline-block;
-  font-size: 1.8rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  background-image: linear-gradient(to right, #7dd56f, #28b487);
-  color: white;
-  border: none;
-  margin-right: 2rem;
-}
-.add-button:hover {
-  background-image: linear-gradient(to left, #7dd56f, #28b487);
-}
- */
-
 @media (max-width: 576px) {
   /* Reduce padding for smaller screens */
   header {
