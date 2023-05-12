@@ -11,7 +11,6 @@ body {
   max-width: 80rem;
 }
 
-/* Style the table */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -34,17 +33,13 @@ body {
   padding: 1rem;
   border-top: 0.0625rem solid #ddd;
 }
-/* .table tr:hover {
-  background-color: #e6e6e6;
-} */
 
 .button-group {
   display: flex;
   gap: 0.5rem;
-  /* align-items: center; */
 }
 
-/* Style the grid view */
+
 #grid-view {
   display: flex;
   flex-wrap: wrap;
@@ -53,15 +48,13 @@ body {
 .card {
   width: 100%;
   border: none;
-  /* border: 0.0625rem solid rgba(0, 0, 0, 0.125); */
   border-radius: 5px;
   cursor: pointer;
 }
 .card-img-top {
   width: 100%;
   height: auto;
-  /* height: 12.5rem;
-  object-fit: cover; */
+
 }
 .card-title {
   margin-bottom: 0.5rem;
@@ -77,32 +70,6 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
-/* Style buttons */
-/* .btn {
-  border-radius: 5px;
-  cursor: pointer;
-}
-.btn-secondary {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.8rem;
-}
-.btn-primary {
-  padding: 0.5rem 1rem;
-  font-size: 1.2rem;
-  color: #fff;
-  background-image: linear-gradient(to right, #7dd56f, #28b487);
-  border: none;
-}
-.btn-primary:hover {
-  color: #fff;
-  background-image: linear-gradient(to right, #28b487, #7dd56f);
-}
-.add-button {
-  display: flex;
-  justify-content: center;
-} */
-
-/* Pagination style */
 .pagination {
   text-align: center;
   display: flex;

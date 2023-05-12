@@ -31,9 +31,6 @@ async function searchBird() {
     }
     LIMIT 5`;
 
-    // const url = `https://dbpedia.org/sparql?query=${encodeURIComponent(
-    //   query
-    // )}&format=json`;
     const endpointUrl = "https://dbpedia.org/sparql";
     const encodedQuery = encodeURIComponent(query);
     const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
@@ -179,9 +176,6 @@ function updateIdentification(author) {
 
 // To avoid uncaught syntax error for JSON.stringify
 function sanitiseText(text) {
-  // return text.replace(/[\u00A0-\u9999<>\&]/g, function (i) {
-  //   return "&#" + i.charCodeAt(0) + ";";
-  // });
   return text.replace(/['"]/g, "");
 }
 
@@ -197,11 +191,6 @@ async function saveChanges(sightingId) {
   const modal = document.getElementById("modal");
   const bootstrapModal = new bootstrap.Modal(modal);
 
-  // const data = {
-  //   birdName: birdNameInput.value.replace(/'/g, ""),
-  //   description: descriptionInput.value.replace(/'/g, ""),
-  //   url: urlInput.value.replace(/'/g, ""),
-  // };
 
   const data = {
     birdName: sanitiseText(birdNameInput.value),

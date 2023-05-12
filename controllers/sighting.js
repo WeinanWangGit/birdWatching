@@ -92,24 +92,6 @@ function uploadOfflineSighting(req, res) {
 
 }
 
-// NOT IN USE
-// function updateSighting(sightingTemp) {
-//     Sighting.findById(sightingTemp._id, (err, sighting) => {
-//         if (err) {
-//             console.error(err);
-//         } else {
-//             sighting.messages.push(sightingTemp.messages[sightingTemp.messages.length - 1]);
-//             sighting.save((err, updatedSighting) => {
-//                 if (err) {
-//                     console.error(err);
-//                 } else {
-//                     console.log('Sighting updated successfully:', updatedSighting);
-//                 }
-//             });
-//         }
-//     });
-// }
-
 function updateSighting(sightingId, message) {
   Sighting.findById(sightingId, (err, sighting) => {
     if (err) {
@@ -163,22 +145,6 @@ async function deleteSighting(id) {
   }
 }
 
-// NOT IN USE
-// async function getSightingByIdAndUpdate(id, identification) {
-//   try {
-//     const updatedSighting = await Sighting.findByIdAndUpdate(
-//       id,
-//       {
-//         $set: { identification: identification },
-//       },
-//       { new: true }
-//     );
-//     return updatedSighting;
-//   } catch (err) {
-//     console.error(`Error getting sighting by ID: ${err}`);
-//     throw err;
-//   }
-// }
 
 async function updateIdentification(id, identification) {
   try {

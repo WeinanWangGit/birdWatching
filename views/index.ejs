@@ -26,7 +26,6 @@
               <th>Spotted Location</th>
               <th class="headClickable" onclick="toggle_Distance(3)">
                 Distance
-                <!-- <i class="fa fa-sort"></i> -->
               </th>
               <th class="headClickable" onclick="toggle_Date()">Date/time</th>
               <th></th>
@@ -179,12 +178,9 @@
     </div> -->
   </body>
 
-  <!--    switch table-->
-  <script>
-    const STATUS_DATE = "pending";
-    const STATUS_DISTANCE = "success";
-    let status = STATUS_DATE;
 
+  <script>
+    // switch table
     function toggle_Date() {
       var table1 = document.getElementById("table-body-date");
       var table2 = document.getElementById("table-body-distance");
@@ -203,32 +199,8 @@
       }
       sortTable(n);
     }
-  </script>
-  <!--    <script>-->
-  <!--      const table = document.getElementById('table-view');-->
-  <!--      const headers = table.querySelectorAll('th');-->
 
-  <!--      headers.forEach((header) => {-->
-  <!--        header.addEventListener('click', () => {-->
-  <!--          const columnIndex = header.cellIndex;-->
-
-  <!--          let field;-->
-  <!--          switch (columnIndex) {-->
-  <!--            case 0:-->
-  <!--              field = 'distance';-->
-  <!--              break;-->
-  <!--            case 1:-->
-  <!--              field = 'birdName';-->
-  <!--              break;-->
-  <!--            case 2:-->
-  <!--              field = 'author';-->
-  <!--              break;-->
-  <!--            default:-->
-  <!--              field = '';-->
-  <!--          }-->
-
-  <!--  page-->
-  <script>
+    //page divided
     const table_distance = document.getElementById("table-body-distance");
     const table_date = document.getElementById("table-body-date");
     let currentPage = 1;
@@ -248,16 +220,12 @@
       const rows_date = Array.from(table_date.rows).slice(0); // Get all rows except the header
       const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
-      if (currentPage <= numPages + 1 && currentPage > 0) {
-        rows_distance.forEach((row) => (row.style.display = "none")); // hide all rows
-        rows_date.forEach((row) => (row.style.display = "none"));
-        rows_distance
-          .slice(startIndex, endIndex)
-          .forEach((row) => (row.style.display = "")); // Display the rows of the specified page
-        rows_date
-          .slice(startIndex, endIndex)
-          .forEach((row) => (row.style.display = ""));
-      } else if (currentPage === 0) {
+      if(currentPage<numPages+1 && currentPage>0){
+        rows_distance.forEach(row => row.style.display = "none"); // hide all rows
+        rows_date.forEach(row => row.style.display = "none");
+        rows_distance.slice(startIndex, endIndex).forEach(row => row.style.display = ""); // Display the rows of the specified page
+        rows_date.slice(startIndex, endIndex).forEach(row => row.style.display = "");
+      }else if(currentPage===0){
         alert("no more");
         currentPage++;
       } else {
@@ -265,12 +233,14 @@
         currentPage--;
       }
     }
+
+    // page link
     function createPagination(table) {
       const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
       const pagination = document.createElement("div");
       pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
-      for (let i = 1; i <= numPages + 1; i++) {
+      for (let i = 1; i < numPages+1; i++) {
         const link = document.createElement("a");
         link.href = "#";
         link.textContent = i;
@@ -293,30 +263,18 @@
       showPage(1);
       createPagination(table_distance);
     });
-  </script>
 
-  <!--    sort-->
-  <!--          const rows = table.querySelectorAll('tbody tr');-->
-  <!--          rows.forEach((row) => {-->
-  <!--            const cell = row.querySelector(`td:nth-child(${columnIndex + 1})`);-->
-  <!--            const data = row.dataset[field];-->
-  <!--            cell.innerText = data;-->
-  <!--          });-->
-  <!--        });-->
-  <!--      });-->
-  <!--    </script>-->
-
-  <script>
+    //sort by distance
     function sortTable(n) {
       var table,
-        rows,
-        switching,
-        i,
-        x,
-        y,
-        shouldSwitch,
-        dir,
-        switchcount = 0;
+              rows,
+              switching,
+              i,
+              x,
+              y,
+              shouldSwitch,
+              dir,
+              switchcount = 0;
       table = document.getElementById("table-body-distance");
       switching = true;
       dir = "asc"; // Set the sorting direction to ascending
@@ -352,9 +310,8 @@
       }
       showPage(1);
     }
-  </script>
 
-  <script>
+    //toggle the present form
     var currentView = 0;
     var views = ["table-view", "grid-view"];
     var toggleText = document.querySelector("span");
@@ -378,4 +335,5 @@
       }
     }
   </script>
+
 </html>

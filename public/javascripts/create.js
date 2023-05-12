@@ -5,8 +5,6 @@ if (navigator.geolocation) {
         function (position) {
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
-            // console.log('Latitude:', latitude, 'Longitude:', longitude);
-            // alert('The location you have selected is：' + latitude + ',' + longitude);
         },
         function (error) {
             console.log("Error getting current position:", error);
@@ -30,7 +28,6 @@ function initMap() {
         var location = e.latLng;
         var locationInput = document.getElementById("location");
         locationInput.value = location.lat() + "," + location.lng();
-        // alert('The location you have selected is：' + location.lat() + ',' + location.lng());
 
         // Delete the previous marker
         if (marker !== null) {
@@ -48,7 +45,6 @@ function initMap() {
             latitude,
             longitude
         );
-        // alert(distance); // （Unit: kilometre）
         const distance_format = distance.toFixed(2);
         var DistanceInput = document.getElementById("distance");
         DistanceInput.value = distance.toFixed(2) + "km";
@@ -64,17 +60,6 @@ function initMap() {
             });
     });
 }
-
-// // Adds a marker to the map.
-// function addMarker(location, map) {
-//   // Add the marker at the clicked location, and add the next-available label
-//   // from the array of alphabetical characters.
-//   new google.maps.Marker({
-//     position: location,
-//     label: labels[labelIndex++ % labels.length],
-//     map: map,
-//   });
-// }
 
 // compute distance
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
