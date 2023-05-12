@@ -58,8 +58,11 @@ body {
 /* Chat */
 .history {
   min-height: 10rem;
+  max-height: 10rem;
   border-bottom: 1px solid #ccc;
   margin-bottom: 1rem;
+  /* overflow-y: auto; */
+  overflow-y: scroll;
 }
 
 .message_container {

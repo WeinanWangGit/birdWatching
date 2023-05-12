@@ -39,27 +39,6 @@ async function searchBird() {
     const url = `${endpointUrl}?query=${encodedQuery}&format=json`;
     const response = await fetch(url);
 
-    // TODO: fetch-sparql-endpoint
-    // const endpoint = "https://dbpedia.org/sparql";
-    // const query = `
-    //   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    //   PREFIX dbo: <http://dbpedia.org/ontology/>
-    //   SELECT ?bird ?label ?description
-    //   WHERE {
-    //     ?bird a dbo:Bird;
-    //     rdfs:label ?label;
-    //     dbo:abstract ?description;
-    //     FILTER(LANG(?label) = 'en' && LANG(?description) = 'en' && regex(?label, '${sanitisedSearch}',"i"))
-    //   }
-    //   LIMIT 5
-    // `;
-    // const options = {
-    //   headers: {
-    //     Accept: "application/sparql-results+json",
-    //   },
-    // };
-    // const response = await fetchSPARQLEndpoint(endpoint, query, options);
-
     if (response.ok) {
       const data = await response.json();
       displayResults(data);
