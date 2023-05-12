@@ -165,34 +165,41 @@ document.addEventListener("DOMContentLoaded", function () {
       // Resync data with the server.
       console.log("You are online from index");
 
-      uploadNewCreateData()
-          .then((response) => {
-            if (response.ok) {
-              console.log("Upload new data success");
-            } else {
-              console.log("Upload new data error:", response.status);
-            }
-          })
-          .catch((error) => console.log("Upload new data error:", error))
+      // Show loading animation
+      const loadingElement = document.getElementById("loading-animation");
+      loadingElement.style.display = "block";
+      // Wait for 2sec
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
+      uploadNewCreateData()
+        .then((response) => {
+          if (response.ok) {
+            console.log("Upload new data success");
+          } else {
+            console.log("Upload new data error:", response.status);
+          }
+        })
+        .catch((error) => console.log("Upload new data error:", error));
 
       updateDataMessage()
-          .then((response) => {
-            if (response.ok) {
-              console.log("Update message success");
-            } else {
-              console.log("Update message error:", response.status);
-            }
-          })
-          .catch((error) => console.log("Update message error:", error))
-          .finally(async () => {
-            // Clean indexedDB
-            await clearSightings();
+        .then((response) => {
+          if (response.ok) {
+            console.log("Update message success");
+          } else {
+            console.log("Update message error:", response.status);
+          }
+        })
+        .catch((error) => console.log("Update message error:", error))
+        .finally(async () => {
+          // Hide the loading animation
+          loadingElement.style.display = "none";
 
-            // Reload the home page
-            window.location.href = "http://localhost:3000";
-          });
+          // Clean indexedDB
+          await clearSightings();
 
+          // Reload the home page
+          window.location.href = "http://localhost:3000";
+        });
     },
     false
   );
@@ -214,8 +221,6 @@ async function uploadNewCreateData() {
   return response;
 }
 
-
-
 async function updateDataMessage() {
   const sightings = await getAllSightings();
   if (sightings) {
@@ -229,6 +234,3 @@ async function updateDataMessage() {
     return response;
   }
 }
-
-
-

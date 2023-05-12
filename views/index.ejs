@@ -163,6 +163,20 @@
       </div>
       <!-- </div> -->
     </div>
+
+    <div id="loading-animation" class="sync-spinner">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Hang tight, we're syncing your data!</p>
+    </div>
+
+    <!-- <div id="loading-animation" style="display: none" class="sync-spinner">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2 fw-bold">Hang tight, we're syncing your data!</p>
+    </div> -->
   </body>
 
   <!--    switch table-->
@@ -213,18 +227,18 @@
   <!--              field = '';-->
   <!--          }-->
 
-<!--  page-->
+  <!--  page-->
   <script>
     const table_distance = document.getElementById("table-body-distance");
     const table_date = document.getElementById("table-body-date");
     let currentPage = 1;
     const rowsPerPage = 3;
     function showPage(page) {
-      let table =null;
-      if(table_distance.display ==="none"){
+      let table = null;
+      if (table_distance.display === "none") {
         table = table_date;
-      }else{
-        table =table_distance;
+      } else {
+        table = table_distance;
       }
 
       currentPage = page; // update current page number
@@ -234,37 +248,41 @@
       const rows_date = Array.from(table_date.rows).slice(0); // Get all rows except the header
       const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
-      if(currentPage<=numPages+1 && currentPage>0){
-        rows_distance.forEach(row => row.style.display = "none"); // hide all rows
-        rows_date.forEach(row => row.style.display = "none");
-        rows_distance.slice(startIndex, endIndex).forEach(row => row.style.display = ""); // Display the rows of the specified page
-        rows_date.slice(startIndex, endIndex).forEach(row => row.style.display = "");
-      }else if(currentPage===0){
+      if (currentPage <= numPages + 1 && currentPage > 0) {
+        rows_distance.forEach((row) => (row.style.display = "none")); // hide all rows
+        rows_date.forEach((row) => (row.style.display = "none"));
+        rows_distance
+          .slice(startIndex, endIndex)
+          .forEach((row) => (row.style.display = "")); // Display the rows of the specified page
+        rows_date
+          .slice(startIndex, endIndex)
+          .forEach((row) => (row.style.display = ""));
+      } else if (currentPage === 0) {
         alert("no more");
         currentPage++;
-      }else{
+      } else {
         alert("no more");
         currentPage--;
       }
-
-
     }
     function createPagination(table) {
       const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
       const pagination = document.createElement("div");
       pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
-      for (let i = 1; i <= numPages+1; i++) {
+      for (let i = 1; i <= numPages + 1; i++) {
         const link = document.createElement("a");
         link.href = "#";
         link.textContent = i;
         if (i === currentPage) {
           link.classList.add("active"); // Add CSS styles to identify the current page number
         }
-        link.addEventListener("click", event => {
+        link.addEventListener("click", (event) => {
           event.preventDefault();
           showPage(i);
-          pagination.querySelectorAll("a").forEach(a => a.classList.remove("active"));
+          pagination
+            .querySelectorAll("a")
+            .forEach((a) => a.classList.remove("active"));
           link.classList.add("active");
         });
         pagination.appendChild(link);
@@ -276,8 +294,6 @@
       createPagination(table_distance);
     });
   </script>
-
-
 
   <!--    sort-->
   <!--          const rows = table.querySelectorAll('tbody tr');-->
