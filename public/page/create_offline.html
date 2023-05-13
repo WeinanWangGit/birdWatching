@@ -22,7 +22,7 @@
             <label for="description" class="form-label">Description:</label>
             <input
               type="text"
-              id="description"
+              id="offline-description"
               name="description"
               class="form-control"
               required
@@ -33,7 +33,7 @@
             <label for="date" class="form-label">Date:</label>
             <input
               type="date"
-              id="date"
+              id="offline-date"
               name="date"
               class="form-control"
               required
@@ -59,7 +59,7 @@
             <label for="bird-name" class="form-label">Bird Name:</label>
             <input
               type="text"
-              id="bird-name"
+              id="offline-bird-name"
               name="bird-name"
               class="form-control"
               required
@@ -71,7 +71,7 @@
               >Bird Description:</label
             >
             <textarea
-              id="bird-description"
+              id="offline-bird-description"
               name="bird-description"
               class="form-control"
               required
@@ -80,12 +80,22 @@
 
           <div class="mb-3">
             <label for="url" class="form-label">URL:</label>
-            <input type="text" id="url" name="url" class="form-control" />
+            <input
+              type="text"
+              id="offline-url"
+              name="url"
+              class="form-control"
+            />
           </div>
 
           <div class="mb-3">
             <label for="image" class="form-label">Image:</label>
-            <input type="file" id="image" name="image" class="form-control" />
+            <input
+              type="file"
+              id="offline-image"
+              name="image"
+              class="form-control"
+            />
           </div>
 
           <button type="submit" class="btn btn-primary">Create</button>
@@ -115,13 +125,14 @@
         event.preventDefault(); // Prevent form from submitting normally
 
         const data = {
-          description: document.getElementById("description").value,
-          date: document.getElementById("date").value,
+          description: document.getElementById("offline-description").value,
+          date: document.getElementById("offline-date").value,
           author: username,
           // identification: document.getElementById("identification").value,
-          birdName: document.getElementById("bird-name").value,
-          birdDescription: document.getElementById("bird-description").value,
-          image: document.getElementById("image").files[0],
+          birdName: document.getElementById("offline-bird-name").value,
+          birdDescription: document.getElementById("offline-bird-description")
+            .value,
+          image: document.getElementById("offline-image").files[0],
           _id: "1",
         };
 
