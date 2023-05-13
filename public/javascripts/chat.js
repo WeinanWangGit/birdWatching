@@ -1,4 +1,3 @@
-
 let name = null;
 let roomNo = null;
 let socket = io();
@@ -27,8 +26,8 @@ function init(sightingJson) {
  * and sends the message via  socket
  */
 function sendChatText() {
-  let input = document.getElementById("chat_input");
-  socket.emit("chat message", roomNo, name, input.value);
+  let input = sanitiseText(document.getElementById("chat_input").value);
+  socket.emit("chat message", roomNo, name, input);
   input.value = "";
 }
 

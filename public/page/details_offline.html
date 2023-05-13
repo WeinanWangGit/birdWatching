@@ -279,9 +279,15 @@
         .getElementById("chat_send")
         .addEventListener("click", sendChatText);
 
+      function sanitiseText(text) {
+        return text.replace(/['"]/g, "").trim();
+      }
+
       function sendChatText() {
         // Get the chat input and username
-        var chatInput = document.getElementById("chat_input").value;
+        var chatInput = sanitiseText(
+          document.getElementById("chat_input").value
+        );
         const username = sessionStorage.getItem("username");
 
         if (chatInput.trim() !== "") {

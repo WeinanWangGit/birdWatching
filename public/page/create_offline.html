@@ -126,14 +126,30 @@
         // event.preventDefault();
         event.preventDefault(); // Prevent form from submitting normally
 
+        // const data = {
+        //   description: document.getElementById("offline-description").value,
+        //   date: document.getElementById("offline-date").value,
+        //   author: username,
+        //   // identification: document.getElementById("identification").value,
+        //   birdName: document.getElementById("offline-bird-name").value,
+        //   birdDescription: document.getElementById("offline-bird-description")
+        //     .value,
+        //   image: document.getElementById("offline-image").files[0],
+        //   _id: "1",
+        // };
+
         const data = {
-          description: document.getElementById("offline-description").value,
-          date: document.getElementById("offline-date").value,
-          author: username,
-          // identification: document.getElementById("identification").value,
-          birdName: document.getElementById("offline-bird-name").value,
-          birdDescription: document.getElementById("offline-bird-description")
-            .value,
+          description: sanitiseText(
+            document.getElementById("offline-description").value
+          ),
+          date: sanitiseText(document.getElementById("offline-date").value),
+          author: sanitiseText(username),
+          birdName: sanitiseText(
+            document.getElementById("offline-bird-name").value
+          ),
+          birdDescription: sanitiseText(
+            document.getElementById("offline-bird-description").value
+          ),
           image: document.getElementById("offline-image").files[0],
           _id: "1",
         };

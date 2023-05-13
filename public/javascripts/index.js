@@ -2,6 +2,10 @@
 const username = sessionStorage.getItem("username");
 const MAX_LENGTH = 20;
 
+function sanitiseText(text) {
+  return text.replace(/['"]/g, "").trim();
+}
+
 if (!username) {
   let isValid = false;
   while (!isValid) {
@@ -9,7 +13,8 @@ if (!username) {
       "Please enter your username (no more than 20 characters):"
     );
     if (username && username.length <= MAX_LENGTH) {
-      sessionStorage.setItem("username", username);
+      const sanitisedUsername = sanitiseText(username);
+      sessionStorage.setItem("username", sanitisedUsername);
       isValid = true;
     }
   }

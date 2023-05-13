@@ -168,9 +168,9 @@ function updateIdentification(author) {
   const username = sessionStorage.getItem("username");
   if (username === author) {
     // Populate modal inputs with current identification data
-    birdNameInput.value = birdName.textContent.trim();
-    descriptionInput.value = description.textContent.trim();
-    urlInput.value = url.textContent.trim();
+    birdNameInput.value = birdName.textContent;
+    descriptionInput.value = description.textContent;
+    urlInput.value = url.textContent;
 
     // Show modal dialog box
     bootstrapModal.show();
@@ -181,7 +181,7 @@ function updateIdentification(author) {
 
 // To avoid uncaught syntax error for JSON.stringify
 function sanitiseText(text) {
-  return text.replace(/['"]/g, "");
+  return text.replace(/['"]/g, "").trim();
 }
 
 async function saveChanges(sightingId) {
@@ -195,7 +195,6 @@ async function saveChanges(sightingId) {
 
   const modal = document.getElementById("modal");
   const bootstrapModal = new bootstrap.Modal(modal);
-
 
   const data = {
     birdName: sanitiseText(birdNameInput.value),
