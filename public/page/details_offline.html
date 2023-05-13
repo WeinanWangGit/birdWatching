@@ -110,7 +110,7 @@
             sighting = await getSighting(sightingId);
           } else {
             // await displayChatHistory(defaultId);
-            chatHistory = await displayChatHistory(defaultId);
+            messages = await displayChatHistory(defaultId);
             sighting = await getSighting(defaultId); // offline add default id
           }
           populateSightingData(sighting);
@@ -120,6 +120,23 @@
         }
       }
 
+      // function processImageFile(imageFile) {
+      //   return new Promise((resolve, reject) => {
+      //     const reader = new FileReader();
+
+      //     reader.onload = function (event) {
+      //       const imageUrl = event.target.result;
+      //       resolve(imageUrl);
+      //     };
+
+      //     reader.onerror = function (event) {
+      //       console.error("Error reading image file:", event.target.error);
+      //       reject(event.target.error);
+      //     };
+
+      //     reader.readAsDataURL(imageFile);
+      //   });
+      // }
       function processImageFile(imageFile) {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -134,7 +151,22 @@
             reject(event.target.error);
           };
 
-          reader.readAsDataURL(imageFile);
+          // Check the type of the image file
+          switch (imageFile.type) {
+            case "image/jpeg":
+              reader.readAsDataURL(imageFile);
+              break;
+            case "image/png":
+              reader.readAsDataURL(imageFile);
+              break;
+            case "image/jpg":
+              reader.readAsDataURL(imageFile);
+              break;
+            default:
+              // Handle unsupported image types
+              reject("Unsupported image type: " + imageFile.type);
+              break;
+          }
         });
       }
 
@@ -163,17 +195,7 @@
         const imageFile = sighting.image;
         console.log(sighting.image.type);
 
-        if (sighting.image.type == "image/png") {
-          processImageFile(imageFile)
-            .then((imageUrl) => {
-              imageElement.src = imageUrl;
-              // Perform additional tasks with the imageUrl if needed
-            })
-            .catch((error) => {
-              // Handle any errors that occur during image processing
-              console.error("Image processing error:", error);
-            });
-        } else if (sighting.image.type == "Buffer") {
+        if (sighting.image.type == "Buffer") {
           //TODO show base64 Buffer image
           const imageBuffer = sighting.image.data;
           processImageBuffer(imageBuffer)
@@ -186,11 +208,47 @@
               // Handle any errors that occur during image processing
               console.error("Image processing error:", error);
             });
+        } else {
+          if (imageFile) {
+            processImageFile(imageFile)
+              .then((imageUrl) => {
+                // Do something with the image URL, like displaying the image
+                imageElement.src = imageUrl;
+              })
+              .catch((error) => {
+                // Handle errors that occur during image processing
+                console.error("Error processing image:", error);
+              });
+          }
         }
+        // if (sighting.image.type == "image/png") {
+        //   processImageFile(imageFile)
+        //     .then((imageUrl) => {
+        //       imageElement.src = imageUrl;
+        //       // Perform additional tasks with the imageUrl if needed
+        //     })
+        //     .catch((error) => {
+        //       // Handle any errors that occur during image processing
+        //       console.error("Image processing error:", error);
+        //     });
+        // } else if (sighting.image.type == "Buffer") {
+        //   //TODO show base64 Buffer image
+        //   const imageBuffer = sighting.image.data;
+        //   processImageBuffer(imageBuffer)
+        //     .then((imageUrl) => {
+        //       imageElement.src = imageUrl;
+        //       console.log(imageUrl);
+        //       // Perform additional tasks with the imageUrl if needed
+        //     })
+        //     .catch((error) => {
+        //       // Handle any errors that occur during image processing
+        //       console.error("Image processing error:", error);
+        //     });
+        // }
 
         // Update Identification Form
         const birdNameElement = document.getElementById("birdName");
-        if (sighting.identification.birdName) {
+        if (sighting.identification) {
           birdNameElement.textContent = sighting.identification.birdName;
         } else {
           birdNameElement.textContent = sighting.birdName;

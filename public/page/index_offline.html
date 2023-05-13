@@ -81,7 +81,7 @@
               row.appendChild(authorCell);
 
               const birdNameCell = document.createElement("td");
-              if (sighting.identification.birdName) {
+              if (sighting.identification) {
                 birdNameCell.textContent = sighting.identification.birdName;
               } else {
                 birdNameCell.textContent = sighting.birdName;
