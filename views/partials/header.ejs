@@ -7,13 +7,69 @@
     <h1 id="title">Bird Sighting</h1>
   </div>
   <div class="nav">
-    <button class="btn btn-primary" onclick="handleButtonClick()">
+    <!-- <button class="btn btn-primary" onclick="handleButtonClick()">
+      <i class="fa fa-plus-circle"></i> Add New Sighting
+    </button> -->
+    <button id="addSightingButton" class="btn btn-primary">
       <i class="fa fa-plus-circle"></i> Add New Sighting
     </button>
   </div>
+
+  <div id="alertBox" class="alert" style="display: none">
+    <span id="closeAlertBoxBtn" class="closebtn">&times;</span>
+    There is an offline sighting not synced. Please sync first.
+  </div>
+
   <!-- Add a modal container -->
   <%- include('../../public/page/create_offline.html') %>
 </header>
+
+<!-- Import idb.js using script tag -->
+<script src="../../public/javascripts/idb.js" type="module"></script>
+
+<script type="module">
+  import { getSighting } from "../../public/javascripts/idb.js";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Function for showing alert box
+    function showAlertBox() {
+      var alertBox = document.getElementById("alertBox");
+      alertBox.style.display = "block";
+    }
+
+    // Handle closeAlert button clicked
+    const closeAlertBoxBtn = document.getElementById("closeAlertBoxBtn");
+    closeAlertBoxBtn.addEventListener("click", function () {
+      // Close the alert box
+      var alertBox = document.getElementById("alertBox");
+      alertBox.style.display = "none";
+    });
+
+    // Handle addSigting button clicked
+    const addSightingButton = document.getElementById("addSightingButton");
+    addSightingButton.addEventListener("click", function () {
+      // Check if there is a sighting with ID 1 in IndexedDB
+      getSighting("1").then((sighting) => {
+        if (sighting) {
+          // console.log("There is one offline sighting");
+          // If a sighting with ID 1 exists, display an alert to the user
+          // alert("There is an offline sighting not synced. Please sync first.");
+          showAlertBox();
+        } else {
+          // console.log("No offline sighting");
+          if (!navigator.onLine) {
+            // If the browser is offline, display the offline modal window
+            var offlineModal = document.getElementById("offlineModal");
+            offlineModal.style.display = "block";
+          } else {
+            // If the browser is online, redirect to the "/create" page
+            window.location.href = "/create";
+          }
+        }
+      });
+    });
+  });
+</script>
 
 <script>
   const titleElement = document.getElementById("title");
@@ -27,17 +83,17 @@
     }
   });
 
-  // Function to handle the button click event
-  function handleButtonClick() {
-    if (!navigator.onLine) {
-      // If the browser is offline, display the offline modal window
-      var offlineModal = document.getElementById("offlineModal");
-      offlineModal.style.display = "block";
-    } else {
-      // If the browser is online, redirect to the "/create" page
-      window.location.href = "/create";
-    }
-  }
+  // // Function to handle the button click event
+  // function handleButtonClick() {
+  //   if (!navigator.onLine) {
+  //     // If the browser is offline, display the offline modal window
+  //     var offlineModal = document.getElementById("offlineModal");
+  //     offlineModal.style.display = "block";
+  //   } else {
+  //     // If the browser is online, redirect to the "/create" page
+  //     window.location.href = "/create";
+  //   }
+  // }
 
   document.addEventListener("DOMContentLoaded", function () {
     // Get the offline bar element
