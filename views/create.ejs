@@ -6,6 +6,8 @@
     <link rel="stylesheet" href=".././stylesheets/create.css" />
     <%- include('partials/header') %>
     <script src="../public/javascripts/create.js"></script>
+    <script src="../public/javascripts/disableButtons.js"></script>
+
     <!--    get current location-->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
@@ -14,7 +16,8 @@
     ></script>
   </head>
 
-  <body>
+  <!-- <body> -->
+  <body onload="disableButtonsIfOffline()">
     <div class="container">
       <div class="title-container">
         <h1 class="page-title">Create a new Sighting</h1>

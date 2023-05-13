@@ -4,14 +4,22 @@
     <title>Sighting Details</title>
     <%- include('partials/head') %>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+    <!-- javascript files -->
     <script src="../public/javascripts/chat.js"></script>
     <script src="../public/javascripts/identification.js"></script>
+    <script src="../public/javascripts/disableButtons.js"></script>
 
+    <!-- stylesheet -->
     <link rel="stylesheet" href=".././stylesheets/details.css" />
+
     <%- include('partials/header') %>
   </head>
 
-  <body onload="init('<%=JSON.stringify(sighting)%>')">
+  <!-- <body onload="init('<%=JSON.stringify(sighting)%>')"> -->
+  <body
+    onload="disableButtonsIfOffline(); init('<%=JSON.stringify(sighting)%>')"
+  >
     <div class="container">
       <div
         class="offline_div"
@@ -240,58 +248,58 @@
       </div>
     </div>
   </body>
-    <!--    map-->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
-      async
-      defer
-    ></script>
+  <!--    map-->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
+    async
+    defer
+  ></script>
 
-    <script>
-      function initMap() {
-        const location = "<%= sighting.location %>";
-        const location_sight = location.split(",");
-        var map = new google.maps.Map(document.getElementById("map"), {
-          center: {
-            lat: parseFloat(location_sight[0]),
-            lng: parseFloat(location_sight[1]),
-          },
-          zoom: 12,
-          draggable: true,
-        });
+  <script>
+    function initMap() {
+      const location = "<%= sighting.location %>";
+      const location_sight = location.split(",");
+      var map = new google.maps.Map(document.getElementById("map"), {
+        center: {
+          lat: parseFloat(location_sight[0]),
+          lng: parseFloat(location_sight[1]),
+        },
+        zoom: 12,
+        draggable: true,
+      });
 
-        var myLatlng = new google.maps.LatLng(
-          location_sight[0],
-          location_sight[1]
-        );
-        marker = new google.maps.Marker({
-          position: myLatlng,
-          map: map,
-        });
+      var myLatlng = new google.maps.LatLng(
+        location_sight[0],
+        location_sight[1]
+      );
+      marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+      });
 
-        map.addListener(function (e) {
-          var location = e.latLng;
-          var locationInfo = document.getElementById("location");
-          locationInfo.innerText =
-            "Location:" +
-            "Latitude: " +
-            location.lat() +
-            ", Longitude: " +
-            location.lng();
+      map.addListener(function (e) {
+        var location = e.latLng;
+        var locationInfo = document.getElementById("location");
+        locationInfo.innerText =
+          "Location:" +
+          "Latitude: " +
+          location.lat() +
+          ", Longitude: " +
+          location.lng();
 
-          geocoder.geocode({ location: location }, function (results, status) {
-            if (status === "OK") {
-              if (results[0]) {
-                var position = document.getElementById("position");
-                position.innerText = "Address: " + results[0].formatted_address;
-              } else {
-                console.log("No results found");
-              }
+        geocoder.geocode({ location: location }, function (results, status) {
+          if (status === "OK") {
+            if (results[0]) {
+              var position = document.getElementById("position");
+              position.innerText = "Address: " + results[0].formatted_address;
             } else {
-              console.log("Geocoder failed due to: " + status);
+              console.log("No results found");
             }
-          });
+          } else {
+            console.log("Geocoder failed due to: " + status);
+          }
         });
-      }
-    </script>
+      });
+    }
+  </script>
 </html>

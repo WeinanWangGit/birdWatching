@@ -11,7 +11,7 @@
     <%- include('partials/header') %>
   </head>
 
-  <body>
+  <body onload="disableButtonsIfOffline()">
     <div class="container">
       <div class="table-responsive">
         <div id="pagination-buttons">
@@ -176,8 +176,30 @@
       </div>
       <p class="mt-2 fw-bold">Hang tight, we're syncing your data!</p>
     </div> -->
-  </body>
 
+    <script>
+      // disable buttons when offline
+      function disableButtons() {
+        // disable all buttons on the page except for the button in the header
+        const buttons = document.querySelectorAll("button:not(.header-button)");
+        buttons.forEach((button) => (button.disabled = true));
+      }
+
+      function enableButtons() {
+        // enable all buttons on the page
+        const buttons = document.querySelectorAll("button");
+        buttons.forEach((button) => (button.disabled = false));
+      }
+
+      window.addEventListener("offline", () => {
+        disableButtons();
+      });
+
+      window.addEventListener("online", () => {
+        enableButtons();
+      });
+    </script>
+  </body>
 
   <script>
     // switch table
@@ -220,12 +242,16 @@
       const rows_date = Array.from(table_date.rows).slice(0); // Get all rows except the header
       const numRows = table.rows.length - 1; // Get the total number of rows, minus the header
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
-      if(currentPage<numPages+1 && currentPage>0){
-        rows_distance.forEach(row => row.style.display = "none"); // hide all rows
-        rows_date.forEach(row => row.style.display = "none");
-        rows_distance.slice(startIndex, endIndex).forEach(row => row.style.display = ""); // Display the rows of the specified page
-        rows_date.slice(startIndex, endIndex).forEach(row => row.style.display = "");
-      }else if(currentPage===0){
+      if (currentPage < numPages + 1 && currentPage > 0) {
+        rows_distance.forEach((row) => (row.style.display = "none")); // hide all rows
+        rows_date.forEach((row) => (row.style.display = "none"));
+        rows_distance
+          .slice(startIndex, endIndex)
+          .forEach((row) => (row.style.display = "")); // Display the rows of the specified page
+        rows_date
+          .slice(startIndex, endIndex)
+          .forEach((row) => (row.style.display = ""));
+      } else if (currentPage === 0) {
         alert("no more");
         currentPage++;
       } else {
@@ -240,7 +266,7 @@
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
       const pagination = document.createElement("div");
       pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
-      for (let i = 1; i < numPages+1; i++) {
+      for (let i = 1; i < numPages + 1; i++) {
         const link = document.createElement("a");
         link.href = "#";
         link.textContent = i;
@@ -267,14 +293,14 @@
     //sort by distance
     function sortTable(n) {
       var table,
-              rows,
-              switching,
-              i,
-              x,
-              y,
-              shouldSwitch,
-              dir,
-              switchcount = 0;
+        rows,
+        switching,
+        i,
+        x,
+        y,
+        shouldSwitch,
+        dir,
+        switchcount = 0;
       table = document.getElementById("table-body-distance");
       switching = true;
       dir = "asc"; // Set the sorting direction to ascending
@@ -335,5 +361,4 @@
       }
     }
   </script>
-
 </html>
