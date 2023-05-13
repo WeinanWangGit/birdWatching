@@ -248,6 +248,17 @@
       </div>
     </div>
   </body>
+
+  <script>
+    window.addEventListener("offline", () => {
+      disableButtons();
+    });
+
+    window.addEventListener("online", () => {
+      enableButtons();
+    });
+  </script>
+
   <!--    map-->
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"

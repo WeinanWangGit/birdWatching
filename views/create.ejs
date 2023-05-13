@@ -196,4 +196,14 @@
       });
     });
   </script>
+
+  <script>
+    window.addEventListener("offline", () => {
+      disableButtons();
+    });
+
+    window.addEventListener("online", () => {
+      enableButtons();
+    });
+  </script>
 </html>
