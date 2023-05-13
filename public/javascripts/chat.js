@@ -21,6 +21,11 @@ function init(sightingJson) {
   });
 }
 
+// To avoid uncaught syntax error for JSON.stringify
+function sanitiseText(text) {
+  return text.replace(/['"]/g, "").trim();
+}
+
 /**
  * called when the Send button is pressed. It gets the text to send from the interface
  * and sends the message via  socket

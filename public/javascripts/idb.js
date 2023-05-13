@@ -42,7 +42,6 @@ export async function getSighting(key) {
 
   return await new Promise((resolve, reject) => {
     req.onsuccess = function (evt) {
-      console.log(evt.target.result);
       const value = evt.target.result;
       resolve(value);
     };

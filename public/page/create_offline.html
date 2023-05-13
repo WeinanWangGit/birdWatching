@@ -166,5 +166,12 @@
         window.location.href = "/page/details_offline.html"; // Navigate to details.html
       }
     </script>
+
+    <script>
+      // To avoid uncaught syntax error for JSON.stringify
+      function sanitiseText(text) {
+        return text.replace(/['"]/g, "").trim();
+      }
+    </script>
   </body>
 </html>
