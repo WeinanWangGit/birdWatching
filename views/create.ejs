@@ -8,9 +8,9 @@
     <script src="../public/javascripts/create.js"></script>
     <!--    get current location-->
     <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
-            async
-            defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3zXfnVpTkl7MMXYScQFqwUY3Pvm9fP5w&callback=initMap&language=en"
+      async
+      defer
     ></script>
   </head>
 
@@ -86,13 +86,13 @@
 
         <div class="mb-3">
           <label for="identification" class="form-label">Identification:</label>
-          <input
+          <!-- <input
             type="text"
             id="identification"
             name="identification"
             class="form-control"
             required
-          />
+          /> -->
         </div>
 
         <div class="mb-3">
@@ -131,48 +131,47 @@
     </div>
   </body>
 
+  <!-- Submit the form -->
+  <script>
+    const username = sessionStorage.getItem("username");
 
-    <!-- Submit the form -->
-    <script>
-      const username = sessionStorage.getItem("username");
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("sighting-form");
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("sighting-form");
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent form from submitting normally
 
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault(); // Prevent form from submitting normally
+        const data = {
+          description: document.getElementById("description").value,
+          date: document.getElementById("date").value,
+          author: username,
+          location: document.getElementById("location").value,
+          position: document.getElementById("position").value,
+          distance: document.getElementById("distance").value,
+          // identification: document.getElementById("identification").value,
+          birdName: document.getElementById("bird-name").value,
+          birdDescription: document.getElementById("bird-description").value,
+          url: document.getElementById("url").value,
+          image: document.getElementById("image").files[0],
+        };
 
-          const data = {
-            description: document.getElementById("description").value,
-            date: document.getElementById("date").value,
-            author: username,
-            location: document.getElementById("location").value,
-            position: document.getElementById("position").value,
-            distance: document.getElementById("distance").value,
-            identification: document.getElementById("identification").value,
-            birdName: document.getElementById("bird-name").value,
-            birdDescription: document.getElementById("bird-description").value,
-            url: document.getElementById("url").value,
-            image: document.getElementById("image").files[0],
-          };
+        const formData = new FormData();
+        for (const key in data) {
+          formData.append(key, data[key]);
+        }
 
-          const formData = new FormData();
-          for (const key in data) {
-            formData.append(key, data[key]);
-          }
-
-          const response = await fetch("/add", {
-            method: "POST",
-            body: formData,
-          });
-
-          if (response.ok) {
-            alert("Sighting created successfully!");
-            form.reset();
-          } else {
-            alert("Error creating sighting");
-          }
+        const response = await fetch("/add", {
+          method: "POST",
+          body: formData,
         });
+
+        if (response.ok) {
+          alert("Sighting created successfully!");
+          form.reset();
+        } else {
+          alert("Error creating sighting");
+        }
       });
-    </script>
+    });
+  </script>
 </html>

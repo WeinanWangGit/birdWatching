@@ -42,6 +42,7 @@ export async function getSighting(key) {
 
   return await new Promise((resolve, reject) => {
     req.onsuccess = function (evt) {
+      console.log(evt.target.result);
       const value = evt.target.result;
       resolve(value);
     };
@@ -119,14 +120,22 @@ export async function displayChatHistory(key) {
   const objectStore = transaction.objectStore(objectStoreName);
   const req = objectStore.get(key);
 
-  req.onsuccess = function (event) {
-    const messages = event.target.result.messages;
-    for (let i = 0; i < messages?.length; i++) {
-      let message = messages[i];
-      let text = message.text;
-      let sentAt = message.sentAt;
-      //   console.log("I am from displayChat", text, sentAt);
-      writeOnHistory(text, sentAt);
-    }
-  };
+  return await new Promise((resolve, reject) => {
+    req.onsuccess = function (event) {
+      // console.log(event.target.result);
+      const messages = event.target.result.messages;
+      resolve(messages);
+      // for (let i = 0; i < messages?.length; i++) {
+      //   let message = messages[i];
+      //   let text = message.text;
+      //   let sentAt = message.sentAt;
+      //   //   console.log("I am from displayChat", text, sentAt);
+      //   writeOnHistory(text, sentAt);
+      // }
+    };
+
+    req.onerror = function (event) {
+      reject(event.target.error);
+    };
+  });
 }

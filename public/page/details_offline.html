@@ -90,22 +90,31 @@
       } from "../public/javascripts/idb.js";
 
       let sighting;
+      let messages;
       const defaultId = "1";
 
       fetchData();
+
+      // Enable the data being fecthed again when the user refreshes
+      window.addEventListener("beforeunload", () => {
+        // Store the current sightingId in localStorage so that we can retrieve it later
+        localStorage.setItem("sightingId", sighting._id);
+      });
 
       async function fetchData() {
         try {
           const sightingId = localStorage.getItem("sightingId");
           if (sightingId && sightingId !== defaultId) {
             localStorage.removeItem("sightingId");
-            await displayChatHistory(sightingId);
+            messages = await displayChatHistory(sightingId);
             sighting = await getSighting(sightingId);
           } else {
-            await displayChatHistory(defaultId);
+            // await displayChatHistory(defaultId);
+            chatHistory = await displayChatHistory(defaultId);
             sighting = await getSighting(defaultId); // offline add default id
           }
           populateSightingData(sighting);
+          writeOnHistory(messages);
         } catch (error) {
           console.error(error);
         }
@@ -213,12 +222,13 @@
         .addEventListener("click", sendChatText);
 
       function sendChatText() {
-        // Get the chat input value
+        // Get the chat input and username
         var chatInput = document.getElementById("chat_input").value;
+        const username = sessionStorage.getItem("username");
 
         if (chatInput.trim() !== "") {
           var message = {
-            text: chatInput,
+            text: username + " " + chatInput,
             sentAt: new Date().toISOString(),
           };
 
@@ -226,7 +236,6 @@
           if (!sighting.messages) {
             sighting.messages = [];
           }
-
           sighting.messages.push(message);
 
           // Create a new message element
@@ -234,17 +243,9 @@
           messageContainer.className = "message";
 
           var messageText = document.createElement("div");
-          // messageText.className = "message-text";
-          messageText.textContent = chatInput;
-
-          // var messageSentAt = document.createElement("div");
-          // messageSentAt.className = "message-sentAt";
-          // var currentDate = new Date();
-          // messageSentAt.textContent = currentDate.toLocaleString();
-
+          messageText.textContent = username + " " + chatInput;
           // Append the message elements to the chat history
           messageContainer.appendChild(messageText);
-          // messageContainer.appendChild(messageSentAt);
 
           var chatHistory = document.getElementById("chat_history");
           chatHistory.appendChild(messageContainer);
@@ -254,6 +255,20 @@
           document.getElementById("chat_input").value = "";
 
           saveSighting(sighting);
+
+          // OLD VER OF CHAT MSG FORMAT
+          // var messageText = document.createElement("div");
+          // messageText.className = "message-text";
+          // messageText.textContent = username + " " + chatInput;
+
+          // var messageSentAt = document.createElement("div");
+          // messageSentAt.className = "message-sentAt";
+          // var currentDate = new Date();
+          // messageSentAt.textContent = currentDate.toLocaleString();
+
+          //// Append the message elements to the chat history
+          // messageContainer.appendChild(messageText);
+          // messageContainer.appendChild(messageSentAt);
         }
       }
 
@@ -282,26 +297,54 @@
         // }
       });
 
-      function writeOnHistory(text, sentAt) {
-        // Create a new message element
-        var messageContainer = document.createElement("div");
-        messageContainer.className = "message";
+      function writeOnHistory(messages) {
+        for (let i = 0; i < messages?.length; i++) {
+          let message = messages[i];
+          let text = message.text;
+          let sentAt = message.sentAt;
 
-        var messageText = document.createElement("div");
-        messageText.className = "message-text";
-        messageText.textContent = text;
+          // Create a new message element
+          var messageContainer = document.createElement("div");
+          messageContainer.className = "message";
 
-        var messageSentAt = document.createElement("div");
-        messageSentAt.className = "message-sentAt";
-        messageSentAt.textContent = sentAt;
+          var messageText = document.createElement("div");
+          messageText.className = "message-text";
+          messageText.textContent = message.text;
 
-        // Append the message elements to the chat history
-        messageContainer.appendChild(messageText);
-        messageContainer.appendChild(messageSentAt);
+          var messageSentAt = document.createElement("div");
+          messageSentAt.className = "message-sentAt";
+          messageSentAt.textContent = message.sentAt;
 
-        var chatHistory = document.getElementById("chat_history");
-        chatHistory.appendChild(messageContainer);
+          // Append the message elements to the chat history
+          messageContainer.appendChild(messageText);
+          messageContainer.appendChild(messageSentAt);
+
+          var chatHistory = document.getElementById("chat_history");
+          chatHistory.appendChild(messageContainer);
+        }
       }
+
+      // OLD VER (working)
+      // function writeOnHistory(text, sentAt) {
+      //   // Create a new message element
+      //   var messageContainer = document.createElement("div");
+      //   messageContainer.className = "message";
+
+      //   var messageText = document.createElement("div");
+      //   messageText.className = "message-text";
+      //   messageText.textContent = text;
+
+      //   var messageSentAt = document.createElement("div");
+      //   messageSentAt.className = "message-sentAt";
+      //   messageSentAt.textContent = sentAt;
+
+      //   // Append the message elements to the chat history
+      //   messageContainer.appendChild(messageText);
+      //   messageContainer.appendChild(messageSentAt);
+
+      //   var chatHistory = document.getElementById("chat_history");
+      //   chatHistory.appendChild(messageContainer);
+      // }
     </script>
   </body>
 </html>
