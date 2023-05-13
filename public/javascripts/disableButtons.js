@@ -13,10 +13,10 @@ function enableButtons() {
   buttons.forEach((button) => (button.disabled = false));
 }
 
-window.addEventListener("offline", () => {
-  disableButtons();
-});
+// window.addEventListener("offline", () => {
+//   disableButtons();
+// });
 
-window.addEventListener("online", () => {
-  enableButtons();
-});
+// window.addEventListener("online", () => {
+//   enableButtons();
+// });

@@ -6,12 +6,14 @@
 
     <script src="../public/javascripts/idb.js" type="module"></script>
     <script src="../public/javascripts/index.js" type="module"></script>
+    <script src="../public/javascripts/disableButtons.js"></script>
 
     <link rel="stylesheet" href="../public/stylesheets/style.css" />
     <%- include('partials/header') %>
   </head>
 
-  <body onload="disableButtonsIfOffline()">
+  <body>
+    <!-- <body onload="disableButtonsIfOffline()"> -->
     <div class="container">
       <div class="table-responsive">
         <div id="pagination-buttons">
@@ -170,27 +172,7 @@
       <p>Hang tight, we're syncing your data!</p>
     </div>
 
-    <!-- <div id="loading-animation" style="display: none" class="sync-spinner">
-      <div class="spinner-border text-success" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <p class="mt-2 fw-bold">Hang tight, we're syncing your data!</p>
-    </div> -->
-
     <script>
-      // disable buttons when offline
-      function disableButtons() {
-        // disable all buttons on the page except for the button in the header
-        const buttons = document.querySelectorAll("button:not(.header-button)");
-        buttons.forEach((button) => (button.disabled = true));
-      }
-
-      function enableButtons() {
-        // enable all buttons on the page
-        const buttons = document.querySelectorAll("button");
-        buttons.forEach((button) => (button.disabled = false));
-      }
-
       window.addEventListener("offline", () => {
         disableButtons();
       });
