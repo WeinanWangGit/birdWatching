@@ -17,7 +17,6 @@
   </head>
 
   <body>
-    <!-- <body onload="disableButtonsIfOffline()"> -->
     <div class="container">
       <div class="title-container">
         <h1 class="page-title">Create a new Sighting</h1>
@@ -89,13 +88,6 @@
 
         <div class="mb-3">
           <label for="identification" class="form-label">Identification:</label>
-          <!-- <input
-            type="text"
-            id="identification"
-            name="identification"
-            class="form-control"
-            required
-          /> -->
         </div>
 
         <div class="mb-3">
@@ -143,23 +135,6 @@
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault(); // Prevent form from submitting normally
-
-        // const data = {
-        //   description: sanitiseText(
-        //     document.getElementById("description").value
-        //   ),
-        //   date: document.getElementById("date").value,
-        //   author: username,
-        //   location: document.getElementById("location").value,
-        //   position: document.getElementById("position").value,
-        //   distance: document.getElementById("distance").value,
-        //   // identification: document.getElementById("identification").value,
-        //   birdName: document.getElementById("bird-name").value,
-        //   birdDescription: document.getElementById("bird-description").value,
-        //   url: document.getElementById("url").value,
-        //   image: document.getElementById("image").files[0],
-        // };
-
         const data = {
           // sanitiseText function is from create.js
           description: sanitiseText(

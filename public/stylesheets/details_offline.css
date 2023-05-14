@@ -60,7 +60,6 @@ body {
   max-height: 10rem;
   border-bottom: 1px solid #ccc;
   margin-bottom: 1rem;
-  /* overflow-y: auto; */
   overflow-y: scroll;
 }
 

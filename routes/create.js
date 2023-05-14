@@ -10,7 +10,6 @@ router.post(
 );
 
 
-
 router.post(
     "/upload",
     sighting_controller.uploadOfflineSighting

@@ -13,7 +13,6 @@
   </head>
 
   <body>
-    <!-- <body onload="disableButtonsIfOffline()"> -->
     <div class="container">
       <div class="table-responsive">
         <div id="pagination-buttons">
@@ -37,8 +36,6 @@
           <tbody id="table-body-date">
             <% sightings.forEach(function(sighting) { %>
             <tr data-id="<%= sighting._id %>">
-              <!-- data-sighting="<%= JSON.stringify(sighting) %>" -->
-
               <td><%= sighting.author %></td>
               <td><%= sighting.identification.birdName %></td>
               <td><%= sighting.position %></td>
@@ -53,8 +50,6 @@
                     data-id="<%= sighting._id %>"
                     data-sighting="<%= JSON.stringify(sighting) %>"
                   >
-                    <!-- onclick="location.href='/details?id=<%= sighting._id %>'" -->
-
                     Details
                   </button>
 
@@ -71,8 +66,6 @@
                       data-id="<%= sighting._id %>"
                       data-sighting="<%= JSON.stringify(sighting) %>"
                     >
-                      <!-- onclick="deleteSighting(event,'<%= sighting._id %>')" -->
-
                       Delete
                     </button>
                   </form>
@@ -155,14 +148,12 @@
         <% }); %>
       </div>
 
-      <!-- <div class="header-container clearfix"> -->
       <div class="toggle-button mb-3">
         <button class="btn btn-light" onclick="toggleGrid(0)">
           <i class="fa fa-exchange"></i>
           <span id="toggle-text">To Grid View</span>
         </button>
       </div>
-      <!-- </div> -->
     </div>
 
     <div id="loading-animation" class="sync-spinner">
