@@ -12,6 +12,7 @@
     </div>
 
     <div class="container">
+      <!-- <div class="row"> -->
       <div class="col-md-6">
         <div class="card mb-3">
           <div class="card-header">
@@ -125,7 +126,6 @@
 
           reader.onload = function (event) {
             const imageUrl = event.target.result;
-            console.log(imageUrl);
             resolve(imageUrl);
           };
 
@@ -153,59 +153,36 @@
         });
       }
 
-      function processImageBuffer(imageBuffer) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-
-          reader.onload = function (event) {
-            const imageUrl = event.target.result;
-            resolve(imageUrl);
-          };
-
-          reader.onerror = function (event) {
-            console.error("Error reading image buffer:", event.target.error);
-            reject(event.target.error);
-          };
-
-          const blob = new Blob([imageBuffer]);
-          reader.readAsDataURL(blob);
-        });
-      }
 
       function populateSightingData(sighting) {
         // Update Sighting Image
         const imageElement = document.querySelector(".img-fluid");
         const imageFile = sighting.image;
-        // console.log(sighting.image.type);
+        const imageType = sighting.image.type
 
-        if (sighting.image.type == "Buffer") {
-          //TODO show base64 Buffer image
-          const imageBuffer = imageFile.data;
-          // console.log(imageBuffer); array32
 
-          const base64Image = btoa(
-            String.fromCharCode(...new Uint8Array(imageBuffer))
-          );
-          const imageUrl = `data:image/png;base64,${base64Image}`;
-          console.log(imageUrl); // same base64 string as in mongoDB
-
-          imageElement.src = imageUrl;
-          imageElement.onload = function () {
-            console.log("Image loaded"); // not shown
-          };
-
-        } else {
+        if (imageType && imageType.includes("image")) {
           if (imageFile) {
             processImageFile(imageFile)
-              .then((imageUrl) => {
-                // Do something with the image URL, like displaying the image
-                imageElement.src = imageUrl;
-              })
-              .catch((error) => {
-                // Handle errors that occur during image processing
-                console.error("Error processing image:", error);
-              });
+                    .then((imageUrl) => {
+                      // Do something with the image URL, like displaying the image
+                      // console.log("image", imageUrl);
+                      imageElement.src = imageUrl;
+                    })
+                    .catch((error) => {
+                      // Handle errors that occur during image processing
+                      console.error("Error processing image:", error);
+                    });
           }
+
+        } else {
+          //deal with ArrayBuffer
+          const uint8Array = new Uint8Array(imageFile);
+          const blob = new Blob([uint8Array]);
+          const base64Data = URL.createObjectURL(blob);
+
+          imageElement.src = base64Data;
+
         }
 
         // Update Identification Form
@@ -282,9 +259,27 @@
 
           saveSighting(sighting);
 
+          // OLD VER OF CHAT MSG FORMAT
+          // var messageText = document.createElement("div");
+          // messageText.className = "message-text";
+          // messageText.textContent = username + " " + chatInput;
+
+          // var messageSentAt = document.createElement("div");
+          // messageSentAt.className = "message-sentAt";
+          // var currentDate = new Date();
+          // messageSentAt.textContent = currentDate.toLocaleString();
+
+          //// Append the message elements to the chat history
+          // messageContainer.appendChild(messageText);
+          // messageContainer.appendChild(messageSentAt);
         }
       }
 
+      //   window.addEventListener("beforeunload", function (event) {
+      //     // Save the sighting object before leaving the page
+      //     console.log("save sighting");
+      //     saveSighting(sighting);
+      //   });
 
       function saveSighting(sighting) {
         console.log(sighting);
@@ -300,6 +295,9 @@
         if (!navigator.onLine) {
           window.location.href = "/page/index_offline.html";
         }
+        // else {
+        //   window.location.href = "/";
+        // }
       });
 
       function writeOnHistory(messages) {
@@ -328,7 +326,28 @@
           chatHistory.appendChild(messageContainer);
         }
       }
-      
+
+      // OLD VER (working)
+      // function writeOnHistory(text, sentAt) {
+      //   // Create a new message element
+      //   var messageContainer = document.createElement("div");
+      //   messageContainer.className = "message";
+
+      //   var messageText = document.createElement("div");
+      //   messageText.className = "message-text";
+      //   messageText.textContent = text;
+
+      //   var messageSentAt = document.createElement("div");
+      //   messageSentAt.className = "message-sentAt";
+      //   messageSentAt.textContent = sentAt;
+
+      //   // Append the message elements to the chat history
+      //   messageContainer.appendChild(messageText);
+      //   messageContainer.appendChild(messageSentAt);
+
+      //   var chatHistory = document.getElementById("chat_history");
+      //   chatHistory.appendChild(messageContainer);
+      // }
     </script>
   </body>
 </html>

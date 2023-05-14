@@ -123,6 +123,7 @@ async function getSightingList(req, res) {
   try {
     // Sort by date in ascending order.
     const sightings = await Sighting.find().sort({ date: "asc" });
+    console.log(sightings)
     return sightings;
   } catch (err) {
     throw err;
