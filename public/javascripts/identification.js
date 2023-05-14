@@ -1,4 +1,3 @@
-// const fetchSPARQLEndpoint = require("fetch-sparql-endpoint");
 function clearSearch() {
   const searchText = document.getElementById("search-text");
   const searchResults = document.getElementById("search-results");
@@ -40,7 +39,6 @@ async function searchBird() {
       const data = await response.json();
       displayResults(data);
       spinner.classList.add("d-none");
-      // console.log(data.results.bindings[0].image.value);
     } else {
       console.error("Failed to fetch search results:", response.status);
     }
@@ -141,9 +139,6 @@ function displayResults(data) {
       // Append each formGroup and horizontal rule to resultsContainer
       list.appendChild(formGroup);
       list.appendChild(document.createElement("hr"));
-
-      // Append each formGroup to resultsContainer
-      // list.appendChild(formGroup);
     }
     resultsContainer.appendChild(list);
   }

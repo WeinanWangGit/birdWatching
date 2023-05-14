@@ -14,6 +14,7 @@ if (navigator.geolocation) {
   console.log("Geolocation is not supported by this browser.");
 }
 
+// Initialize Map
 function initMap() {
   var map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 53.381766908539895, lng: -1.4816093444824219 },
@@ -75,10 +76,12 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   return distance;
 }
 
+// Convert angles to radians.
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 
+// Obtain the corresponding address information through the given latitude and longitude.
 function getAddressFromLatLng(lat, lng) {
   return new Promise(function (resolve, reject) {
     var geocoder = new google.maps.Geocoder();

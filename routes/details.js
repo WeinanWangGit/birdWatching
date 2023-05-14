@@ -6,7 +6,6 @@ router.get("/details", async function (req, res) {
   try {
     const id = req.query.id;
     const sighting = await sighting_controller.getSightingById(id);
-    // res.json(sighting)
     res.render("details", { sighting: sighting });
   } catch (err) {
     // handle error

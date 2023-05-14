@@ -121,16 +121,8 @@ export async function displayChatHistory(key) {
 
   return await new Promise((resolve, reject) => {
     req.onsuccess = function (event) {
-      // console.log(event.target.result);
       const messages = event.target.result.messages;
       resolve(messages);
-      // for (let i = 0; i < messages?.length; i++) {
-      //   let message = messages[i];
-      //   let text = message.text;
-      //   let sentAt = message.sentAt;
-      //   //   console.log("I am from displayChat", text, sentAt);
-      //   writeOnHistory(text, sentAt);
-      // }
     };
 
     req.onerror = function (event) {

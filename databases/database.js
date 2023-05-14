@@ -3,8 +3,6 @@ let mongoDB = 'mongodb://127.0.0.1:27017/birdsighting'
 
 mongoose.Promise = global.Promise;
 
-
-
 try {
     connection = mongoose.connect(mongoDB, {
         useNewUrlParser: true,

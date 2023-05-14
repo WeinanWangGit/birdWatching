@@ -1,4 +1,3 @@
-
 const Sighting = require("../models/sighting");
 const multer = require("multer");
 
@@ -17,6 +16,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
+// Insert a new observation record.
 function insertSighting(req, res) {
   const sighting = new Sighting({
     description: req.body.description,
@@ -34,7 +34,7 @@ function insertSighting(req, res) {
   });
 
   console.log(sighting);
-
+  // Save to database.
   sighting.save((err, savedSighting) => {
     if (err) {
       console.error(err);
@@ -45,7 +45,9 @@ function insertSighting(req, res) {
   });
 }
 
-
+// Update the message list in the observation record.
+// Find the corresponding observation record based on the given sightingId.
+// If found, update its message list to the incoming messages.
 function updateMessageList(sightingId, messages) {
   Sighting.findById(sightingId, (err, sighting) => {
     if (err) {
@@ -71,7 +73,7 @@ function updateMessageList(sightingId, messages) {
   });
 }
 
-
+// Batch upload of offline observation records messages.
 function uploadOfflineSighting(req, res) {
   const sightings = req.body;
   const defaultId = "1";
@@ -81,6 +83,7 @@ function uploadOfflineSighting(req, res) {
       const sightingId = sighting._id
       const messages = sighting.messages
       if (sightingId !== defaultId) {
+        // Call the updateMessageList to update.
         updateMessageList(sightingId, messages);
       }
     });
@@ -92,6 +95,7 @@ function uploadOfflineSighting(req, res) {
 
 }
 
+// Update the messages in the observation record.
 function updateSighting(sightingId, message) {
   Sighting.findById(sightingId, (err, sighting) => {
     if (err) {
@@ -102,6 +106,7 @@ function updateSighting(sightingId, message) {
       console.error("Sighting not found");
       return;
     }
+    // Add to the message list of observation records.
     sighting.messages.push({ text: message, sentAt: new Date() });
     sighting.save((err, updatedSighting) => {
       if (err) {
@@ -113,8 +118,10 @@ function updateSighting(sightingId, message) {
   });
 }
 
+// Obtain a list of observation records.
 async function getSightingList(req, res) {
   try {
+    // Sort by date in ascending order.
     const sightings = await Sighting.find().sort({ date: "asc" });
     console.log(sightings)
     return sightings;
@@ -123,6 +130,7 @@ async function getSightingList(req, res) {
   }
 }
 
+// Obtain a single observation record based on the ID of the observation record.
 async function getSightingById(id) {
   try {
     const sighting = await Sighting.findById(id);
@@ -133,6 +141,7 @@ async function getSightingById(id) {
   }
 }
 
+// Delete observation records.
 async function deleteSighting(id) {
   if (!id) {
     throw new Error("Missing sighting ID");
@@ -146,7 +155,7 @@ async function deleteSighting(id) {
   }
 }
 
-
+// Update bird identification information from observation records.
 async function updateIdentification(id, identification) {
   try {
     const updatedSighting = await Sighting.updateOne(
@@ -165,7 +174,6 @@ module.exports = {
   getSightingList,
   getSightingById,
   deleteSighting,
-  // getSightingByIdAndUpdate,
   updateIdentification,
   updateSighting,
   upload,
