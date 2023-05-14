@@ -1,5 +1,6 @@
+let cacheName = 'v1';
 const addResourcesToCache = async (resources) => {
-  const cache = await caches.open("v1");
+  const cache = await caches.open(cacheName);
   await cache.addAll(resources);
 };
 
@@ -19,6 +20,15 @@ self.addEventListener("install", (event) => {
     ])
   );
 });
+
+
+self.addEventListener('activate', function (e) {
+    e.waitUntil([
+        self.clients.claim(),
+        caches.keys().then(keyList => Promise.all(keyList.filter(key => key !== cacheName).map(key => caches.delete(key))))
+    ]);
+});
+
 
 const putInCache = async (request, response) => {
   const cache = await caches.open("v1");
@@ -44,14 +54,7 @@ const networkFirst = async ({ request, fallbackUrl }) => {
       return responseFromCache;
     }
 
-    //todo
-    // const fallbackResponse = await caches.match(fallbackUrl);
-    // if (fallbackResponse) {
-    //     return fallbackResponse;
-    // }
-
     // when even the fallback response is not available,
-    // there is nothing we can do, but we must always
     // return a Response object
     return new Response("Network error happened", {
       status: 408,
@@ -77,7 +80,8 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       networkFirst({
         request: event.request,
-        fallbackUrl: "/gallery/myLittleVader.jpg",
+          //todo add error image
+        fallbackUrl: "/update/error.jpg",
       })
     );
   }
