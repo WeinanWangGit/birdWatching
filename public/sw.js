@@ -32,7 +32,6 @@ const networkFirst = async ({ request, fallbackUrl }) => {
     // response may be used only once
     // we need to save clone to put one copy in cache
     // and serve second one
-    // putInCache(request, responseFromNetwork.clone());
     return responseFromNetwork;
   } catch (error) {
     console.log("get from cache");

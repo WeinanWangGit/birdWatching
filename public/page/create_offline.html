@@ -17,7 +17,6 @@
           <button class="close-button" onclick="closeModal()">X</button>
         </div>
         <form class="offlineForm" id="offlineForm">
-          <!-- <div class="form-container"> -->
           <div class="mb-3">
             <label for="description" class="form-label">Description:</label>
             <input
@@ -44,15 +43,7 @@
 
           <div class="mb-3">
             <label for="identification" class="form-label"
-              >Identification:</label
-            >
-            <!-- <input
-              type="text"
-              id="identification"
-              name="identification"
-              class="form-control"
-              required
-            /> -->
+              >Identification:</label>
           </div>
 
           <div class="mb-3">
@@ -101,7 +92,6 @@
           <button type="submit" class="btn btn-primary header-button">
             Create
           </button>
-          <!-- </div> -->
         </form>
       </div>
     </div>
@@ -125,18 +115,6 @@
         console.log("enter save sighting");
         // event.preventDefault();
         event.preventDefault(); // Prevent form from submitting normally
-
-        // const data = {
-        //   description: document.getElementById("offline-description").value,
-        //   date: document.getElementById("offline-date").value,
-        //   author: username,
-        //   // identification: document.getElementById("identification").value,
-        //   birdName: document.getElementById("offline-bird-name").value,
-        //   birdDescription: document.getElementById("offline-bird-description")
-        //     .value,
-        //   image: document.getElementById("offline-image").files[0],
-        //   _id: "1",
-        // };
 
         const data = {
           description: sanitiseText(

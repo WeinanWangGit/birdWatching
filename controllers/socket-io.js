@@ -12,7 +12,6 @@ exports.init = function (io) {
         console.log("user" + userId + "join in the room" + room);
         clients++;
         socket.join(room);
-        // socket.to(room).emit('joined', room, userId);
         io.sockets.in(room).emit("joined", room, userId);
       });
       /**
@@ -23,7 +22,6 @@ exports.init = function (io) {
         io.sockets.in(room).emit("chat message", room, userId, chatText);
         var text = userId + "  " + chatText;
         sighting_controller.getSightingById(room).then(function (sighting) {
-          // sighting.messages.push(text);
           sighting_controller.updateSighting(sighting, text);
         });
         console.log("chat message", room, userId, chatText);

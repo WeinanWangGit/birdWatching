@@ -1,4 +1,3 @@
-
 const Sighting = require("../models/sighting");
 const multer = require("multer");
 
