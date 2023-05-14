@@ -3,8 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const swaggerUi = require('swagger-ui-express');
-const specs = require('./swaggerConfig.js');
 
 
 
@@ -17,7 +15,6 @@ var detailsRouter = require('./routes/details');
 var app = express();
 
 //add swagger config
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
 // view engine setup

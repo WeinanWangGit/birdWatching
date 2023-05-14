@@ -98,7 +98,7 @@ document.addEventListener("click", (event) => {
     // Add sighting to IndexedDB
     putSighting(sighting)
       .then(() => {
-        console.log("Sighting created successfully in indexedDB!");
+        console.log("Sighting put successfully in indexedDB!");
       })
       .catch((error) => {
         console.log("Error creating sighting");
