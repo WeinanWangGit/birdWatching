@@ -20,7 +20,7 @@
           </div>
           <div class="card-body">
             <img
-              src="sighting_image.jpg"
+              src=""
               alt="Bird Image"
               class="img-fluid"
               style="max-width: 100%; max-height: 100%"
@@ -143,6 +143,7 @@
 
           reader.onload = function (event) {
             const imageUrl = event.target.result;
+            console.log(imageUrl);
             resolve(imageUrl);
           };
 
@@ -193,26 +194,42 @@
         // Update Sighting Image
         const imageElement = document.querySelector(".img-fluid");
         const imageFile = sighting.image;
-        console.log(sighting.image.type);
+        // console.log(sighting.image.type);
 
         if (sighting.image.type == "Buffer") {
           //TODO show base64 Buffer image
-          const imageBuffer = sighting.image.data;
-          processImageBuffer(imageBuffer)
-            .then((imageUrl) => {
-              imageElement.src = imageUrl;
-              console.log(imageUrl);
-              // Perform additional tasks with the imageUrl if needed
-            })
-            .catch((error) => {
-              // Handle any errors that occur during image processing
-              console.error("Image processing error:", error);
-            });
+          const imageBuffer = imageFile.data;
+          // console.log(imageBuffer); array32
+
+          const base64Image = btoa(
+            String.fromCharCode(...new Uint8Array(imageBuffer))
+          );
+          const imageUrl = `data:image/png;base64,${base64Image}`;
+          console.log(imageUrl); // same base64 string as in mongoDB
+
+          imageElement.src = imageUrl;
+          imageElement.onload = function () {
+            console.log("Image loaded"); // not shown
+          };
+
+          // processImageBuffer(imageBuffer)
+          //   .then((imageUrl) => {
+          //     // console.log(imageUrl);
+          //     imageElement.src = imageUrl;
+          //     console.log(imageElement);
+          //     console.log(imageUrl);
+          //     // Perform additional tasks with the imageUrl if needed
+          //   })
+          //   .catch((error) => {
+          //     // Handle any errors that occur during image processing
+          //     console.error("Image processing error:", error);
+          //   });
         } else {
           if (imageFile) {
             processImageFile(imageFile)
               .then((imageUrl) => {
                 // Do something with the image URL, like displaying the image
+                // console.log("image", imageUrl);
                 imageElement.src = imageUrl;
               })
               .catch((error) => {
