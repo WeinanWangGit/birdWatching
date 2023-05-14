@@ -5,6 +5,7 @@ const sighting_controller = require("../controllers/sighting");
 router.get("/details", async function (req, res) {
   try {
     const id = req.query.id;
+    // Obtain the observation record for the specified ID.
     const sighting = await sighting_controller.getSightingById(id);
     res.render("details", { sighting: sighting });
   } catch (err) {
@@ -22,6 +23,7 @@ router.put("/details", async function (req, res) {
   };
 
   try {
+    // Update based on the given ID and identification information
     const updatedSighting = await sighting_controller.updateIdentification(
       id,
       identification

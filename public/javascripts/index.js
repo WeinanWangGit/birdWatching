@@ -2,6 +2,7 @@
 const username = sessionStorage.getItem("username");
 const MAX_LENGTH = 20;
 
+// Clean up text, remove single quotes, double quotes, and spaces from the text.
 function sanitiseText(text) {
   return text.replace(/['"]/g, "").trim();
 }
@@ -12,6 +13,7 @@ if (!username) {
     const username = prompt(
       "Please enter your username (no more than 20 characters):"
     );
+    // Clean up the entered username and save it to the username in SessionStorage.
     if (username && username.length <= MAX_LENGTH) {
       const sanitisedUsername = sanitiseText(username);
       sessionStorage.setItem("username", sanitisedUsername);
@@ -23,6 +25,7 @@ if (!username) {
 var latitude = null;
 var longitude = null;
 if (navigator.geolocation) {
+  // Obtain the longitude and latitude of the current position.
   navigator.geolocation.getCurrentPosition(
     function (position) {
       latitude = position.coords.latitude;
@@ -135,7 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
       loadingElement.style.display = "block";
       // Wait for 2sec
       await new Promise((resolve) => setTimeout(resolve, 2000));
-
       uploadNewCreateData()
         .then((response) => {
           if (response.ok) {
@@ -145,7 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         })
         .catch((error) => console.log("Upload new data error:", error));
-
       updateDataMessage()
         .then((response) => {
           if (response.ok) {
@@ -170,6 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 });
 
+// Upload newly created data to the server.
 let defaultLocalId = "1";
 async function uploadNewCreateData() {
   const sighting = await getSighting(defaultLocalId);
@@ -186,6 +188,7 @@ async function uploadNewCreateData() {
   return response;
 }
 
+// Message for updating data.
 async function updateDataMessage() {
   const sightings = await getAllSightings();
   if (sightings) {

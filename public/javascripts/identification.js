@@ -1,3 +1,5 @@
+
+// Clear search text boxes and search results.
 function clearSearch() {
   const searchText = document.getElementById("search-text");
   const searchResults = document.getElementById("search-results");
@@ -5,6 +7,7 @@ function clearSearch() {
   searchResults.innerHTML = "";
 }
 
+// Search for birds.
 async function searchBird() {
   const searchText = document.getElementById("search-text");
   const sanitisedSearch = searchText.value.replace(/[^a-zA-Z0-9]/g, "");
@@ -45,6 +48,7 @@ async function searchBird() {
   }
 }
 
+// Display search results.
 function displayResults(data) {
   // Results area
   const resultsContainer = document.getElementById("search-results");
@@ -144,11 +148,13 @@ function displayResults(data) {
   }
 }
 
+// Return focus to search text box.
 function goToTop() {
   const searchText = document.getElementById("search-text");
   searchText.focus();
 }
 
+// Update identification information.
 function updateIdentification(author) {
   const birdName = document.getElementById("birdName");
   const description = document.getElementById("description");

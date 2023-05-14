@@ -175,7 +175,8 @@
   </body>
 
   <script>
-    // switch table
+
+    // Switch the table view to a view sorted by date.
     function toggle_Date() {
       var table1 = document.getElementById("table-body-date");
       var table2 = document.getElementById("table-body-distance");
@@ -185,6 +186,8 @@
       }
       showPage(1);
     }
+
+    // Switch the table view to a view sorted by distance.
     function toggle_Distance(n) {
       var table1 = document.getElementById("table-body-date");
       var table2 = document.getElementById("table-body-distance");
@@ -200,6 +203,7 @@
     const table_date = document.getElementById("table-body-date");
     let currentPage = 1;
     const rowsPerPage = 5;
+
     function showPage(page) {
       let table = null;
       if (table_distance.display === "none") {
@@ -315,6 +319,7 @@
     var views = ["table-view", "grid-view"];
     var toggleText = document.querySelector("span");
 
+    // Switch between list view and grid view.
     function toggleGrid(n) {
       sortTable(n);
       var viewToHide = views[currentView];

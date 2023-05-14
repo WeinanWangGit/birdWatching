@@ -174,10 +174,11 @@
   </script>
 
   <script>
+    // Disable buttons or perform other actions related to offline status.
     window.addEventListener("offline", () => {
       disableButtons();
     });
-
+    // Enable buttons or perform other actions related to online status.
     window.addEventListener("online", () => {
       enableButtons();
     });

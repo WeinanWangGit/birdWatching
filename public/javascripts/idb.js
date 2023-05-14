@@ -4,6 +4,7 @@ const objectStoreName = "sightings";
 
 let db = null;
 
+// Create an IndexedDB database.
 export async function openSightingDB() {
   if (db) {
     console.log("Database is already open");
@@ -34,6 +35,7 @@ export async function openSightingDB() {
   });
 }
 
+// Obtain corresponding observation records from IndexedDB.
 export async function getSighting(key) {
   await openSightingDB();
   const transaction = db.transaction([objectStoreName], "readonly");
@@ -52,12 +54,13 @@ export async function getSighting(key) {
   });
 }
 
+// Adding observation records to the object storage space in IndexedDB.
 export async function setSighting(sighting) {
   await openSightingDB();
   console.log(sighting, db);
   const transaction = db.transaction([objectStoreName], "readwrite");
   const objectStore = transaction.objectStore(objectStoreName);
-
+  // Add observation records to the database.
   await objectStore.add(sighting);
 
   transaction.oncomplete = function () {
@@ -65,12 +68,13 @@ export async function setSighting(sighting) {
   };
 }
 
+// Update or add observation records to IndexedDB.
 export async function putSighting(sighting) {
   await openSightingDB();
   console.log(sighting, db);
   const transaction = db.transaction([objectStoreName], "readwrite");
   const objectStore = transaction.objectStore(objectStoreName);
-
+  // Update or add observation records.
   await objectStore.put(sighting);
 
   transaction.oncomplete = function () {
@@ -78,6 +82,7 @@ export async function putSighting(sighting) {
   };
 }
 
+// Obtain all observation records from IndexedDB.
 export async function getAllSightings() {
   await openSightingDB();
   const transaction = db.transaction([objectStoreName], "readonly");
@@ -96,6 +101,7 @@ export async function getAllSightings() {
   });
 }
 
+// Clear observation records in IndexedDB.
 export async function clearSightings() {
   await openSightingDB();
   const transaction = db.transaction([objectStoreName], "readwrite");
@@ -113,6 +119,7 @@ export async function clearSightings() {
   });
 }
 
+// Obtain the chat message history of the corresponding observation record from IndexedDB.
 export async function displayChatHistory(key) {
   await openSightingDB();
   const transaction = db.transaction([objectStoreName], "readonly");
