@@ -16,7 +16,6 @@ self.addEventListener("install", (event) => {
       "/stylesheets/create_offline.css",
       "/stylesheets/details_offline.css",
       "/stylesheets/index_offline.css",
-      // "/public/uploads/*"
     ])
   );
 });

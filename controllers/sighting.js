@@ -116,6 +116,7 @@ function updateSighting(sightingId, message) {
 async function getSightingList(req, res) {
   try {
     const sightings = await Sighting.find().sort({ date: "asc" });
+    console.log(sightings)
     return sightings;
   } catch (err) {
     throw err;

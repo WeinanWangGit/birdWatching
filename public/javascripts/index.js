@@ -95,14 +95,38 @@ document.addEventListener("click", (event) => {
     // Get the sighting data from the clicked element
     const sighting = JSON.parse(target.dataset.sighting);
 
-    // Add sighting to IndexedDB
-    putSighting(sighting)
-      .then(() => {
-        console.log("Sighting put successfully in indexedDB!");
-      })
-      .catch((error) => {
-        console.log("Error creating sighting");
-      });
+    const imageURL = sighting.image
+
+    // Fetch the image file
+     fetch(`http://localhost:3000/${imageURL}`)
+        .then((response) => response.blob())
+        .then((blob) => {
+          // Create a new FileReader to read the blob data
+          const fileReader = new FileReader();
+
+          fileReader.onloadend = () => {
+            // Store the image data (as ArrayBuffer) in the sighting.image property
+            sighting.image = fileReader.result;
+
+            // Add sighting to IndexedDB
+            putSighting(sighting)
+                .then(() => {
+                  console.log("Sighting put successfully in indexedDB!");
+                })
+                .catch((error) => {
+                  console.log("Error creating sighting");
+                });
+            console.log("Image downloaded and stored in sighting.image");
+          };
+
+          // Start reading the blob data
+          fileReader.readAsArrayBuffer(blob);
+        })
+        .catch((error) => {
+          console.log("Error fetching or processing the image file:", error);
+        });
+
+
 
     if (sighting._id) {
       const id = sighting._id;
