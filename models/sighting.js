@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+// Suppress the deprecation warning by setting strictQuery to true
+mongoose.set('strictQuery', true);
+
+
 // Define a shema for Identification
 const IdentificationSchema = new mongoose.Schema({
   birdName: {
