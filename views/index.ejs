@@ -15,10 +15,15 @@
   <body>
     <div class="container">
       <div class="table-responsive">
-        <div id="pagination-buttons">
-          <button onclick="showPage(currentPage - 1)">Prev</button>
-          <button onclick="showPage(currentPage + 1)">Next</button>
-        </div>
+        <!-- <div id="pagination-buttons">
+          <button onclick="showPage(currentPage - 1)" class="page-btn">
+            Prev
+          </button>
+          <button onclick="showPage(currentPage + 1)" class="page-btn">
+            Next
+          </button>
+        </div> -->
+
         <table class="table" id="table-view">
           <thead>
             <tr>
@@ -28,7 +33,7 @@
               <th class="headClickable" onclick="toggle_Distance(3)">
                 Distance
               </th>
-              <th class="headClickable" onclick="toggle_Date()">Date/time</th>
+              <th class="headClickable" onclick="toggle_Date()">Date</th>
               <th></th>
             </tr>
           </thead>
@@ -136,8 +141,7 @@
                 <%= sighting.identification.birdName %>
               </h5>
               <p class="card-text">
-                <strong>Date/Time:</strong> <%= new
-                Date(sighting.date).toLocaleString() %>
+                <strong>Date:</strong> <%= sighting.date %>
               </p>
               <p class="card-text">
                 <strong>User:</strong> <%= sighting.author %>
@@ -164,6 +168,7 @@
     </div>
 
     <script>
+      // Disable all buttons except add new sighting button when offline
       window.addEventListener("offline", () => {
         disableButtons();
       });
@@ -175,7 +180,6 @@
   </body>
 
   <script>
-
     // Switch the table view to a view sorted by date.
     function toggle_Date() {
       var table1 = document.getElementById("table-body-date");
@@ -219,7 +223,7 @@
       const rows_date = Array.from(table_date.rows).slice(0); // Get all rows except the header
       const numRows = table.rows.length; // Get the total number of rows, minus the header
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
-      if (currentPage <= numPages  && currentPage > 0) {
+      if (currentPage <= numPages && currentPage > 0) {
         rows_distance.forEach((row) => (row.style.display = "none")); // hide all rows
         rows_date.forEach((row) => (row.style.display = "none"));
         rows_distance
@@ -237,31 +241,73 @@
       }
     }
 
-    // page link
+    // Create new page
+    // function createPagination(table) {
+    //   const numRows = table.rows.length; // Get the total number of rows, minus the header
+    //   const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
+    //   const pagination = document.createElement("div");
+    //   pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
+    //   for (let i = 1; i <= numPages; i++) {
+    //     const link = document.createElement("a");
+    //     link.href = "#";
+    //     link.textContent = i;
+    //     if (i === currentPage) {
+    //       link.classList.add("active"); // Add CSS styles to identify the current page number
+    //     }
+
+    //     link.addEventListener("click", (event) => {
+    //       event.preventDefault();
+    //       showPage(i);
+    //       pagination
+    //         .querySelectorAll("a")
+    //         .forEach((a) => a.classList.remove("active"));
+    //       link.classList.add("active");
+    //     });
+    //     pagination.appendChild(link);
+    //   }
+    //   document.body.appendChild(pagination); // Add a pagination to the page
+    // }
+
+    // Create new pages
     function createPagination(table) {
       const numRows = table.rows.length; // Get the total number of rows, minus the header
       const numPages = Math.ceil(numRows / rowsPerPage); // Calculate the total number of pages
-      const pagination = document.createElement("div");
-      pagination.classList.add("pagination"); // Add CSS styles to beautify the pagination bar
-      for (let i = 1; i <= numPages ; i++) {
+
+      const pagination = document.createElement("nav");
+      pagination.setAttribute("aria-label", "Page navigation");
+
+      const ul = document.createElement("ul");
+      ul.classList.add("pagination", "custom-pagination");
+
+      for (let i = 1; i <= numPages; i++) {
+        const li = document.createElement("li");
+        li.classList.add("page-item");
+
         const link = document.createElement("a");
         link.href = "#";
         link.textContent = i;
+        link.classList.add("page-link");
+
         if (i === currentPage) {
-          link.classList.add("active"); // Add CSS styles to identify the current page number
+          li.classList.add("active");
         }
+
+        // Change display for current pagination
         link.addEventListener("click", (event) => {
           event.preventDefault();
           showPage(i);
-          pagination
-            .querySelectorAll("a")
-            .forEach((a) => a.classList.remove("active"));
-          link.classList.add("active");
+          const activeLinks = pagination.querySelectorAll("li.page-item");
+          activeLinks.forEach((li) => li.classList.remove("active"));
+          li.classList.add("active");
         });
-        pagination.appendChild(link);
+        li.appendChild(link);
+        ul.appendChild(li);
       }
+
+      pagination.appendChild(ul);
       document.body.appendChild(pagination); // Add a pagination bar to the page
     }
+
     window.addEventListener("load", () => {
       showPage(1);
       createPagination(table_distance);
