@@ -41,6 +41,17 @@
             />
           </div>
 
+          <div class="mb-3">
+            <label for="offline-position" class="form-label">Position:</label>
+            <input
+              type="text"
+              id="offline-position"
+              name="bird-name"
+              class="form-control"
+              required
+            />
+          </div>
+
           <hr />
 
           <div class="mb-3">
@@ -73,7 +84,7 @@
             ></textarea>
           </div>
 
-          <div class="mb-3">
+          <!-- <div class="mb-3" style="display: none">
             <label for="offline-url" class="form-label">URL:</label>
             <input
               type="text"
@@ -81,7 +92,7 @@
               name="url"
               class="form-control"
             />
-          </div>
+          </div> -->
 
           <div class="mb-3">
             <label for="offline-image" class="form-label">Image:</label>
@@ -125,6 +136,9 @@
             document.getElementById("offline-description").value
           ),
           date: sanitiseText(document.getElementById("offline-date").value),
+          position: sanitiseText(
+            document.getElementById("offline-position").value
+          ),
           author: sanitiseText(username),
           birdName: sanitiseText(
             document.getElementById("offline-bird-name").value
