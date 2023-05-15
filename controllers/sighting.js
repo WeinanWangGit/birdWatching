@@ -30,10 +30,11 @@ function insertSighting(req, res) {
       description: req.body.birdDescription ?? "",
       url: req.body.url ?? "",
     },
-    image: req.file.path,
+    // image: req.file.path,
+    image: req.file.path.replace(/\\/g, "\\\\"),
   });
 
-  console.log(sighting);
+  console.log(sighting.image);
   // Save to database.
   sighting.save((err, savedSighting) => {
     if (err) {
@@ -60,7 +61,6 @@ function updateMessageList(sightingId, messages) {
     }
 
     if (messages.length > sighting.messages.length) {
-
       sighting.messages = messages;
       sighting.save((err) => {
         if (err) {
@@ -80,19 +80,17 @@ function uploadOfflineSighting(req, res) {
 
   try {
     sightings.forEach((sighting) => {
-      const sightingId = sighting._id
-      const messages = sighting.messages
+      const sightingId = sighting._id;
+      const messages = sighting.messages;
       if (sightingId !== defaultId) {
         // Call the updateMessageList to update.
         updateMessageList(sightingId, messages);
       }
     });
     res.status(200).send("Sightings message uploaded successfully.");
-
-  }catch (e) {
-    res.status(500).send("Sightings message uploaded fail")
+  } catch (e) {
+    res.status(500).send("Sightings message uploaded fail");
   }
-
 }
 
 // Update the messages in the observation record.
@@ -123,7 +121,7 @@ async function getSightingList(req, res) {
   try {
     // Sort by date in ascending order.
     const sightings = await Sighting.find().sort({ date: "asc" });
-    console.log(sightings)
+    console.log(sightings);
     return sightings;
   } catch (err) {
     throw err;
@@ -177,5 +175,5 @@ module.exports = {
   updateIdentification,
   updateSighting,
   upload,
-  uploadOfflineSighting
+  uploadOfflineSighting,
 };
