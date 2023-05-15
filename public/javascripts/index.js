@@ -98,44 +98,42 @@ document.addEventListener("click", (event) => {
     // Get the sighting data from the clicked element
     const sighting = JSON.parse(target.dataset.sighting);
 
-    const imageURL = sighting.image
+    const imageURL = sighting.image;
 
     // Fetch the image file
-     fetch(`http://localhost:3000/${imageURL}`)
-        .then((response) => response.blob())
-        .then((blob) => {
-          // Create a new FileReader to read the blob data
-          const fileReader = new FileReader();
+    fetch(`http://localhost:3000/${imageURL}`)
+      .then((response) => response.blob())
+      .then((blob) => {
+        // Create a new FileReader to read the blob data
+        const fileReader = new FileReader();
 
-          fileReader.onloadend = () => {
-            // Store the image data (as ArrayBuffer) in the sighting.image property
-            sighting.image = fileReader.result;
+        fileReader.onloadend = () => {
+          // Store the image data (as ArrayBuffer) in the sighting.image property
+          sighting.image = fileReader.result;
 
-            // Add sighting to IndexedDB
-            putSighting(sighting)
-                .then(() => {
-                  console.log("Sighting put successfully in indexedDB!");
-                })
-                .catch((error) => {
-                  console.log("Error creating sighting");
-                });
-            console.log("Image downloaded and stored in sighting.image");
-          };
+          // Add sighting to IndexedDB
+          putSighting(sighting)
+            .then(() => {
+              console.log("Sighting put successfully in indexedDB!");
 
-          // Start reading the blob data
-          fileReader.readAsArrayBuffer(blob);
-        })
-        .catch((error) => {
-          console.log("Error fetching or processing the image file:", error);
-        });
+              if (sighting._id) {
+                const id = sighting._id;
+                // Redirect to the details page
+                window.location.href = `/details?id=${id}`;
+              }
+            })
+            .catch((error) => {
+              console.log("Error creating sighting");
+            });
+          console.log("Image downloaded and stored in sighting.image");
+        };
 
-
-
-    if (sighting._id) {
-      const id = sighting._id;
-      // Redirect to the details page
-      window.location.href = `/details?id=${id}`;
-    }
+        // Start reading the blob data
+        fileReader.readAsArrayBuffer(blob);
+      })
+      .catch((error) => {
+        console.log("Error fetching or processing the image file:", error);
+      });
   } else if (target.matches("#delete-btn")) {
     const sighting = JSON.parse(target.dataset.sighting);
     if (sighting._id) {
