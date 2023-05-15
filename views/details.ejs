@@ -266,52 +266,54 @@
   <script>
     function initMap() {
       const location = "<%= sighting.location %>";
-      const location_sight = location.split(",");
+      if(location.length>0){
+        const location_sight = location.split(",");
 
-      // Create a new Google Map instance.
-      var map = new google.maps.Map(document.getElementById("map"), {
-        center: {
-          lat: parseFloat(location_sight[0]),
-          lng: parseFloat(location_sight[1]),
-        },
-        zoom: 12,
-        draggable: true,
-      });
-
-      var myLatlng = new google.maps.LatLng(
-        location_sight[0],
-        location_sight[1]
-      );
-      marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-      });
-
-      // Executes a callback function when a click event occurs on the map.
-      map.addListener(function (e) {
-        var location = e.latLng;
-        var locationInfo = document.getElementById("location");
-        locationInfo.innerText =
-          "Location:" +
-          "Latitude: " +
-          location.lat() +
-          ", Longitude: " +
-          location.lng();
-
-        // Convert positional coordinates into geographic location information.
-        geocoder.geocode({ location: location }, function (results, status) {
-          if (status === "OK") {
-            if (results[0]) {
-              var position = document.getElementById("position");
-              position.innerText = "Address: " + results[0].formatted_address;
-            } else {
-              console.log("No results found");
-            }
-          } else {
-            console.log("Geocoder failed due to: " + status);
-          }
+        // Create a new Google Map instance.
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: {
+            lat: parseFloat(location_sight[0]),
+            lng: parseFloat(location_sight[1]),
+          },
+          zoom: 12,
+          draggable: true,
         });
-      });
+
+        var myLatlng = new google.maps.LatLng(
+                location_sight[0],
+                location_sight[1]
+        );
+        marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+        });
+
+        // Executes a callback function when a click event occurs on the map.
+        map.addListener(function (e) {
+          var location = e.latLng;
+          var locationInfo = document.getElementById("location");
+          locationInfo.innerText =
+                  "Location:" +
+                  "Latitude: " +
+                  location.lat() +
+                  ", Longitude: " +
+                  location.lng();
+
+          // Convert positional coordinates into geographic location information.
+          geocoder.geocode({ location: location }, function (results, status) {
+            if (status === "OK") {
+              if (results[0]) {
+                var position = document.getElementById("position");
+                position.innerText = "Address: " + results[0].formatted_address;
+              } else {
+                console.log("No results found");
+              }
+            } else {
+              console.log("Geocoder failed due to: " + status);
+            }
+          });
+        });
+      }
     }
   </script>
 </html>
