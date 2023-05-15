@@ -86,7 +86,7 @@
         getSighting,
         setSighting,
         putSighting,
-        displayChatHistory,
+        // displayChatHistory,
       } from "../public/javascripts/idb.js";
 
       let sighting;
@@ -106,12 +106,12 @@
           const sightingId = localStorage.getItem("sightingId");
           if (sightingId && sightingId !== defaultId) {
             localStorage.removeItem("sightingId");
-            messages = await displayChatHistory(sightingId);
+            // messages = await displayChatHistory(sightingId);
             sighting = await getSighting(sightingId);
+            messages = sighting.messages;
           } else {
-            // await displayChatHistory(defaultId);
-            messages = await displayChatHistory(defaultId);
             sighting = await getSighting(defaultId); // offline add default id
+            messages = sighting.messages;
           }
           populateSightingData(sighting);
           writeOnHistory(messages);
@@ -153,28 +153,25 @@
         });
       }
 
-
       function populateSightingData(sighting) {
         // Update Sighting Image
         const imageElement = document.querySelector(".img-fluid");
         const imageFile = sighting.image;
-        const imageType = sighting.image.type
-
+        const imageType = sighting.image.type;
 
         if (imageType && imageType.includes("image")) {
           if (imageFile) {
             processImageFile(imageFile)
-                    .then((imageUrl) => {
-                      // Do something with the image URL, like displaying the image
-                      // console.log("image", imageUrl);
-                      imageElement.src = imageUrl;
-                    })
-                    .catch((error) => {
-                      // Handle errors that occur during image processing
-                      console.error("Error processing image:", error);
-                    });
+              .then((imageUrl) => {
+                // Do something with the image URL, like displaying the image
+                // console.log("image", imageUrl);
+                imageElement.src = imageUrl;
+              })
+              .catch((error) => {
+                // Handle errors that occur during image processing
+                console.error("Error processing image:", error);
+              });
           }
-
         } else {
           //deal with ArrayBuffer
           const uint8Array = new Uint8Array(imageFile);
@@ -182,7 +179,6 @@
           const base64Data = URL.createObjectURL(blob);
 
           imageElement.src = base64Data;
-
         }
 
         // Update Identification Form

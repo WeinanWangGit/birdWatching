@@ -22,9 +22,9 @@ function insertSighting(req, res) {
     description: req.body.description,
     date: req.body.date,
     author: req.body.author,
-    location: req.body.location ?? "",
-    position: req.body.position ?? "",
-    distance: req.body.distance ?? "",
+    location: req.body.location ?? "unknown",
+    position: req.body.position ?? "unknown",
+    distance: req.body.distance ?? "unknown",
     identification: {
       birdName: req.body.birdName ?? "",
       description: req.body.birdDescription ?? "",
