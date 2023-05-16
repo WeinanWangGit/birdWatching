@@ -2,22 +2,24 @@
 <%- include('head') %>
 
 <header>
-  <div class="offline-bar">You are in offline mode</div>
-  <div class="title">
-    <h1 id="title">Bird Sighting</h1>
-  </div>
-  <div class="nav">
-    <!-- <button class="btn btn-primary" onclick="handleButtonClick()">
-      <i class="fa fa-plus-circle"></i> Add New Sighting
-    </button> -->
-    <button id="addSightingButton" class="btn btn-primary header-button">
-      <i class="fa fa-plus-circle"></i> Add New Sighting
-    </button>
-  </div>
-
-  <div id="alertBox" class="alert" style="display: none">
-    <span id="closeAlertBoxBtn" class="closebtn">&times;</span>
-    There is an offline sighting not synced. Please sync first.
+  <div class="offline-included">
+    <div class="offline-bar">
+      You are offline. Please click the title to go to the offline page
+    </div>
+    <div class="header-content">
+      <div class="title">
+        <h1 id="title">Bird Sighting</h1>
+      </div>
+      <div class="nav">
+        <button id="addSightingButton" class="btn btn-primary header-button">
+          <i class="fa fa-plus-circle"></i> Add New Sighting
+        </button>
+      </div>
+    </div>
+    <div id="alertBox" class="alert" style="display: none">
+      <span id="closeAlertBoxBtn" class="closebtn">&times;</span>
+      There is an offline sighting not synced. Please sync first.
+    </div>
   </div>
 
   <!-- Add a modal container -->

@@ -34,11 +34,8 @@
           </div>
           <div class="card-body">
             <div id="chat_history" class="history">
-              <div class="message">
-                <!-- Testing chat -->
-                <div class="message-text">Hello, how are you?</div>
-                <div class="message-sentAt">5/9/2023, 2:15:35 PM</div>
-              </div>
+              <p id="noMsg">No Messages Yet</p>
+              <div class="message"></div>
             </div>
             <form id="chat_form" onsubmit="return false;">
               <div class="message_container">
@@ -106,11 +103,15 @@
           if (sightingId && sightingId !== defaultId) {
             localStorage.removeItem("sightingId");
             sighting = await getSighting(sightingId);
-            messages = sighting.messages;
+            if (sighting.messages) {
+              messages = sighting.messages;
+            }
           } else {
             localStorage.removeItem("sightingId");
             sighting = await getSighting(defaultId); // offline add default id
-            messages = sighting.messages;
+            if (sighting.messages) {
+              messages = sighting.messages;
+            }
           }
           populateSightingData(sighting);
           writeOnHistory(messages);
@@ -206,6 +207,12 @@
         document
           .getElementById("metadata")
           .appendChild(descriptionMetadataElement);
+
+        const positionMetadataElement = document.createElement("p");
+        positionMetadataElement.innerHTML = `<strong>Location:</strong> ${sighting.position}`;
+        document
+          .getElementById("metadata")
+          .appendChild(positionMetadataElement);
       }
 
       // Add event listener to the button
@@ -230,21 +237,38 @@
             sentAt: new Date().toISOString(),
           };
 
-
           // Add the message to the sighting's messages array
           if (!sighting.messages) {
             sighting.messages = [];
           }
           sighting.messages.push(message);
 
+          const noMessage = document.getElementById("noMsg");
+          noMessage.style.display = "none";
+
           // Create a new message element
           var messageContainer = document.createElement("div");
           messageContainer.className = "message";
 
+          // NEW VER WITH NO TIME
+          // var messageText = document.createElement("div");
+          // messageText.textContent = username + " " + chatInput;
+          // // Append the message elements to the chat history
+          // messageContainer.appendChild(messageText);
+
+          // OLD VER OF CHAT MSG FORMAT
           var messageText = document.createElement("div");
+          messageText.className = "message-text";
           messageText.textContent = username + " " + chatInput;
+
+          var messageSentAt = document.createElement("div");
+          messageSentAt.className = "message-sentAt";
+          var currentDate = new Date();
+          messageSentAt.textContent = currentDate.toLocaleString();
+
           // Append the message elements to the chat history
           messageContainer.appendChild(messageText);
+          messageContainer.appendChild(messageSentAt);
 
           var chatHistory = document.getElementById("chat_history");
           chatHistory.appendChild(messageContainer);
@@ -252,22 +276,7 @@
 
           // Clear the chat input
           document.getElementById("chat_input").value = "";
-
           saveSighting(sighting);
-
-          // OLD VER OF CHAT MSG FORMAT
-          // var messageText = document.createElement("div");
-          // messageText.className = "message-text";
-          // messageText.textContent = username + " " + chatInput;
-
-          // var messageSentAt = document.createElement("div");
-          // messageSentAt.className = "message-sentAt";
-          // var currentDate = new Date();
-          // messageSentAt.textContent = currentDate.toLocaleString();
-
-          //// Append the message elements to the chat history
-          // messageContainer.appendChild(messageText);
-          // messageContainer.appendChild(messageSentAt);
         }
       }
 
@@ -298,6 +307,11 @@
 
       function writeOnHistory(messages) {
         for (let i = 0; i < messages?.length; i++) {
+          if (messages?.length >= 1) {
+            const noMessage = document.getElementById("noMsg");
+            noMessage.style.display = "none";
+          }
+
           let message = messages[i];
           let text = message.text;
           let sentAt = message.sentAt;
@@ -322,28 +336,6 @@
           chatHistory.appendChild(messageContainer);
         }
       }
-
-      // OLD VER (working)
-      // function writeOnHistory(text, sentAt) {
-      //   // Create a new message element
-      //   var messageContainer = document.createElement("div");
-      //   messageContainer.className = "message";
-
-      //   var messageText = document.createElement("div");
-      //   messageText.className = "message-text";
-      //   messageText.textContent = text;
-
-      //   var messageSentAt = document.createElement("div");
-      //   messageSentAt.className = "message-sentAt";
-      //   messageSentAt.textContent = sentAt;
-
-      //   // Append the message elements to the chat history
-      //   messageContainer.appendChild(messageText);
-      //   messageContainer.appendChild(messageSentAt);
-
-      //   var chatHistory = document.getElementById("chat_history");
-      //   chatHistory.appendChild(messageContainer);
-      // }
     </script>
   </body>
 </html>

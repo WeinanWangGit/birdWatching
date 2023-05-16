@@ -84,16 +84,6 @@
             ></textarea>
           </div>
 
-          <!-- <div class="mb-3" style="display: none">
-            <label for="offline-url" class="form-label">URL:</label>
-            <input
-              type="text"
-              id="offline-url"
-              name="url"
-              class="form-control"
-            />
-          </div> -->
-
           <div class="mb-3">
             <label for="offline-image" class="form-label">Image:</label>
             <input
@@ -109,6 +99,12 @@
           </button>
         </form>
       </div>
+    </div>
+
+    <!-- <div id="loadingMessage">Loading...</div> -->
+    <div id="loadingOverlay">
+      <div class="spinner"></div>
+      <div class="loadingText">Sighting created successfully.</div>
     </div>
 
     <script src="../public/javascripts/idb.js" type="module"></script>
@@ -159,7 +155,17 @@
           });
 
         closeModal();
-        window.location.href = "/page/details_offline.html"; // Navigate to details.html
+
+        var loadingOverlay = document.getElementById("loadingOverlay");
+        loadingOverlay.style.display = "flex";
+
+        // Hide the loading overlay after a specific duration
+        setTimeout(function () {
+          loadingOverlay.style.display = "none";
+
+          // Navigate to details_offline.html
+          window.location.href = "/page/details_offline.html";
+        }, 1500); // Adjust the duration (in milliseconds) as needed
       }
     </script>
 
