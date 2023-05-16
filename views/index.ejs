@@ -30,10 +30,26 @@
               <th>User</th>
               <th>Identification</th>
               <th>Spotted Location</th>
-              <th class="headClickable" onclick="toggle_Distance(3)" style="background-color: #DCDCDC;box-shadow: 0 2px 4px rgba(0.2, 0, 0, 0.2);">
+              <th
+                class="headClickable"
+                onclick="toggle_Distance(3)"
+                style="
+                  background-color: #dcdcdc;
+                  box-shadow: 0 2px 4px rgba(0.2, 0, 0, 0.2);
+                "
+              >
                 Distance
               </th>
-              <th class="headClickable" onclick="toggle_Date()" style="background-color: #DCDCDC;box-shadow: 0 2px 4px rgba(0.2, 0, 0, 0.2);" >Date</th>
+              <th
+                class="headClickable"
+                onclick="toggle_Date()"
+                style="
+                  background-color: #dcdcdc;
+                  box-shadow: 0 2px 4px rgba(0.2, 0, 0, 0.2);
+                "
+              >
+                Date
+              </th>
               <th></th>
             </tr>
           </thead>
@@ -110,7 +126,7 @@
                     <button
                       type="submit"
                       class="btn btn-outline-danger"
-                      onclick="deleteSighting(event,'<%= sighting._id %>')"
+                      onclick="deleteSighting(event,'<%= sighting._id %>','<%= sighting.author %>')"
                     >
                       Delete
                     </button>
