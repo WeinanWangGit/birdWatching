@@ -130,11 +130,11 @@
           description: sanitiseText(
             document.getElementById("offline-description").value
           ),
-          date: sanitiseText(document.getElementById("offline-date").value),
+          date: document.getElementById("offline-date").value,
           position: sanitiseText(
             document.getElementById("offline-position").value
           ),
-          author: sanitiseText(username),
+          author: username,
           birdName: sanitiseText(
             document.getElementById("offline-bird-name").value
           ),

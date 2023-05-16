@@ -195,7 +195,8 @@
 
         // Update Metadata
         const dateElement = document.createElement("p");
-        dateElement.innerHTML = `<strong>Date:</strong> ${sighting.date}`;
+        const dateFormat = new Date(sighting.date).toDateString();
+        dateElement.innerHTML = `<strong>Date:</strong> ${dateFormat}`;
         document.getElementById("metadata").appendChild(dateElement);
 
         const authorElement = document.createElement("p");
