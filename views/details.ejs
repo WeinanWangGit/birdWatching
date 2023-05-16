@@ -266,7 +266,7 @@
   <script>
     function initMap() {
       const location = "<%= sighting.location %>";
-      if(location.length>0){
+      if(location!=="unknown"){
         const location_sight = location.split(",");
 
         // Create a new Google Map instance.
@@ -313,6 +313,10 @@
             }
           });
         });
+      }
+      else{
+        var map1 = document.getElementById("table-body-date");
+        map1.style.display==="none";
       }
     }
   </script>

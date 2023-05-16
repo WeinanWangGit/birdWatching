@@ -334,16 +334,24 @@
           shouldSwitch = false;
           x = rows[i].getElementsByTagName("TD")[n];
           y = rows[i + 1].getElementsByTagName("TD")[n];
-          if (dir == "asc") {
-            if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
-              shouldSwitch = true;
-              break;
+
+          var xValue = x.innerHTML.trim();
+          var yValue = y.innerHTML.trim();
+          if (xValue !== "unknown" && yValue !== "unknown") {
+            if (dir === "asc") {
+              if (parseFloat(xValue) > parseFloat(yValue)) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir === "desc") {
+              if (parseFloat(xValue) < parseFloat(yValue)) {
+                shouldSwitch = true;
+                break;
+              }
             }
-          } else if (dir == "desc") {
-            if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
-              shouldSwitch = true;
-              break;
-            }
+          } else if (xValue === "unknown" && yValue !== "unknown") {
+            shouldSwitch = true;
+            break;
           }
         }
         if (shouldSwitch) {

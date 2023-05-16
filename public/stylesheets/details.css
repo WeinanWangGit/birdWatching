@@ -25,7 +25,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
   flex-basis: 50%;
   max-width: 100%;
   padding: 1rem;
