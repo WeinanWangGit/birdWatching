@@ -86,7 +86,6 @@
         getSighting,
         setSighting,
         putSighting,
-        // displayChatHistory,
       } from "../public/javascripts/idb.js";
 
       let sighting;
@@ -106,10 +105,10 @@
           const sightingId = localStorage.getItem("sightingId");
           if (sightingId && sightingId !== defaultId) {
             localStorage.removeItem("sightingId");
-            // messages = await displayChatHistory(sightingId);
             sighting = await getSighting(sightingId);
             messages = sighting.messages;
           } else {
+            localStorage.removeItem("sightingId");
             sighting = await getSighting(defaultId); // offline add default id
             messages = sighting.messages;
           }
@@ -230,6 +229,7 @@
             text: username + " " + chatInput,
             sentAt: new Date().toISOString(),
           };
+
 
           // Add the message to the sighting's messages array
           if (!sighting.messages) {

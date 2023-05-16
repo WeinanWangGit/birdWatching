@@ -199,7 +199,11 @@ async function uploadNewCreateData() {
   const sighting = await getSighting(defaultLocalId);
   const formData = new FormData();
   for (const key in sighting) {
-    formData.append(key, sighting[key]);
+    if(key == "messages"){
+      formData.append("messages", JSON.stringify(sighting.messages));
+    }else{
+      formData.append(key, sighting[key]);
+    }
   }
   console.log(sighting);
 
@@ -207,6 +211,7 @@ async function uploadNewCreateData() {
     method: "POST",
     body: formData,
   });
+
   return response;
 }
 

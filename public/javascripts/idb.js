@@ -119,21 +119,3 @@ export async function clearSightings() {
   });
 }
 
-// Obtain the chat message history of the corresponding observation record from IndexedDB.
-export async function displayChatHistory(key) {
-  await openSightingDB();
-  const transaction = db.transaction([objectStoreName], "readonly");
-  const objectStore = transaction.objectStore(objectStoreName);
-  const req = objectStore.get(key);
-
-  return await new Promise((resolve, reject) => {
-    req.onsuccess = function (event) {
-      const messages = event.target.result.messages;
-      resolve(messages);
-    };
-
-    req.onerror = function (event) {
-      reject(event.target.error);
-    };
-  });
-}

@@ -25,6 +25,7 @@ function insertSighting(req, res) {
     location: req.body.location ?? "unknown",
     position: req.body.position ?? "unknown",
     distance: req.body.distance ?? "unknown",
+    messages: JSON.parse(req.body.messages) ?? [],
     identification: {
       birdName: req.body.birdName ?? "",
       description: req.body.birdDescription ?? "",
@@ -34,7 +35,7 @@ function insertSighting(req, res) {
     image: req.file.path.replace(/\\/g, "\\\\"),
   });
 
-  console.log(sighting.image);
+  console.log(sighting.messages);
   // Save to database.
   sighting.save((err, savedSighting) => {
     if (err) {
@@ -121,7 +122,6 @@ async function getSightingList(req, res) {
   try {
     // Sort by date in ascending order.
     const sightings = await Sighting.find().sort({ date: "asc" });
-    console.log(sightings);
     return sightings;
   } catch (err) {
     throw err;
