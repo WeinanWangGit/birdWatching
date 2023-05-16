@@ -59,8 +59,17 @@ const registerServiceWorker = async () => {
 
 registerServiceWorker();
 
-async function deleteSighting(event, id) {
+async function deleteSighting(event, id, author) {
   event.preventDefault();
+
+  const username = sessionStorage.getItem("username");
+  // console.log(username, author, id);
+
+  if (author !== username) {
+    alert("Sorry, you don't have permission to delete this sighting.");
+    return; // Exit the function if user is not the author
+  }
+
   if (confirm("Are you sure you want to delete this sighting?")) {
     // POST request if user clicked ok
     fetch(`/delete?id=${id}`, { method: "POST" })
@@ -138,9 +147,8 @@ document.addEventListener("click", (event) => {
     const sighting = JSON.parse(target.dataset.sighting);
     if (sighting._id) {
       const id = sighting._id;
-      // call deleteSighting function
-      deleteSighting(event, id);
-      console.log(id);
+      const author = sighting.author;
+      deleteSighting(event, id, author);
     }
   }
 });
@@ -199,9 +207,9 @@ async function uploadNewCreateData() {
   const sighting = await getSighting(defaultLocalId);
   const formData = new FormData();
   for (const key in sighting) {
-    if(key == "messages"){
+    if (key == "messages") {
       formData.append("messages", JSON.stringify(sighting.messages));
-    }else{
+    } else {
       formData.append(key, sighting[key]);
     }
   }

@@ -35,7 +35,7 @@ function insertSighting(req, res) {
     image: req.file.path.replace(/\\/g, "\\\\"),
   });
 
-  console.log(sighting.messages);
+  // console.log(sighting.messages);
   // Save to database.
   sighting.save((err, savedSighting) => {
     if (err) {
