@@ -1,25 +1,34 @@
 # Project name:birdWatching
 
-# 1, Installation 
+# 1 Installation 
 ```
 To run the Bird Watching website, you need to follow the steps below:
 ```
 
-1.Clone the repository: git clone: https://github.com/WeinanWanggit/birdWatching.git
+1.Change directory into the project folder: cd birdWatching
 
-2.Change directory into the project folder: cd birdWatching
+2.Install the required dependencies: ``` npm install```
 
-3.Install the required dependencies: ``` npm install```
+3.Start the server, Input at terminal : ```npm start```  / run in dev: ```npm run dev```
+
+4.Open the website in your browser at: http://localhost:3000
 
 
-# 2, Instruction
-```
-To run the Bird Watching website, you need to follow the steps below:
-```
+# 2 other
 
-1.Start the server, Input at terminal : ```npm start``` / run in dev: ```npm run dev```
+github repository: https://github.com/WeinanWanggit/birdWatching.git
 
-2.Open the website in your browser at: http://localhost:3000
+team member:
+
+    Weinan Wang  acq22ww
+    Yijia Liu act22yl
+    Yuchen Wu acv22yw
+    Haowen Hou acp22hh
+
+    
+   
+
+
 
 
 
