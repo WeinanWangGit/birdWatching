@@ -1,6 +1,6 @@
 //add socket.io
 var clients = 0;
-const sighting_controller = require("../controllers/sighting");
+const sighting_controller = require("./sighting");
 
 exports.init = function (io) {
   io.sockets.on("connection", function (socket) {

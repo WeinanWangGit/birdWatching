@@ -5,7 +5,7 @@
 To run the Bird Watching website, you need to follow the steps below:
 ```
 
-1.Change directory into the project folder: cd birdWatching
+1.Change directory into the project folder: ```cd solution```
 
 2.Install the required dependencies: ``` npm install```
 
