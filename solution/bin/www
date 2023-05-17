@@ -30,11 +30,7 @@ server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
 
-if (process.env.NODE_ENV === 'development') {
-  const livereload = require('livereload');
-  const server = livereload.createServer();
-  server.watch(__dirname);
-}
+
 
 
 /**
