@@ -1,4 +1,4 @@
-# Project name:birdWatching
+# Project name: birdWatching The final project of COM6504 the intelligent web
 
 # 1 Installation 
 ```
@@ -20,10 +20,10 @@ github repository: https://github.com/WeinanWanggit/birdWatching.git
 
 team member:
 
-    Weinan Wang  acq22ww
-    Yijia Liu act22yl
-    Yuchen Wu acv22yw
-    Haowen Hou acp22hh
+    Weinan Wang 
+    Yijia Liu 
+    Yuchen Wu 
+    Haowen Hou 
 
     
    
